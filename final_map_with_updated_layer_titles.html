@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_73adaceba7ab040cb9b82bb24ce8206a {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_73adaceba7ab040cb9b82bb24ce8206a" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_73adaceba7ab040cb9b82bb24ce8206a = L.map(
+                "map_73adaceba7ab040cb9b82bb24ce8206a",
+                {
+                    center: [37.0902, -95.7129],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 4,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_61a13cb2c8c9adbb452c2098c0fc7150 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_73adaceba7ab040cb9b82bb24ce8206a);
+        
+    
+            var feature_group_a069be3da2bb7796c60bf1da16bf5ea9 = L.featureGroup(
+                {}
+            ).addTo(map_73adaceba7ab040cb9b82bb24ce8206a);
+        
+    
+            var marker_f9e048f79f0d486dbda374189c2e33e2 = L.marker(
+                [34.7465, -92.2896],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_af2c1575de7ecbd48c1a9659f08911a5 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_f9e048f79f0d486dbda374189c2e33e2.setIcon(icon_af2c1575de7ecbd48c1a9659f08911a5);
+        
+    
+        var popup_dab4fbd8375a271bfba63a92471ce53d = L.popup({"maxWidth": 500});
+
+        
+            var html_1d5e05aa0fb7b13aa9033966ce644295 = $(`<div id="html_1d5e05aa0fb7b13aa9033966ce644295" style="width: 100.0%; height: 100.0%;"><strong>ARKANSAS</strong><br>PLS: $3,840/$6,480 (POE: ATLANTA)</div>`)[0];
+            popup_dab4fbd8375a271bfba63a92471ce53d.setContent(html_1d5e05aa0fb7b13aa9033966ce644295);
+        
+
+        marker_f9e048f79f0d486dbda374189c2e33e2.bindPopup(popup_dab4fbd8375a271bfba63a92471ce53d)
+        ;
+
+        
+    
+    
+            var marker_57625a44dc62141a66926e5a920638f2 = L.marker(
+                [33.749, -84.388],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_5fa5edbd4a52a53b3b30827e29e22048 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_57625a44dc62141a66926e5a920638f2.setIcon(icon_5fa5edbd4a52a53b3b30827e29e22048);
+        
+    
+        var popup_3f53d86f7e98dbc9f8d83bc5fa54644d = L.popup({"maxWidth": 500});
+
+        
+            var html_d5c41b63ad93526336fc7d4b64cdc6b0 = $(`<div id="html_d5c41b63ad93526336fc7d4b64cdc6b0" style="width: 100.0%; height: 100.0%;"><strong>ATLANTA</strong><br>PLS: $1,345/$2,395 (POE: ATLANTA)</div>`)[0];
+            popup_3f53d86f7e98dbc9f8d83bc5fa54644d.setContent(html_d5c41b63ad93526336fc7d4b64cdc6b0);
+        
+
+        marker_57625a44dc62141a66926e5a920638f2.bindPopup(popup_3f53d86f7e98dbc9f8d83bc5fa54644d)
+        ;
+
+        
+    
+    
+            var marker_ba356a8ffdf1e869d136be15c7c3712e = L.marker(
+                [36.1632, -82.8302],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_0a3a6047dd3e163e1c41cbe604dd784a = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_ba356a8ffdf1e869d136be15c7c3712e.setIcon(icon_0a3a6047dd3e163e1c41cbe604dd784a);
+        
+    
+        var popup_04ed26c7054fc7e1dd96a47b125dd329 = L.popup({"maxWidth": 500});
+
+        
+            var html_11eeca0fec06b68415c551f9ebf5aa6c = $(`<div id="html_11eeca0fec06b68415c551f9ebf5aa6c" style="width: 100.0%; height: 100.0%;"><strong>GREENVILLE,TN</strong><br>PLS: $1,790/$2,990 (POE: ATLANTA)</div>`)[0];
+            popup_04ed26c7054fc7e1dd96a47b125dd329.setContent(html_11eeca0fec06b68415c551f9ebf5aa6c);
+        
+
+        marker_ba356a8ffdf1e869d136be15c7c3712e.bindPopup(popup_04ed26c7054fc7e1dd96a47b125dd329)
+        ;
+
+        
+    
+    
+            var marker_0b52f83c9bc70250d7cba1f8264a1baa = L.marker(
+                [38.2527, -85.7585],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_cb86fd70a77a95fe39c38dadc315780b = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_0b52f83c9bc70250d7cba1f8264a1baa.setIcon(icon_cb86fd70a77a95fe39c38dadc315780b);
+        
+    
+        var popup_54e1e2067a8178859f75cbb3dc1209d2 = L.popup({"maxWidth": 500});
+
+        
+            var html_12a71b9fc19cf227822b2a26fc4e31e8 = $(`<div id="html_12a71b9fc19cf227822b2a26fc4e31e8" style="width: 100.0%; height: 100.0%;"><strong>LOUISVILLE</strong><br>PLS: $2,750/$4,790 (POE: ATLANTA)</div>`)[0];
+            popup_54e1e2067a8178859f75cbb3dc1209d2.setContent(html_12a71b9fc19cf227822b2a26fc4e31e8);
+        
+
+        marker_0b52f83c9bc70250d7cba1f8264a1baa.bindPopup(popup_54e1e2067a8178859f75cbb3dc1209d2)
+        ;
+
+        
+    
+    
+            var marker_db6383a1e475c3ffb7051b46f7f4512b = L.marker(
+                [35.1495, -90.049],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_a4ec8667a6c726aae39737460a70b084 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_db6383a1e475c3ffb7051b46f7f4512b.setIcon(icon_a4ec8667a6c726aae39737460a70b084);
+        
+    
+        var popup_1a712df946416ee61d3e9dd6d8e21f73 = L.popup({"maxWidth": 500});
+
+        
+            var html_ef72f852eddfe004499063f19af05ef8 = $(`<div id="html_ef72f852eddfe004499063f19af05ef8" style="width: 100.0%; height: 100.0%;"><strong>MEMPHIS,TN</strong><br>PLS: $3,420/$5,700 (POE: ATLANTA)</div>`)[0];
+            popup_1a712df946416ee61d3e9dd6d8e21f73.setContent(html_ef72f852eddfe004499063f19af05ef8);
+        
+
+        marker_db6383a1e475c3ffb7051b46f7f4512b.bindPopup(popup_1a712df946416ee61d3e9dd6d8e21f73)
+        ;
+
+        
+    
+    
+            var marker_60b1e6ec556ce37cd5d67f1a21ef472e = L.marker(
+                [25.7617, -80.1918],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_218ed20d33b59837aa75c9e8175be812 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_60b1e6ec556ce37cd5d67f1a21ef472e.setIcon(icon_218ed20d33b59837aa75c9e8175be812);
+        
+    
+        var popup_46768d3caac505e268e7d26cf2584f60 = L.popup({"maxWidth": 500});
+
+        
+            var html_e66097c3c5c7c60381b893e818d489bf = $(`<div id="html_e66097c3c5c7c60381b893e818d489bf" style="width: 100.0%; height: 100.0%;"><strong>MIAMI,FL</strong><br>PLS: $4,000/$6,400 (POE: ATLANTA)</div>`)[0];
+            popup_46768d3caac505e268e7d26cf2584f60.setContent(html_e66097c3c5c7c60381b893e818d489bf);
+        
+
+        marker_60b1e6ec556ce37cd5d67f1a21ef472e.bindPopup(popup_46768d3caac505e268e7d26cf2584f60)
+        ;
+
+        
+    
+    
+            var marker_693c123d3ef35cdf132dbb6e8f487cbe = L.marker(
+                [35.7796, -78.6382],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_b8813aa5720b9ae5507cbc793fe333c4 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_693c123d3ef35cdf132dbb6e8f487cbe.setIcon(icon_b8813aa5720b9ae5507cbc793fe333c4);
+        
+    
+        var popup_eed3d1792e5954e675a574aa38759a3f = L.popup({"maxWidth": 500});
+
+        
+            var html_a32dc6b8b3d4cd1b6c230550b70273bf = $(`<div id="html_a32dc6b8b3d4cd1b6c230550b70273bf" style="width: 100.0%; height: 100.0%;"><strong>RALEIGH,NC</strong><br>PLS: $2,720/$4,520 (POE: ATLANTA)</div>`)[0];
+            popup_eed3d1792e5954e675a574aa38759a3f.setContent(html_a32dc6b8b3d4cd1b6c230550b70273bf);
+        
+
+        marker_693c123d3ef35cdf132dbb6e8f487cbe.bindPopup(popup_eed3d1792e5954e675a574aa38759a3f)
+        ;
+
+        
+    
+    
+            var marker_034fdcc5321031fdf8964607d90a1b79 = L.marker(
+                [37.5407, -77.436],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_c988b87328b83265c25ecd0cc3e706c7 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_034fdcc5321031fdf8964607d90a1b79.setIcon(icon_c988b87328b83265c25ecd0cc3e706c7);
+        
+    
+        var popup_e67ecb3443f017442f12a8f1293432a5 = L.popup({"maxWidth": 500});
+
+        
+            var html_1cc875d85a8369c6f41b031f971ab9da = $(`<div id="html_1cc875d85a8369c6f41b031f971ab9da" style="width: 100.0%; height: 100.0%;"><strong>RICHMOND,VA</strong><br>PLS: $4,207/$8,407 (POE: ATLANTA)</div>`)[0];
+            popup_e67ecb3443f017442f12a8f1293432a5.setContent(html_1cc875d85a8369c6f41b031f971ab9da);
+        
+
+        marker_034fdcc5321031fdf8964607d90a1b79.bindPopup(popup_e67ecb3443f017442f12a8f1293432a5)
+        ;
+
+        
+    
+    
+            var marker_2d27a048c3a283f8f36833296844459c = L.marker(
+                [32.7767, -96.797],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_97f5d1e08070a1e80ed9b4981a33815c = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_2d27a048c3a283f8f36833296844459c.setIcon(icon_97f5d1e08070a1e80ed9b4981a33815c);
+        
+    
+        var popup_13901d2ceda043236c8546dd131eb877 = L.popup({"maxWidth": 500});
+
+        
+            var html_b69436639a985ea2c5c8212d20e26d96 = $(`<div id="html_b69436639a985ea2c5c8212d20e26d96" style="width: 100.0%; height: 100.0%;"><strong>DALLAS, TX</strong><br>PLS: $2,520/$4,320 (POE: DALLAS)</div>`)[0];
+            popup_13901d2ceda043236c8546dd131eb877.setContent(html_b69436639a985ea2c5c8212d20e26d96);
+        
+
+        marker_2d27a048c3a283f8f36833296844459c.bindPopup(popup_13901d2ceda043236c8546dd131eb877)
+        ;
+
+        
+    
+    
+            var marker_19bd2a1fca5a18757f9de8986e35042b = L.marker(
+                [30.2672, -97.7431],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_9177fa4e6d65b68bd462c00b2eaca669 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_19bd2a1fca5a18757f9de8986e35042b.setIcon(icon_9177fa4e6d65b68bd462c00b2eaca669);
+        
+    
+        var popup_3ecce65538e5daf9bcb5e812835509e5 = L.popup({"maxWidth": 500});
+
+        
+            var html_46146df801eeaedbacf1f6f65e4fd86c = $(`<div id="html_46146df801eeaedbacf1f6f65e4fd86c" style="width: 100.0%; height: 100.0%;"><strong>AUSTIN, TX</strong><br>PLS: $2,370/$4,170 (POE: HOUSTON)</div>`)[0];
+            popup_3ecce65538e5daf9bcb5e812835509e5.setContent(html_46146df801eeaedbacf1f6f65e4fd86c);
+        
+
+        marker_19bd2a1fca5a18757f9de8986e35042b.bindPopup(popup_3ecce65538e5daf9bcb5e812835509e5)
+        ;
+
+        
+    
+    
+            var marker_faef1aaf450db056f0e2fec611f772af = L.marker(
+                [29.7604, -95.3698],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_24d3e42a1ad5358cf02930abdb4f94c4 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_faef1aaf450db056f0e2fec611f772af.setIcon(icon_24d3e42a1ad5358cf02930abdb4f94c4);
+        
+    
+        var popup_ade7e57c21348dcbb64585f37f9aaabd = L.popup({"maxWidth": 500});
+
+        
+            var html_edff8efe751f1531982d3f5a53681c05 = $(`<div id="html_edff8efe751f1531982d3f5a53681c05" style="width: 100.0%; height: 100.0%;"><strong>HOUSTON, TX</strong><br>PLS: $2,370/$4,170 (POE: HOUSTON)</div>`)[0];
+            popup_ade7e57c21348dcbb64585f37f9aaabd.setContent(html_edff8efe751f1531982d3f5a53681c05);
+        
+
+        marker_faef1aaf450db056f0e2fec611f772af.bindPopup(popup_ade7e57c21348dcbb64585f37f9aaabd)
+        ;
+
+        
+    
+    
+            var marker_1424ebe243bf879fd961254decf63c83 = L.marker(
+                [42.3601, -71.0589],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_fc6f7d94c85e5a2a6389deadcda6d96b = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_1424ebe243bf879fd961254decf63c83.setIcon(icon_fc6f7d94c85e5a2a6389deadcda6d96b);
+        
+    
+        var popup_40dcdebc57e418e4eca6d498bb413e7e = L.popup({"maxWidth": 500});
+
+        
+            var html_72fd65a3296601f3e48d0ae69ed3fc21 = $(`<div id="html_72fd65a3296601f3e48d0ae69ed3fc21" style="width: 100.0%; height: 100.0%;"><strong>BOSTON</strong><br>PLS: $2,225/$3,875 (POE: NEW YORK)</div>`)[0];
+            popup_40dcdebc57e418e4eca6d498bb413e7e.setContent(html_72fd65a3296601f3e48d0ae69ed3fc21);
+        
+
+        marker_1424ebe243bf879fd961254decf63c83.bindPopup(popup_40dcdebc57e418e4eca6d498bb413e7e)
+        ;
+
+        
+    
+    
+            var marker_71c930c57400e01e886381ba4c505259 = L.marker(
+                [40.7128, -74.006],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_ee5dd053cd3dc781187e5cda55e1e44d = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_71c930c57400e01e886381ba4c505259.setIcon(icon_ee5dd053cd3dc781187e5cda55e1e44d);
+        
+    
+        var popup_42405e82e44e85ea3790abfc283c53e7 = L.popup({"maxWidth": 500});
+
+        
+            var html_85b76380554586117c7f512f1449e7de = $(`<div id="html_85b76380554586117c7f512f1449e7de" style="width: 100.0%; height: 100.0%;"><strong>NEW YORK,NY</strong><br>PLS: $1,800/$3,300 (POE: NEW YORK)</div>`)[0];
+            popup_42405e82e44e85ea3790abfc283c53e7.setContent(html_85b76380554586117c7f512f1449e7de);
+        
+
+        marker_71c930c57400e01e886381ba4c505259.bindPopup(popup_42405e82e44e85ea3790abfc283c53e7)
+        ;
+
+        
+    
+    
+            var marker_935adacdf0c61fdb119a0304408eea7f = L.marker(
+                [39.9526, -75.1652],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_361e58345a1b8d8ff1aab8d3fe99569f = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_935adacdf0c61fdb119a0304408eea7f.setIcon(icon_361e58345a1b8d8ff1aab8d3fe99569f);
+        
+    
+        var popup_7961b34da8d03f7b95afb98d2b9d1f1d = L.popup({"maxWidth": 500});
+
+        
+            var html_b703d747ff13def362ce2f0df0ab3f10 = $(`<div id="html_b703d747ff13def362ce2f0df0ab3f10" style="width: 100.0%; height: 100.0%;"><strong>PHILADELPHIA</strong><br>PLS: $1,950/$3,450 (POE: NEW YORK)</div>`)[0];
+            popup_7961b34da8d03f7b95afb98d2b9d1f1d.setContent(html_b703d747ff13def362ce2f0df0ab3f10);
+        
+
+        marker_935adacdf0c61fdb119a0304408eea7f.bindPopup(popup_7961b34da8d03f7b95afb98d2b9d1f1d)
+        ;
+
+        
+    
+    
+            var marker_960ba48e0a3f7bf2c8c7e7d340489b62 = L.marker(
+                [37.4316, -78.6569],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_46e1bb500eea6f6fb3624a5b9d2642fd = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_960ba48e0a3f7bf2c8c7e7d340489b62.setIcon(icon_46e1bb500eea6f6fb3624a5b9d2642fd);
+        
+    
+        var popup_13a164423fd4b64316e32fa45ba3171d = L.popup({"maxWidth": 500});
+
+        
+            var html_f53f85f6a12391aa2bd938b83a7903f6 = $(`<div id="html_f53f85f6a12391aa2bd938b83a7903f6" style="width: 100.0%; height: 100.0%;"><strong>VIRGINIA</strong><br>PLS: $4,207/$8,407 (POE: NEW YORK)</div>`)[0];
+            popup_13a164423fd4b64316e32fa45ba3171d.setContent(html_f53f85f6a12391aa2bd938b83a7903f6);
+        
+
+        marker_960ba48e0a3f7bf2c8c7e7d340489b62.bindPopup(popup_13a164423fd4b64316e32fa45ba3171d)
+        ;
+
+        
+    
+    
+            var marker_606a5ba42e1f810508c19f801b54bd20 = L.marker(
+                [38.9072, -77.0369],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_97fc71aa7e73b35994ebdaa0ef18aaec = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_606a5ba42e1f810508c19f801b54bd20.setIcon(icon_97fc71aa7e73b35994ebdaa0ef18aaec);
+        
+    
+        var popup_362c8adefa59450cfb0d6876babde448 = L.popup({"maxWidth": 500});
+
+        
+            var html_c7489a65ed955d83ae55277bf57fe997 = $(`<div id="html_c7489a65ed955d83ae55277bf57fe997" style="width: 100.0%; height: 100.0%;"><strong>WASHINGTON</strong><br>PLS: $2,225/$3,875 (POE: NEW YORK)</div>`)[0];
+            popup_362c8adefa59450cfb0d6876babde448.setContent(html_c7489a65ed955d83ae55277bf57fe997);
+        
+
+        marker_606a5ba42e1f810508c19f801b54bd20.bindPopup(popup_362c8adefa59450cfb0d6876babde448)
+        ;
+
+        
+    
+    
+            var marker_3c133d5c1fc1d1edac048538cb6565cb = L.marker(
+                [41.6032, -73.0877],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_95dd14a4841eeccd61fb43b85a0be364 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_3c133d5c1fc1d1edac048538cb6565cb.setIcon(icon_95dd14a4841eeccd61fb43b85a0be364);
+        
+    
+        var popup_f22a58e17cfb258e9e38d188ca40f1c5 = L.popup({"maxWidth": 500});
+
+        
+            var html_d8a90cac9737ad7bb875012748a9e503 = $(`<div id="html_d8a90cac9737ad7bb875012748a9e503" style="width: 100.0%; height: 100.0%;"><strong>CONNECTICUT</strong><br>PLS: $1,950/$3,450 (POE: NEW YORK)</div>`)[0];
+            popup_f22a58e17cfb258e9e38d188ca40f1c5.setContent(html_d8a90cac9737ad7bb875012748a9e503);
+        
+
+        marker_3c133d5c1fc1d1edac048538cb6565cb.bindPopup(popup_f22a58e17cfb258e9e38d188ca40f1c5)
+        ;
+
+        
+    
+    
+            var marker_e853a8094239b7057ced0e6b92ea7c24 = L.marker(
+                [42.1429, -77.0547],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_0177175b5fe09ada4ea3d7e6d7b761c3 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_e853a8094239b7057ced0e6b92ea7c24.setIcon(icon_0177175b5fe09ada4ea3d7e6d7b761c3);
+        
+    
+        var popup_8857270f35dcd2f34c84b0f4626549a2 = L.popup({"maxWidth": 500});
+
+        
+            var html_b841a9bf35ad22025956dd1fa2b88d4b = $(`<div id="html_b841a9bf35ad22025956dd1fa2b88d4b" style="width: 100.0%; height: 100.0%;"><strong>CORNING</strong><br>PLS: $2,250/$3,750 (POE: NEW YORK)</div>`)[0];
+            popup_8857270f35dcd2f34c84b0f4626549a2.setContent(html_b841a9bf35ad22025956dd1fa2b88d4b);
+        
+
+        marker_e853a8094239b7057ced0e6b92ea7c24.bindPopup(popup_8857270f35dcd2f34c84b0f4626549a2)
+        ;
+
+        
+    
+    
+            var marker_e81df8e7e95b827949ea9afd6b629af6 = L.marker(
+                [40.4406, -79.9959],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_c6597f2cc815038cbee6b5ef42e50566 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_e81df8e7e95b827949ea9afd6b629af6.setIcon(icon_c6597f2cc815038cbee6b5ef42e50566);
+        
+    
+        var popup_16b2b507991ab21dd8eadb9daeacd9ec = L.popup({"maxWidth": 500});
+
+        
+            var html_49a7e686c17fadb41ad444757aad5b5a = $(`<div id="html_49a7e686c17fadb41ad444757aad5b5a" style="width: 100.0%; height: 100.0%;"><strong>PITTSBURGH</strong><br>PLS: $2,600/$4,100 (POE: NEW YORK)</div>`)[0];
+            popup_16b2b507991ab21dd8eadb9daeacd9ec.setContent(html_49a7e686c17fadb41ad444757aad5b5a);
+        
+
+        marker_e81df8e7e95b827949ea9afd6b629af6.bindPopup(popup_16b2b507991ab21dd8eadb9daeacd9ec)
+        ;
+
+        
+    
+    
+            var marker_3b3d074b5ed111c84177758390658333 = L.marker(
+                [45.5152, -122.6784],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_6fb54d5941de1e69936b7c5d7ff68930 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_3b3d074b5ed111c84177758390658333.setIcon(icon_6fb54d5941de1e69936b7c5d7ff68930);
+        
+    
+        var popup_b2eaa9db2891bd00a60a9f2ab6e3cb9f = L.popup({"maxWidth": 500});
+
+        
+            var html_3862aa82e63792e9b4255efb39f602dd = $(`<div id="html_3862aa82e63792e9b4255efb39f602dd" style="width: 100.0%; height: 100.0%;"><strong>PORTLAND</strong><br>PLS: $4,950/$9,450 (POE: OAKLAND)</div>`)[0];
+            popup_b2eaa9db2891bd00a60a9f2ab6e3cb9f.setContent(html_3862aa82e63792e9b4255efb39f602dd);
+        
+
+        marker_3b3d074b5ed111c84177758390658333.bindPopup(popup_b2eaa9db2891bd00a60a9f2ab6e3cb9f)
+        ;
+
+        
+    
+    
+            var marker_7c9908623142c76bb76e9794cbeb95ac = L.marker(
+                [37.3382, -121.8863],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_bf6b25f36a6bf8992ae67ab1eeba066e = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_7c9908623142c76bb76e9794cbeb95ac.setIcon(icon_bf6b25f36a6bf8992ae67ab1eeba066e);
+        
+    
+        var popup_d04cfc128d8726b1134fc94aaba20d5e = L.popup({"maxWidth": 500});
+
+        
+            var html_fd6b24ca4aab7899e8b805c603568310 = $(`<div id="html_fd6b24ca4aab7899e8b805c603568310" style="width: 100.0%; height: 100.0%;"><strong>SAN JOSE, CA</strong><br>PLS: $2,255/$4,205 (POE: OAKLAND)</div>`)[0];
+            popup_d04cfc128d8726b1134fc94aaba20d5e.setContent(html_fd6b24ca4aab7899e8b805c603568310);
+        
+
+        marker_7c9908623142c76bb76e9794cbeb95ac.bindPopup(popup_d04cfc128d8726b1134fc94aaba20d5e)
+        ;
+
+        
+    
+    
+            var marker_db60d707ca8387843d1c9c1c4426d8d9 = L.marker(
+                [37.7749, -122.4194],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_98f6da0929e8e011860c61d0f18a0faa = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_db60d707ca8387843d1c9c1c4426d8d9.setIcon(icon_98f6da0929e8e011860c61d0f18a0faa);
+        
+    
+        var popup_51e19a499212c0cd35485337ce99fdd1 = L.popup({"maxWidth": 500});
+
+        
+            var html_9db2f1dd2bb590d24a5d11291debaebe = $(`<div id="html_9db2f1dd2bb590d24a5d11291debaebe" style="width: 100.0%; height: 100.0%;"><strong>SANFRANCISCO,CA</strong><br>PLS: $2,255/$4,205 (POE: OAKLAND)</div>`)[0];
+            popup_51e19a499212c0cd35485337ce99fdd1.setContent(html_9db2f1dd2bb590d24a5d11291debaebe);
+        
+
+        marker_db60d707ca8387843d1c9c1c4426d8d9.bindPopup(popup_51e19a499212c0cd35485337ce99fdd1)
+        ;
+
+        
+    
+    
+            var marker_cdb67f6c1f9f840af26d9e4c5cfe1c3e = L.marker(
+                [37.3861, -122.0839],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_2ad3bdf7c73b91f6f30ffc3ce42cadc1 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_cdb67f6c1f9f840af26d9e4c5cfe1c3e.setIcon(icon_2ad3bdf7c73b91f6f30ffc3ce42cadc1);
+        
+    
+        var popup_22e1937cabb5629b6ecaae149f877761 = L.popup({"maxWidth": 500});
+
+        
+            var html_89eceba66014ad6376e5b00119c7cf08 = $(`<div id="html_89eceba66014ad6376e5b00119c7cf08" style="width: 100.0%; height: 100.0%;"><strong>MOUNTAINVIEW</strong><br>PLS: $2,255/$4,205 (POE: OAKLAND)</div>`)[0];
+            popup_22e1937cabb5629b6ecaae149f877761.setContent(html_89eceba66014ad6376e5b00119c7cf08);
+        
+
+        marker_cdb67f6c1f9f840af26d9e4c5cfe1c3e.bindPopup(popup_22e1937cabb5629b6ecaae149f877761)
+        ;
+
+        
+    
+    
+            var marker_f31fe784d563476219fceed4215f7f9a = L.marker(
+                [37.3541, -121.9552],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_13920a1a4adad8605959e6f1948d14f5 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_f31fe784d563476219fceed4215f7f9a.setIcon(icon_13920a1a4adad8605959e6f1948d14f5);
+        
+    
+        var popup_793b8bf2b4ce51349c7d6a13660d2a2b = L.popup({"maxWidth": 500});
+
+        
+            var html_cce30e6bf74e9ca72ac65b24824113d4 = $(`<div id="html_cce30e6bf74e9ca72ac65b24824113d4" style="width: 100.0%; height: 100.0%;"><strong>SANTA CLARA</strong><br>PLS: $2,255/$4,205 (POE: OAKLAND)</div>`)[0];
+            popup_793b8bf2b4ce51349c7d6a13660d2a2b.setContent(html_cce30e6bf74e9ca72ac65b24824113d4);
+        
+
+        marker_f31fe784d563476219fceed4215f7f9a.bindPopup(popup_793b8bf2b4ce51349c7d6a13660d2a2b)
+        ;
+
+        
+    
+    
+            var marker_3387c752aa7e0a52ab50456b76a3e0b9 = L.marker(
+                [40.015, -105.2705],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_1c08c893f8c74c09ccb72f7d21110c78 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_3387c752aa7e0a52ab50456b76a3e0b9.setIcon(icon_1c08c893f8c74c09ccb72f7d21110c78);
+        
+    
+        var popup_304b6a656992fb35fb4bcb0dd415a9d9 = L.popup({"maxWidth": 500});
+
+        
+            var html_bffc2ebb598a05458bc5a57a6c857add = $(`<div id="html_bffc2ebb598a05458bc5a57a6c857add" style="width: 100.0%; height: 100.0%;"><strong>DOULDER</strong><br>PLS: $2,255/$4,205 (POE: OAKLAND)</div>`)[0];
+            popup_304b6a656992fb35fb4bcb0dd415a9d9.setContent(html_bffc2ebb598a05458bc5a57a6c857add);
+        
+
+        marker_3387c752aa7e0a52ab50456b76a3e0b9.bindPopup(popup_304b6a656992fb35fb4bcb0dd415a9d9)
+        ;
+
+        
+    
+    
+            var marker_fc22409b7dc4c577f6d88af634f5d364 = L.marker(
+                [47.6062, -122.3321],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_186ba6d877593bda1e9c852267afd087 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_fc22409b7dc4c577f6d88af634f5d364.setIcon(icon_186ba6d877593bda1e9c852267afd087);
+        
+    
+        var popup_6cbf9053097e626e0ffac1356a62ba5d = L.popup({"maxWidth": 500});
+
+        
+            var html_2f062ab7689236b5850d78b7b1700447 = $(`<div id="html_2f062ab7689236b5850d78b7b1700447" style="width: 100.0%; height: 100.0%;"><strong>SEATTLE</strong><br>PLS: $5,590/$10,690 (POE: OAKLAND)</div>`)[0];
+            popup_6cbf9053097e626e0ffac1356a62ba5d.setContent(html_2f062ab7689236b5850d78b7b1700447);
+        
+
+        marker_fc22409b7dc4c577f6d88af634f5d364.bindPopup(popup_6cbf9053097e626e0ffac1356a62ba5d)
+        ;
+
+        
+    
+    
+            var marker_f8244e91f12a1442c43d9ee0c7dde79d = L.marker(
+                [39.7392, -104.9903],
+                {}
+            ).addTo(feature_group_a069be3da2bb7796c60bf1da16bf5ea9);
+        
+    
+            var icon_835c4c5651cd94be6b945f360d4ab047 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_f8244e91f12a1442c43d9ee0c7dde79d.setIcon(icon_835c4c5651cd94be6b945f360d4ab047);
+        
+    
+        var popup_d67cef510e27d15b667f2ecc91d04371 = L.popup({"maxWidth": 500});
+
+        
+            var html_92291722ac2584fcc194a4fa9aac4529 = $(`<div id="html_92291722ac2584fcc194a4fa9aac4529" style="width: 100.0%; height: 100.0%;"><strong>Denver, CO</strong><br>PLS: $5,590/$10,690 (POE: NEW YORK)</div>`)[0];
+            popup_d67cef510e27d15b667f2ecc91d04371.setContent(html_92291722ac2584fcc194a4fa9aac4529);
+        
+
+        marker_f8244e91f12a1442c43d9ee0c7dde79d.bindPopup(popup_d67cef510e27d15b667f2ecc91d04371)
+        ;
+
+        
+    
+    
+            var feature_group_e6c3c5dd6b6adab322adc7f6ee962157 = L.featureGroup(
+                {}
+            ).addTo(map_73adaceba7ab040cb9b82bb24ce8206a);
+        
+    
+            var marker_4c6a3f41a7b0228c6f177ef3bf8ba3cc = L.marker(
+                [30.2672, -97.7431],
+                {}
+            ).addTo(feature_group_e6c3c5dd6b6adab322adc7f6ee962157);
+        
+    
+            var icon_652ce6f5d40f216e0ec89bbe953ab2cc = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_4c6a3f41a7b0228c6f177ef3bf8ba3cc.setIcon(icon_652ce6f5d40f216e0ec89bbe953ab2cc);
+        
+    
+        var popup_10c0dca44ac65526a38340182b479420 = L.popup({"maxWidth": 500});
+
+        
+            var html_1c5db08d5626bd44e04d2c00e01675ad = $(`<div id="html_1c5db08d5626bd44e04d2c00e01675ad" style="width: 100.0%; height: 100.0%;"><strong>AUSTIN, TX</strong><br>HI-TEK: $5,590/$10,690 (POE: LONG BEACH)</div>`)[0];
+            popup_10c0dca44ac65526a38340182b479420.setContent(html_1c5db08d5626bd44e04d2c00e01675ad);
+        
+
+        marker_4c6a3f41a7b0228c6f177ef3bf8ba3cc.bindPopup(popup_10c0dca44ac65526a38340182b479420)
+        ;
+
+        
+    
+    
+            var marker_474869e354d5f9a0ad7f944197cd4337 = L.marker(
+                [32.7767, -96.797],
+                {}
+            ).addTo(feature_group_e6c3c5dd6b6adab322adc7f6ee962157);
+        
+    
+            var icon_4449e1b2333fdcbb20811f7f79630b62 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_474869e354d5f9a0ad7f944197cd4337.setIcon(icon_4449e1b2333fdcbb20811f7f79630b62);
+        
+    
+        var popup_5feffc0919f535fc79d144905136a80c = L.popup({"maxWidth": 500});
+
+        
+            var html_cf16e3214c44449419c371a740a6c154 = $(`<div id="html_cf16e3214c44449419c371a740a6c154" style="width: 100.0%; height: 100.0%;"><strong>DALLAS, TX</strong><br>HI-TEK: $5,590/$10,690 (POE: LONG BEACH)</div>`)[0];
+            popup_5feffc0919f535fc79d144905136a80c.setContent(html_cf16e3214c44449419c371a740a6c154);
+        
+
+        marker_474869e354d5f9a0ad7f944197cd4337.bindPopup(popup_5feffc0919f535fc79d144905136a80c)
+        ;
+
+        
+    
+    
+            var marker_d617c46c287aa9616591de67c2c11150 = L.marker(
+                [29.7604, -95.3698],
+                {}
+            ).addTo(feature_group_e6c3c5dd6b6adab322adc7f6ee962157);
+        
+    
+            var icon_d6350ca6bd0a9596bae8a37940074f41 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_d617c46c287aa9616591de67c2c11150.setIcon(icon_d6350ca6bd0a9596bae8a37940074f41);
+        
+    
+        var popup_29d7b4c9b44414cf2186423839b7d833 = L.popup({"maxWidth": 500});
+
+        
+            var html_15991a1acb3e6cff7e7682bd8d7f3b67 = $(`<div id="html_15991a1acb3e6cff7e7682bd8d7f3b67" style="width: 100.0%; height: 100.0%;"><strong>HOUSTON, TX</strong><br>HI-TEK: $5,590/$10,690 (POE: LONG BEACH)</div>`)[0];
+            popup_29d7b4c9b44414cf2186423839b7d833.setContent(html_15991a1acb3e6cff7e7682bd8d7f3b67);
+        
+
+        marker_d617c46c287aa9616591de67c2c11150.bindPopup(popup_29d7b4c9b44414cf2186423839b7d833)
+        ;
+
+        
+    
+    
+            var marker_e716f5274c5fa8774d17b6ff76276e42 = L.marker(
+                [39.7392, -104.9903],
+                {}
+            ).addTo(feature_group_e6c3c5dd6b6adab322adc7f6ee962157);
+        
+    
+            var icon_e3cfa87f3d0a617fba333131750ba846 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_e716f5274c5fa8774d17b6ff76276e42.setIcon(icon_e3cfa87f3d0a617fba333131750ba846);
+        
+    
+        var popup_e099a9736408bb59b8a79df107e68645 = L.popup({"maxWidth": 500});
+
+        
+            var html_de6283b4e88abedde38ea74b58aa4d87 = $(`<div id="html_de6283b4e88abedde38ea74b58aa4d87" style="width: 100.0%; height: 100.0%;"><strong>DENVER,CO</strong><br>HI-TEK: $5,590/$10,690 (POE: LONG BEACH)</div>`)[0];
+            popup_e099a9736408bb59b8a79df107e68645.setContent(html_de6283b4e88abedde38ea74b58aa4d87);
+        
+
+        marker_e716f5274c5fa8774d17b6ff76276e42.bindPopup(popup_e099a9736408bb59b8a79df107e68645)
+        ;
+
+        
+    
+    
+            var marker_acd594f788a3903038ed3ae7c0a8a1b4 = L.marker(
+                [39.1141, -94.6275],
+                {}
+            ).addTo(feature_group_e6c3c5dd6b6adab322adc7f6ee962157);
+        
+    
+            var icon_a617d013654afe479c9b60ddf82a8942 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_acd594f788a3903038ed3ae7c0a8a1b4.setIcon(icon_a617d013654afe479c9b60ddf82a8942);
+        
+    
+        var popup_6840c6b820daf6f15fe62aeb17e4f240 = L.popup({"maxWidth": 500});
+
+        
+            var html_84ea5e5ce0ca9c269fd5dfaadc36aecf = $(`<div id="html_84ea5e5ce0ca9c269fd5dfaadc36aecf" style="width: 100.0%; height: 100.0%;"><strong>KANSAS CITY, KS</strong><br>HI-TEK: $5,860/$11,260 (POE: LONG BEACH)</div>`)[0];
+            popup_6840c6b820daf6f15fe62aeb17e4f240.setContent(html_84ea5e5ce0ca9c269fd5dfaadc36aecf);
+        
+
+        marker_acd594f788a3903038ed3ae7c0a8a1b4.bindPopup(popup_6840c6b820daf6f15fe62aeb17e4f240)
+        ;
+
+        
+    
+    
+            var marker_aa72a105b85dcd28186e50f3cb55b92a = L.marker(
+                [33.6846, -117.8265],
+                {}
+            ).addTo(feature_group_e6c3c5dd6b6adab322adc7f6ee962157);
+        
+    
+            var icon_c62c061262b9a251b90536ed52699cd5 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_aa72a105b85dcd28186e50f3cb55b92a.setIcon(icon_c62c061262b9a251b90536ed52699cd5);
+        
+    
+        var popup_e416b90f0d8c2915a7b8c16c76150746 = L.popup({"maxWidth": 500});
+
+        
+            var html_73727a9c103f6083b7f7ff8592d2c088 = $(`<div id="html_73727a9c103f6083b7f7ff8592d2c088" style="width: 100.0%; height: 100.0%;"><strong>IRVINE, CA</strong><br>HI-TEK: $2,070/$3,870 (POE: LONG BEACH)</div>`)[0];
+            popup_e416b90f0d8c2915a7b8c16c76150746.setContent(html_73727a9c103f6083b7f7ff8592d2c088);
+        
+
+        marker_aa72a105b85dcd28186e50f3cb55b92a.bindPopup(popup_e416b90f0d8c2915a7b8c16c76150746)
+        ;
+
+        
+    
+    
+            var marker_9d9ff0c35855c456dce4a0c1650c8a91 = L.marker(
+                [33.4934, -112.3577],
+                {}
+            ).addTo(feature_group_e6c3c5dd6b6adab322adc7f6ee962157);
+        
+    
+            var icon_a9c29b1aed4265099d789d64baf2d232 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_9d9ff0c35855c456dce4a0c1650c8a91.setIcon(icon_a9c29b1aed4265099d789d64baf2d232);
+        
+    
+        var popup_3cece90ccd933db8b8161f15e737f16e = L.popup({"maxWidth": 500});
+
+        
+            var html_af3c6e4ec41c4a864650cc7f2c9aa164 = $(`<div id="html_af3c6e4ec41c4a864650cc7f2c9aa164" style="width: 100.0%; height: 100.0%;"><strong>LITCHFIELD PARK, AZ</strong><br>HI-TEK: $4,140/$7,740 (POE: LONG BEACH)</div>`)[0];
+            popup_3cece90ccd933db8b8161f15e737f16e.setContent(html_af3c6e4ec41c4a864650cc7f2c9aa164);
+        
+
+        marker_9d9ff0c35855c456dce4a0c1650c8a91.bindPopup(popup_3cece90ccd933db8b8161f15e737f16e)
+        ;
+
+        
+    
+    
+            var marker_6565818f79f0172b7b30aa72340ad12b = L.marker(
+                [34.0522, -118.2437],
+                {}
+            ).addTo(feature_group_e6c3c5dd6b6adab322adc7f6ee962157);
+        
+    
+            var icon_528dcbf068687c867b47b297e1f7430b = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_6565818f79f0172b7b30aa72340ad12b.setIcon(icon_528dcbf068687c867b47b297e1f7430b);
+        
+    
+        var popup_3bf6e7be01df5b8fc33610ade0541f9b = L.popup({"maxWidth": 500});
+
+        
+            var html_4e26602d4d4aa5bd9f7821588a1d3b2e = $(`<div id="html_4e26602d4d4aa5bd9f7821588a1d3b2e" style="width: 100.0%; height: 100.0%;"><strong>LOS ANGELES, CA</strong><br>HI-TEK: $2,050/$3,850 (POE: LONG BEACH)</div>`)[0];
+            popup_3bf6e7be01df5b8fc33610ade0541f9b.setContent(html_4e26602d4d4aa5bd9f7821588a1d3b2e);
+        
+
+        marker_6565818f79f0172b7b30aa72340ad12b.bindPopup(popup_3bf6e7be01df5b8fc33610ade0541f9b)
+        ;
+
+        
+    
+    
+            var marker_65239de7d6e7764151df1a9965a10812 = L.marker(
+                [45.5152, -122.6784],
+                {}
+            ).addTo(feature_group_e6c3c5dd6b6adab322adc7f6ee962157);
+        
+    
+            var icon_196e6c6fa6b7ea254d4aa278741d367b = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_65239de7d6e7764151df1a9965a10812.setIcon(icon_196e6c6fa6b7ea254d4aa278741d367b);
+        
+    
+        var popup_cec3618de42cc379cf03a596303688bf = L.popup({"maxWidth": 500});
+
+        
+            var html_d82db9f7efaca2112c7ca6bf66ac27c6 = $(`<div id="html_d82db9f7efaca2112c7ca6bf66ac27c6" style="width: 100.0%; height: 100.0%;"><strong>PORTLAND, OR</strong><br>HI-TEK: $5,590/$10,690 (POE: LONG BEACH)</div>`)[0];
+            popup_cec3618de42cc379cf03a596303688bf.setContent(html_d82db9f7efaca2112c7ca6bf66ac27c6);
+        
+
+        marker_65239de7d6e7764151df1a9965a10812.bindPopup(popup_cec3618de42cc379cf03a596303688bf)
+        ;
+
+        
+    
+    
+            var marker_987e52e6a50276c0115acee55fe025a6 = L.marker(
+                [32.7157, -117.1611],
+                {}
+            ).addTo(feature_group_e6c3c5dd6b6adab322adc7f6ee962157);
+        
+    
+            var icon_919be9a8d78443539ce2e6abb0d2e6c5 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_987e52e6a50276c0115acee55fe025a6.setIcon(icon_919be9a8d78443539ce2e6abb0d2e6c5);
+        
+    
+        var popup_5b4c395ab3d0e8364683e2cc23003bab = L.popup({"maxWidth": 500});
+
+        
+            var html_dac258346302193a5a2aaf49a58a429f = $(`<div id="html_dac258346302193a5a2aaf49a58a429f" style="width: 100.0%; height: 100.0%;"><strong>SAN DIEGO, CA</strong><br>HI-TEK: $2,540/$4,640 (POE: LONG BEACH)</div>`)[0];
+            popup_5b4c395ab3d0e8364683e2cc23003bab.setContent(html_dac258346302193a5a2aaf49a58a429f);
+        
+
+        marker_987e52e6a50276c0115acee55fe025a6.bindPopup(popup_5b4c395ab3d0e8364683e2cc23003bab)
+        ;
+
+        
+    
+    
+            var marker_a2b5d1c723f30b4ef315ab54837c5586 = L.marker(
+                [37.3382, -121.8863],
+                {}
+            ).addTo(feature_group_e6c3c5dd6b6adab322adc7f6ee962157);
+        
+    
+            var icon_ab865a59e3c7618376bd4d1a4aa1374b = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_a2b5d1c723f30b4ef315ab54837c5586.setIcon(icon_ab865a59e3c7618376bd4d1a4aa1374b);
+        
+    
+        var popup_79ef4859b8ce6e9bc84343d547d39dc4 = L.popup({"maxWidth": 500});
+
+        
+            var html_b622c6c65b06019a2b0e32c9a4afe774 = $(`<div id="html_b622c6c65b06019a2b0e32c9a4afe774" style="width: 100.0%; height: 100.0%;"><strong>SAN JOSE, CA</strong><br>HI-TEK: $3,500/$6,500 (POE: LONG BEACH)</div>`)[0];
+            popup_79ef4859b8ce6e9bc84343d547d39dc4.setContent(html_b622c6c65b06019a2b0e32c9a4afe774);
+        
+
+        marker_a2b5d1c723f30b4ef315ab54837c5586.bindPopup(popup_79ef4859b8ce6e9bc84343d547d39dc4)
+        ;
+
+        
+    
+    
+            var marker_21ae3a4c54aafae9f781f814dae75aaf = L.marker(
+                [37.7749, -122.4194],
+                {}
+            ).addTo(feature_group_e6c3c5dd6b6adab322adc7f6ee962157);
+        
+    
+            var icon_8ae441d5a431de0c1834157d52a86536 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_21ae3a4c54aafae9f781f814dae75aaf.setIcon(icon_8ae441d5a431de0c1834157d52a86536);
+        
+    
+        var popup_4837b2af1950f6d51de51ac5b2da006b = L.popup({"maxWidth": 500});
+
+        
+            var html_b69cea6bd383343bf0ca2bdbda4a3660 = $(`<div id="html_b69cea6bd383343bf0ca2bdbda4a3660" style="width: 100.0%; height: 100.0%;"><strong>SAN FRANCISCO, CA</strong><br>HI-TEK: $3,870/$7,170 (POE: LONG BEACH)</div>`)[0];
+            popup_4837b2af1950f6d51de51ac5b2da006b.setContent(html_b69cea6bd383343bf0ca2bdbda4a3660);
+        
+
+        marker_21ae3a4c54aafae9f781f814dae75aaf.bindPopup(popup_4837b2af1950f6d51de51ac5b2da006b)
+        ;
+
+        
+    
+    
+            var marker_11d94c22ca1d087ad9c0c17f3064a5e3 = L.marker(
+                [41.157, -85.488],
+                {}
+            ).addTo(feature_group_e6c3c5dd6b6adab322adc7f6ee962157);
+        
+    
+            var icon_0f91b8fe558db9fc7375f65a7279246f = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_11d94c22ca1d087ad9c0c17f3064a5e3.setIcon(icon_0f91b8fe558db9fc7375f65a7279246f);
+        
+    
+        var popup_e51a9977f41e428d0ae592daaf7b805f = L.popup({"maxWidth": 500});
+
+        
+            var html_54faebbf589cb43570a8f07f299ef19b = $(`<div id="html_54faebbf589cb43570a8f07f299ef19b" style="width: 100.0%; height: 100.0%;"><strong>COLUMBIA CITY, IN</strong><br>HI-TEK: $6,770/$13,070 (POE: LONG BEACH)</div>`)[0];
+            popup_e51a9977f41e428d0ae592daaf7b805f.setContent(html_54faebbf589cb43570a8f07f299ef19b);
+        
+
+        marker_11d94c22ca1d087ad9c0c17f3064a5e3.bindPopup(popup_e51a9977f41e428d0ae592daaf7b805f)
+        ;
+
+        
+    
+    
+            var marker_2dfc71ad4029d31180ef18da1dd37c24 = L.marker(
+                [40.7608, -111.891],
+                {}
+            ).addTo(feature_group_e6c3c5dd6b6adab322adc7f6ee962157);
+        
+    
+            var icon_155581d2bf2087c1410408a92341d0b5 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_2dfc71ad4029d31180ef18da1dd37c24.setIcon(icon_155581d2bf2087c1410408a92341d0b5);
+        
+    
+        var popup_436a186cf0d6eb39e734514dfb7d1390 = L.popup({"maxWidth": 500});
+
+        
+            var html_c6bc6fef632e21ab1b14fa7fbfd0778b = $(`<div id="html_c6bc6fef632e21ab1b14fa7fbfd0778b" style="width: 100.0%; height: 100.0%;"><strong>SALT LAKE CITY, UT</strong><br>HI-TEK: $5,000/$9,500 (POE: LONG BEACH)</div>`)[0];
+            popup_436a186cf0d6eb39e734514dfb7d1390.setContent(html_c6bc6fef632e21ab1b14fa7fbfd0778b);
+        
+
+        marker_2dfc71ad4029d31180ef18da1dd37c24.bindPopup(popup_436a186cf0d6eb39e734514dfb7d1390)
+        ;
+
+        
+    
+    
+            var marker_7393821d76debbb34924a351800782b2 = L.marker(
+                [37.3861, -122.0839],
+                {}
+            ).addTo(feature_group_e6c3c5dd6b6adab322adc7f6ee962157);
+        
+    
+            var icon_05a4534c87035e6fe50699368d063b93 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_7393821d76debbb34924a351800782b2.setIcon(icon_05a4534c87035e6fe50699368d063b93);
+        
+    
+        var popup_0e285173e7ad50954975be833468c683 = L.popup({"maxWidth": 500});
+
+        
+            var html_ea70813eba04558352020da5e5c29b54 = $(`<div id="html_ea70813eba04558352020da5e5c29b54" style="width: 100.0%; height: 100.0%;"><strong>MOUNTIAN VIEW, CA</strong><br>HI-TEK: $3,500/$6,500 (POE: LONG BEACH)</div>`)[0];
+            popup_0e285173e7ad50954975be833468c683.setContent(html_ea70813eba04558352020da5e5c29b54);
+        
+
+        marker_7393821d76debbb34924a351800782b2.bindPopup(popup_0e285173e7ad50954975be833468c683)
+        ;
+
+        
+    
+    
+            var marker_4689f8a325ddc227527ea0c2616ff05d = L.marker(
+                [34.1478, -118.1445],
+                {}
+            ).addTo(feature_group_e6c3c5dd6b6adab322adc7f6ee962157);
+        
+    
+            var icon_704aa5ad0a046f6561eec8528e27af5d = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_4689f8a325ddc227527ea0c2616ff05d.setIcon(icon_704aa5ad0a046f6561eec8528e27af5d);
+        
+    
+        var popup_3718ae632dda9c5eb94dc2ab5200ef43 = L.popup({"maxWidth": 500});
+
+        
+            var html_5676da8c2b8e4e964137840a99260c46 = $(`<div id="html_5676da8c2b8e4e964137840a99260c46" style="width: 100.0%; height: 100.0%;"><strong>PASADENA, CA</strong><br>HI-TEK: $2,070/$3,870 (POE: LONG BEACH)</div>`)[0];
+            popup_3718ae632dda9c5eb94dc2ab5200ef43.setContent(html_5676da8c2b8e4e964137840a99260c46);
+        
+
+        marker_4689f8a325ddc227527ea0c2616ff05d.bindPopup(popup_3718ae632dda9c5eb94dc2ab5200ef43)
+        ;
+
+        
+    
+    
+            var marker_8c2dacb2593825641db0cf33d28f63db = L.marker(
+                [34.4208, -119.6982],
+                {}
+            ).addTo(feature_group_e6c3c5dd6b6adab322adc7f6ee962157);
+        
+    
+            var icon_45e82d1aa048ef58f694ccb25783e3c1 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_8c2dacb2593825641db0cf33d28f63db.setIcon(icon_45e82d1aa048ef58f694ccb25783e3c1);
+        
+    
+        var popup_11b726c09d41448adeb465efc60a65cf = L.popup({"maxWidth": 500});
+
+        
+            var html_d3dcd1e8c675f8676146a10967cc746c = $(`<div id="html_d3dcd1e8c675f8676146a10967cc746c" style="width: 100.0%; height: 100.0%;"><strong>SANTA BARBARA, CA</strong><br>HI-TEK: $2,725/$4,975 (POE: LONG BEACH)</div>`)[0];
+            popup_11b726c09d41448adeb465efc60a65cf.setContent(html_d3dcd1e8c675f8676146a10967cc746c);
+        
+
+        marker_8c2dacb2593825641db0cf33d28f63db.bindPopup(popup_11b726c09d41448adeb465efc60a65cf)
+        ;
+
+        
+    
+    
+            var marker_436f69b9603dee1f4e6333c9c88e9e6f = L.marker(
+                [37.3541, -121.9552],
+                {}
+            ).addTo(feature_group_e6c3c5dd6b6adab322adc7f6ee962157);
+        
+    
+            var icon_06d37d5568830d7860e5021c0e7e7b02 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_436f69b9603dee1f4e6333c9c88e9e6f.setIcon(icon_06d37d5568830d7860e5021c0e7e7b02);
+        
+    
+        var popup_d33d19ee6c9183773002397947de1643 = L.popup({"maxWidth": 500});
+
+        
+            var html_a0f8f86ee65182e1635ac35f45c9bebd = $(`<div id="html_a0f8f86ee65182e1635ac35f45c9bebd" style="width: 100.0%; height: 100.0%;"><strong>SANTA CLARA, CA</strong><br>HI-TEK: $3,500/$6,500 (POE: LONG BEACH)</div>`)[0];
+            popup_d33d19ee6c9183773002397947de1643.setContent(html_a0f8f86ee65182e1635ac35f45c9bebd);
+        
+
+        marker_436f69b9603dee1f4e6333c9c88e9e6f.bindPopup(popup_d33d19ee6c9183773002397947de1643)
+        ;
+
+        
+    
+    
+            var marker_96b990cae2de1554a38569494082d110 = L.marker(
+                [40.015, -105.2705],
+                {}
+            ).addTo(feature_group_e6c3c5dd6b6adab322adc7f6ee962157);
+        
+    
+            var icon_5a623df2a864c643182dce3e9d4f27be = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_96b990cae2de1554a38569494082d110.setIcon(icon_5a623df2a864c643182dce3e9d4f27be);
+        
+    
+        var popup_54553857f82fa493b36a06757c95b76f = L.popup({"maxWidth": 500});
+
+        
+            var html_53999122312e46869ef429b88dcde68f = $(`<div id="html_53999122312e46869ef429b88dcde68f" style="width: 100.0%; height: 100.0%;"><strong>BOULDER, CO</strong><br>HI-TEK: $5,590/$10,690 (POE: LONG BEACH)</div>`)[0];
+            popup_54553857f82fa493b36a06757c95b76f.setContent(html_53999122312e46869ef429b88dcde68f);
+        
+
+        marker_96b990cae2de1554a38569494082d110.bindPopup(popup_54553857f82fa493b36a06757c95b76f)
+        ;
+
+        
+    
+    
+            var layer_control_77105f6a360fd370afd6f8e358003ed1 = {
+                base_layers : {
+                    "openstreetmap" : tile_layer_61a13cb2c8c9adbb452c2098c0fc7150,
+                },
+                overlays :  {
+                    "PLS (RED)" : feature_group_a069be3da2bb7796c60bf1da16bf5ea9,
+                    "HI-TEK (YELLOW)" : feature_group_e6c3c5dd6b6adab322adc7f6ee962157,
+                },
+            };
+            L.control.layers(
+                layer_control_77105f6a360fd370afd6f8e358003ed1.base_layers,
+                layer_control_77105f6a360fd370afd6f8e358003ed1.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "topright"}
+            ).addTo(map_73adaceba7ab040cb9b82bb24ce8206a);
+            feature_group_e6c3c5dd6b6adab322adc7f6ee962157.remove();
+        
+    
+            L.Control.geocoder(
+                {"collapsed": false, "defaultMarkGeocode": true, "position": "topright"}
+            ).on('markgeocode', function(e) {
+                map_73adaceba7ab040cb9b82bb24ce8206a.setView(e.geocode.center, 11);
+            }).addTo(map_73adaceba7ab040cb9b82bb24ce8206a);
+
+        
+</script>
+</html>
