@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Leaflet 지도 마커 및 항상 열린 검색</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css" />
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+  <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+  <style>
+    html, body {width: 100%; height: 100%; margin: 0; padding: 0;}
+    #map {position: absolute; top: 0; bottom: 0; right: 0; left: 0; height: 75vh;} /* Adjust height to 75% of the viewport */
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script>
+    var map = L.map('map').setView([33.0, -83.5], 7);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    var locations = [
+      {lat: 33.749, lng: -84.388, name: 'Atlanta, GA'},
+      {lat: 33.0362, lng: -85.0319, name: 'LaGrange, GA'},
+      {lat: 33.4700, lng: -81.9748, name: 'Augusta, GA'},
+      {lat: 32.0835, lng: -81.0998, name: 'Savannah, GA'}
+    ];
+
+    locations.forEach(function(location) {
+        var customIcon = L.AwesomeMarkers.icon({
+            extraClasses: 'fa-rotate-0',
+            icon: 'info-sign',
+            iconColor: 'white',
+            markerColor: 'red',
+            prefix: 'glyphicon'
+        });
+        L.marker([location.lat, location.lng], {icon: customIcon}).addTo(map)
+          .bindPopup(location.name);
+    });
+
+    // Add search control and keep it always open
+    var geocoder = L.Control.geocoder({
+      defaultMarkGeocode: false
+    }).addTo(map);
+
+    geocoder._toggle(); // Ensure the search bar is always expanded
+
+    geocoder.on('markgeocode', function(e) {
+      var bbox = e.geocode.bbox;
+      var poly = L.polygon([
+        bbox.getSouthEast(),
+        bbox.getNorthEast(),
+        bbox.getNorthWest(),
+        bbox.getSouthWest()
+      ]).addTo(map);
+      map.fitBounds(poly.getBounds());
+    });
+  </script>
+</body>
+</html>
