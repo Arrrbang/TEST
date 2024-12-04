@@ -1,0 +1,12 @@
+{
+  "poes": [
+    {
+      "name": "ATLANTA",
+      "code": "atlanta"
+    },
+    {
+      "name": "SAVANNAH",
+      "code": "savannah"
+    }
+  ]
+}
