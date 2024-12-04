@@ -199,28 +199,16 @@ function updateMarkers() {
           markerColor: 'red',
           prefix: 'glyphicon'
         });
-
-        // 마커 생성
-        var marker = L.marker([location.lat, location.lng], {icon: customIcon});
-
-        // 팝업 내용 생성
-        var popupContent = `<strong>${location.name}</strong><br>`;
-        if (location.links && location.links.length > 0) {
-          location.links.forEach(link => {
-            // path 필드를 기반으로 URL 생성
-            const path = `data/usa/${location.path}/sos`;
-            popupContent += `<a href="${link.url}?path=${encodeURIComponent(path)}"
-                              style="text-decoration: none; color: ${link.color || 'black'};">${link.type}</a><br>`;
-          });
-        }
-
-        // 팝업 연결
-      var marker = L.marker([location.lat, location.lng], {icon: customIcon});
-      marker.bindPopup(popupContent);
-      markers.push(marker);
-    });
-
+      
+        const marker = L.marker([location.lat, location.lng], { icon: customIcon });
+        const popupContent = `<strong>${location.name}</strong><br>` +
+          `<a href="home.html?path=${encodeURIComponent(location.path)}" style="color: blue;">View Details</a>`;
+        marker.bindPopup(popupContent);
+        markers.push(marker);
+      });
+      
       updateMarkers(); // 초기 상태에서 마커 업데이트
+
     })
     .catch(error => console.error('Error loading JSON:', error));
 
