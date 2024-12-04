@@ -799,6 +799,18 @@ function resetDropdown(dropdownElement, placeholder = "-- Select an Option --") 
   dropdownElement.innerHTML = `<option value="">${placeholder}</option>`;
 }
 
+    const tableResponse = await fetch(tableJsonPath);
+console.log("Table JSON fetch status:", tableResponse.status);
+
+const extraCostResponse = await fetch(extraCostJsonPath);
+console.log("Extra Cost JSON fetch status:", extraCostResponse.status);
+
+if (!tableResponse.ok || !extraCostResponse.ok) {
+  console.error("Failed to fetch JSON files.");
+  return;
+}
+
+
 
 // CBM 드롭다운 업데이트
 function updateDropdown(data) {
