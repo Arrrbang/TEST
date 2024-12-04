@@ -699,6 +699,34 @@ const storageValue = document.getElementById("storage-value");
 const totalCostElement = document.getElementById("total-value");
 const poeDropdown = document.getElementById("poe-dropdown");
 
+async function initializePoeDropdown(path) {
+  try {
+    const poeDropdownPath = `${path}/poedropdown.json`;
+    const response = await fetch(poeDropdownPath);
+
+    if (!response.ok) {
+      console.error(`Failed to fetch POE dropdown JSON. Status: ${response.status}`);
+      return;
+    }
+
+    const poeOptions = await response.json();
+    resetDropdown(poeDropdown, "-- Select a Port --");
+
+    poeOptions.forEach((option) => {
+      const opt = document.createElement("option");
+      opt.value = option.value; // 예: "atlanta"
+      opt.textContent = option.label; // 예: "Atlanta, GA"
+      poeDropdown.appendChild(opt);
+    });
+
+    // POE 드롭다운 변경 이벤트 리스너 추가
+    poeDropdown.addEventListener("change", fetchData);
+  } catch (error) {
+    console.error("Failed to initialize POE dropdown:", error);
+  }
+}
+
+// 기존 fetchData 함수에 POE 드롭다운 초기화 호출 추가
 async function fetchData() {
   try {
     // URL에서 path 매개변수 가져오기
@@ -759,6 +787,14 @@ async function fetchData() {
     console.error("Failed to fetch data:", error);
   }
 }
+
+// 드롭다운 초기화 함수 추가
+function resetDropdown(dropdownElement, placeholder = "-- Select an Option --") {
+  dropdownElement.innerHTML = `<option value="">${placeholder}</option>`;
+}
+
+// 페이지 로드 시 데이터 로드 호출
+document.addEventListener("DOMContentLoaded", fetchData);
 
 //-------------------드롭다운 초기화--------------------------
 function resetDropdown(dropdownElement, placeholder = "-- Select an Option --") {
