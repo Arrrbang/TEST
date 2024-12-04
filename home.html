@@ -710,10 +710,13 @@ async function fetchData() {
       return;
     }
 
+    // POE 드롭다운 초기화
+    await initializePoeDropdown(path);
+
     // POE 드롭다운 값 가져오기
     const poeValue = poeDropdown.value;
     if (!poeValue) {
-      console.error("POE value missing for fetchData");
+      console.warn("POE value is not selected");
       return;
     }
 
@@ -756,7 +759,6 @@ async function fetchData() {
     console.error("Failed to fetch data:", error);
   }
 }
-
 
 //-------------------드롭다운 초기화--------------------------
 function resetDropdown(dropdownElement, placeholder = "-- Select an Option --") {
