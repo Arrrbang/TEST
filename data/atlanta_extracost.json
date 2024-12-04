@@ -1,0 +1,106 @@
+{
+  "POC": {
+    "NonDiplomat": {
+      "CONSOLE": {
+        "1-60": "INCLUDED"
+      },
+      "20DRY": "INCLUDED",
+      "40HC": "INCLUDED"
+    },
+    "Diplomat": {
+      "CONSOLE": {
+        "1-60":"INCLUDED"
+      },
+      "20DRY": "INCLUDED",
+      "40HC": "INCLUDED"
+    }
+  },
+  "THC": {
+    "NonDiplomat": {
+      "CONSOLE": {
+        "1-60": "INCLUDED"
+      },
+      "20DRY": "INCLUDED",
+      "40HC": "INCLUDED"
+    },
+    "Diplomat": {
+      "CONSOLE": {
+        "1-60":"INCLUDED"
+      },
+      "20DRY": "INCLUDED",
+      "40HC": "INCLUDED"
+    }
+  },
+  "DRAYAGE": {
+    "NonDiplomat": {
+      "20DRY": "1850",
+      "40HC": "1850"
+    },
+    "Diplomat": {
+      "20DRY": "1850",
+      "40HC": "1850"
+    }
+  },
+
+  "DEVANNING": {
+    "NonDiplomat": {
+      "20DRY": "200",
+      "40HC": "300"
+    },
+    "Diplomat": {
+      "20DRY": "200",
+      "40HC": "300"
+    }
+  },
+
+  "INSPECTION": {
+    "NonDiplomat": {
+      "20DRY": "200",
+      "40HC": "200"
+    },
+    "Diplomat": {
+      "20DRY": "200",
+      "40HC": "200"
+    }
+  },
+
+  "CUSTOMER ENTRY": {
+    "NonDiplomat": {
+      "CONSOLE": {
+        "1-60": "170"
+      },
+      "20DRY": "170",
+      "40HC": "170"
+    },
+    "Diplomat": {
+      "CONSOLE": {
+        "1-60":"170"
+      },
+      "20DRY": "170",
+      "40HC": "170"
+    }
+  },
+
+  "SHUTTLE CHARGE": {
+    "ANY":"미확인"
+  },
+  "LONG CARRY CHARGE": {
+    "ANY":"미확인"
+  },
+  "STAIR CHARGE": {
+  },
+  "HEAVY ITEM": {
+    "1":"100",
+    "2":"200",
+    "3":"300"
+  },
+  "FULL SETTING CHARGE": {
+  },
+  "WEEKEND CHARGE": {
+    "1-40": "800",
+    "41-60": "1200"
+  },
+    "UPLIGHT PIANO": {
+    "ANY": "100"
+  }
+}
