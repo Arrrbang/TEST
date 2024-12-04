@@ -147,6 +147,8 @@
   </div>
   <div id="results"></div>
   <div id="map"></div>
+
+  
   <script>
     // 인증 확인: 토큰 검증
     function verifyToken() {
@@ -212,47 +214,48 @@ function updateMarkers() {
 }
 
 // JSON 데이터 로드 후 마커 생성 및 초기화
-fetch('./location.json')
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Failed to fetch JSON');
-    }
-    return response.json();
-  })
-  .then(locations => {
-    console.log('Loaded locations:', locations); // JSON 데이터 확인
-    
-    locations.forEach(location => {
-      // Leaflet Awesome Marker 설정
-      var customIcon = L.AwesomeMarkers.icon({
-        extraClasses: 'fa-rotate-0',
-        icon: 'info-sign',
-        iconColor: 'white',
-        markerColor: 'red',
-        prefix: 'glyphicon'
+  fetch('./location.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch JSON');
+      }
+      return response.json();
+    })
+    .then(locations => {
+      console.log('Loaded locations:', locations); // JSON 데이터 확인
+      
+      locations.forEach(location => {
+        // Leaflet Awesome Marker 설정
+        var customIcon = L.AwesomeMarkers.icon({
+          extraClasses: 'fa-rotate-0',
+          icon: 'info-sign',
+          iconColor: 'white',
+          markerColor: 'red',
+          prefix: 'glyphicon'
+        });
+
+        // 마커 생성
+        var marker = L.marker([location.lat, location.lng], {icon: customIcon});
+
+        // 팝업 내용 생성
+        var popupContent = `<strong>${location.name}</strong><br>`;
+        if (location.links && location.links.length > 0) {
+          location.links.forEach(link => {
+            // 경로를 URL 매개변수로 포함
+            const path = `data/usa/${location.name.toLowerCase().replace(/ /g, '')}/sos`;
+            popupContent += `<a href="${link.url}?path=${encodeURIComponent(path)}"
+                              style="text-decoration: none; color: ${link.color || 'black'};">${link.type}</a><br>`;
+          });
+        }
+
+        // 팝업 연결
+        marker.bindPopup(popupContent);
+        markers.push(marker); // 마커 저장
       });
 
-      // 마커 생성
-      var marker = L.marker([location.lat, location.lng], {icon: customIcon});
-
-      // 팝업 내용 생성
-      var popupContent = `<strong>${location.name}</strong><br>`;
-      if (location.links && location.links.length > 0) {
-        location.links.forEach(link => {
-           // JSON에서 동적으로 스타일링
-          popupContent += `<a href="javascript:void(0)" onclick="navigateTo('${link.url}')" 
-                            style="text-decoration: none; color: ${link.color || 'black'};">${link.type}</a><br>`;
-        });
-      }
-
-      // 팝업 연결
-      marker.bindPopup(popupContent);
-      markers.push(marker); // 마커 저장
-    });
-
-    updateMarkers(); // 초기 상태에서 마커 업데이트
-  })
-  .catch(error => console.error('Error loading JSON:', error));
+      updateMarkers(); // 초기 상태에서 마커 업데이트
+    })
+    .catch(error => console.error('Error loading JSON:', error));
 
 // 줌 레벨 변경 시 마커 상태 업데이트
 map.on('zoomend', updateMarkers);
