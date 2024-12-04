@@ -770,9 +770,14 @@ async function fetchData() {
     }
 
     console.log("Fetching data for path:", path);
+    
+const basePath = "https://arrrbang.github.io/TEST";
 
-    const tableJsonPath = `${path}/${poeValue}/poeis${poeValue}_tariff.json`;
-    const extraCostJsonPath = `${path}/poeis${poeValue}_extracost.json`;
+const tableJsonPath = `${basePath}/${path}/poeis${poeValue}_tariff.json`;
+const extraCostJsonPath = `${basePath}/${path}/poeis${poeValue}_extracost.json`;
+
+console.log("Table JSON Path:", tableJsonPath);
+console.log("Extra Cost JSON Path:", extraCostJsonPath);
 
     console.log("Fetching JSON files:", {
       table: tableJsonPath,
