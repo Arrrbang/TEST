@@ -1,12 +1,6 @@
 {
-  "poes": [
-    {
-      "name": "ATLANTA",
-      "code": "atlanta"
-    },
-    {
-      "name": "SAVANNAH",
-      "code": "savannah"
-    }
+  "options": [
+    { "value": "atlanta", "label": "Atlanta" },
+    { "value": "savannah", "label": "Savannah" }
   ]
 }
