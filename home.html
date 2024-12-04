@@ -774,7 +774,10 @@ async function fetchData() {
 const basePath = "https://arrrbang.github.io/TEST";
 
 const tableJsonPath = `${basePath}/${path}/poeis${poeValue}_tariff.json`;
-const extraCostJsonPath = `${basePath}/${path}/poeis${poeValue}_extracost.json`;
+const modifiedPath = path.replace(/\/[^/]+\/?$/, "");
+
+// 경로 생성
+const extraCostJsonPath = `${basePath}/${modifiedPath}/poeis${poeValue}_extracost.json`;
 
 console.log("Table JSON Path:", tableJsonPath);
 console.log("Extra Cost JSON Path:", extraCostJsonPath);
