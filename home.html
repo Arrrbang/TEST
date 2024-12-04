@@ -484,6 +484,14 @@
     <h2>기본 정보 입력</h2>
 
     <table>
+    <tr>
+      <td>Port of Entry</td>
+      <td>
+          <select id="poe-dropdown" style="width: 100%;">
+            <option value="">-- Select a Port --</option>
+          </select>
+      </td>
+    </tr> 
       <tr>
         <td>외교화물 유무</td>
         <td class="checkbox-group">
@@ -689,30 +697,66 @@ const heavyItemValue = document.getElementById("heavyitem-value");
 const storageperiodDropdown = document.getElementById("storageperiod");
 const storageValue = document.getElementById("storage-value");
 const totalCostElement = document.getElementById("total-value");
+const poeDropdown = document.getElementById("poe-dropdown");
 
 async function fetchData() {
   try {
-    const tableResponse = await fetch("TABLE.json");
-    const tableData = await tableResponse.json();
+    // URL에서 path 매개변수 가져오기
+    const params = new URLSearchParams(window.location.search);
+    const path = params.get("path"); // 예: "data/usa/atlanta/sos"
 
+    if (!path) {
+      console.error("Path parameter missing for fetchData");
+      return;
+    }
+
+    // POE 드롭다운 값 가져오기
+    const poeValue = poeDropdown.value;
+    if (!poeValue) {
+      console.error("POE value missing for fetchData");
+      return;
+    }
+
+    // JSON 파일 경로 동적으로 설정
+    const tableJsonPath = `${path}/poeis${poeValue}_tariff.json`; // 선택된 POE 값 반영
+    const extraCostJsonPath = `${path}/poeis${poeValue}_extracost.json`;
+
+    // JSON 데이터 로드
+    const [tableResponse, extraCostResponse] = await Promise.all([
+      fetch(tableJsonPath),
+      fetch(extraCostJsonPath),
+    ]);
+
+    // 응답 확인
+    if (!tableResponse.ok || !extraCostResponse.ok) {
+      console.error(
+        `Failed to fetch JSON files. Table response status: ${tableResponse.status}, Extra cost response status: ${extraCostResponse.status}`
+      );
+      return;
+    }
+
+    // JSON 데이터 파싱
+    const tableData = await tableResponse.json();
+    basicExtraCost = await extraCostResponse.json();
+
+    // JSON 데이터 활용
     dataNonDiplomat = tableData.nonDiplomat || {};
     dataDiplomat = tableData.diplomat || {};
     containerTypes = tableData.containerType || [];
 
-    const extraCostResponse = await fetch("basicextracost.json");
-    basicExtraCost = await extraCostResponse.json();
-
+    // 드롭다운 및 UI 업데이트
     updateDropdown(nonDiplomat.checked ? dataNonDiplomat : dataDiplomat);
     updateContainerDropdown();
     updateAdditionalCosts();
     updateStairChargeDropdown();
-    updateHeavyItemDropdown(); 
+    updateHeavyItemDropdown();
     updatestorageperiodDropdown();
     calculateTotalCost();
   } catch (error) {
     console.error("Failed to fetch data:", error);
   }
 }
+
 
 //-------------------드롭다운 초기화--------------------------
 function resetDropdown(dropdownElement, placeholder = "-- Select an Option --") {
