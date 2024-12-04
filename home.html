@@ -759,21 +759,21 @@ async function fetchData() {
 
     -----------------디버깅
 
-    async function initializePoeDropdown(path) {
+async function initializePoeDropdown(path) {
   try {
     const poeDropdownPath = `${path}/poedropdown.json`;
-    console.log("Fetching POE dropdown from:", poeDropdownPath); // JSON 경로 확인
+    console.log("Fetching POE dropdown from:", poeDropdownPath); // 경로 확인
 
     const response = await fetch(poeDropdownPath);
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch POE dropdown JSON. Status: ${response.status}`);
+      console.error(`Failed to fetch POE dropdown JSON. Status: ${response.status}`);
+      return;
     }
 
     const poeOptions = await response.json();
     console.log("Loaded POE Options:", poeOptions); // JSON 데이터 확인
 
-    // 배열인지 확인
     if (!Array.isArray(poeOptions)) {
       throw new TypeError("POE dropdown data is not an array. Check JSON format.");
     }
