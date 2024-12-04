@@ -1,6 +1,10 @@
-{
-  "options": [
-    { "value": "atlanta", "label": "Atlanta" },
-    { "value": "savannah", "label": "Savannah" }
-  ]
-}
+[
+  {
+    "value": "atlanta",
+    "label": "Atlanta, GA"
+  },
+  {
+    "value": "savannah",
+    "label": "Savannah, GA"
+  }
+]
