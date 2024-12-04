@@ -709,7 +709,7 @@ async function fetchData() {
       return;
     }
 
-    console.log("Fetching data for path:", path); // 디버깅
+    console.log("Fetching data for path:", path);
 
     await initializePoeDropdown(path);
 
@@ -722,8 +722,10 @@ async function fetchData() {
     const tableJsonPath = `${path}/poeis${poeValue}_tariff.json`;
     const extraCostJsonPath = `${path}/poeis${poeValue}_extracost.json`;
 
-    console.log("Fetching Table JSON from:", tableJsonPath);
-    console.log("Fetching Extra Cost JSON from:", extraCostJsonPath);
+    console.log("Fetching JSON files:", {
+      table: tableJsonPath,
+      extraCost: extraCostJsonPath,
+    });
 
     const [tableResponse, extraCostResponse] = await Promise.all([
       fetch(tableJsonPath),
@@ -731,16 +733,24 @@ async function fetchData() {
     ]);
 
     if (!tableResponse.ok || !extraCostResponse.ok) {
-      console.error(`Failed to fetch JSON. Table: ${tableResponse.status}, Extra Cost: ${extraCostResponse.status}`);
+      console.error("Failed to fetch JSON files:", {
+        tableStatus: tableResponse.status,
+        extraCostStatus: extraCostResponse.status,
+      });
       return;
     }
 
-    const tableData = await tableResponse.json();
-    basicExtraCost = await extraCostResponse.json();
+    const [tableData, extraCostData] = await Promise.all([
+      tableResponse.json(),
+      extraCostResponse.json(),
+    ]);
 
-    console.log("Loaded table data:", tableData);
-    console.log("Loaded extra cost data:", basicExtraCost);
+    console.log("Loaded data:", {
+      tableData,
+      extraCostData,
+    });
 
+    basicExtraCost = extraCostData;
     dataNonDiplomat = tableData.nonDiplomat || {};
     dataDiplomat = tableData.diplomat || {};
     containerTypes = tableData.containerType || [];
@@ -757,8 +767,6 @@ async function fetchData() {
   }
 }
 
-    //-----------------디버깅
-
 async function initializePoeDropdown(path) {
   try {
     const poeDropdownPath = `${path}/poedropdown.json`;
@@ -772,13 +780,13 @@ async function initializePoeDropdown(path) {
     }
 
     const poeOptions = await response.json();
+
     console.log("Loaded POE Options:", poeOptions);
 
     if (!Array.isArray(poeOptions)) {
       throw new TypeError("POE dropdown data is not an array. Check JSON format.");
     }
 
-    // 중복 함수 정의 제거
     resetDropdown(poeDropdown, "-- Select a Port --");
 
     poeOptions.forEach((option) => {
@@ -794,21 +802,10 @@ async function initializePoeDropdown(path) {
   }
 }
 
-// 중복 함수 정의 제거
 function resetDropdown(dropdownElement, placeholder = "-- Select an Option --") {
   dropdownElement.innerHTML = `<option value="">${placeholder}</option>`;
 }
 
-    const tableResponse = await fetch(tableJsonPath);
-console.log("Table JSON fetch status:", tableResponse.status);
-
-const extraCostResponse = await fetch(extraCostJsonPath);
-console.log("Extra Cost JSON fetch status:", extraCostResponse.status);
-
-if (!tableResponse.ok || !extraCostResponse.ok) {
-  console.error("Failed to fetch JSON files.");
-  return;
-}
 
 
 
