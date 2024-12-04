@@ -150,40 +150,6 @@
 
   
   <script>
-    // 인증 확인: 토큰 검증
-    function verifyToken() {
-      const token = localStorage.getItem('token'); // 로컬 스토리지에서 토큰 가져오기
-      if (!token) {
-        alert('로그인이 해제되었습니다. 다시 로그인해주세요.');
-        window.location.href = '/frontend/index.html'; // 로그인 페이지로 리다이렉션
-        return;
-      }
-
-      // 토큰 유효성 확인
-      fetch('https://backend-beta-lemon.vercel.app/verifyToken', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`, // 토큰 전송
-          'Content-Type': 'application/json'
-        }
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (!data.success) {
-            alert('Session expired. Please log in again.');
-            localStorage.removeItem('token'); // 유효하지 않은 토큰 삭제
-            window.location.href = 'index.html';
-          }
-        })
-        .catch(() => {
-          alert('Error verifying token. Redirecting to login page.');
-          localStorage.removeItem('token');
-          window.location.href = 'index.html';
-        });
-    }
-
-    // 페이지 로드 시 토큰 확인
-    verifyToken();
 
 // 지도 초기화 (줌 레벨에 따른 마커 표시 설정)
 var map = L.map('map', {
