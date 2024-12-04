@@ -678,7 +678,8 @@
   <script>
     
 // json 데이터 로드
-let dataNonDiplomat = {};
+
+    let dataNonDiplomat = {};
 let dataDiplomat = {};
 let containerTypes = [];
 let basicExtraCost = {};
@@ -697,7 +698,60 @@ const heavyItemValue = document.getElementById("heavyitem-value");
 const storageperiodDropdown = document.getElementById("storageperiod");
 const storageValue = document.getElementById("storage-value");
 const totalCostElement = document.getElementById("total-value");
-const poeDropdown = document.getElementById("poe-dropdown");
+const totalCostElement = document.getElementById("poe-dropdown");
+    
+async function initializePoeDropdown(path) {
+  try {
+    const poeDropdownPath = `${path}/poedropdown.json`;
+    console.log("Fetching POE dropdown from:", poeDropdownPath);
+
+    const response = await fetch(poeDropdownPath);
+
+    if (!response.ok) {
+      console.error(`Failed to fetch POE dropdown JSON. Status: ${response.status}`);
+      return;
+    }
+
+    const poeOptions = await response.json();
+
+    console.log("Loaded POE Options:", poeOptions);
+
+    if (!Array.isArray(poeOptions)) {
+      throw new TypeError("POE dropdown data is not an array. Check JSON format.");
+    }
+
+    // 드롭다운 초기화
+    const previousValue = poeDropdown.value; // 이전 선택값 저장
+    resetDropdown(poeDropdown, "-- Select a Port --");
+
+    poeOptions.forEach((option) => {
+      const opt = document.createElement("option");
+      opt.value = option.value;
+      opt.textContent = option.label;
+      poeDropdown.appendChild(opt);
+    });
+
+    // 이전 선택값 복원
+    poeDropdown.value = previousValue;
+
+    // 드롭다운 값 변경 이벤트 리스너 추가 (중복 방지)
+    poeDropdown.removeEventListener("change", handlePoeChange); // 기존 리스너 제거
+    poeDropdown.addEventListener("change", handlePoeChange);
+  } catch (error) {
+    console.error("Failed to initialize POE dropdown:", error);
+  }
+}
+
+function handlePoeChange() {
+  const poeValue = poeDropdown.value;
+
+  if (poeValue) {
+    console.log("Selected POE value:", poeValue);
+    fetchData(); // 드롭다운 값이 변경될 때 fetchData 호출
+  } else {
+    console.warn("No POE value selected.");
+  }
+}
 
 async function fetchData() {
   try {
@@ -709,13 +763,13 @@ async function fetchData() {
       return;
     }
 
-    console.log("Fetching data for path:", path);
-
     const poeValue = poeDropdown.value; // 드롭다운 값 가져오기
     if (!poeValue) {
       console.warn("POE value is not selected. Waiting for selection...");
       return; // 값이 선택되지 않은 경우 실행 중단
     }
+
+    console.log("Fetching data for path:", path);
 
     const tableJsonPath = `${path}/poeis${poeValue}_tariff.json`;
     const extraCostJsonPath = `${path}/poeis${poeValue}_extracost.json`;
@@ -748,6 +802,7 @@ async function fetchData() {
       extraCostData,
     });
 
+    // 데이터를 업데이트하는 로직 추가
     basicExtraCost = extraCostData;
     dataNonDiplomat = tableData.nonDiplomat || {};
     dataDiplomat = tableData.diplomat || {};
@@ -765,58 +820,11 @@ async function fetchData() {
   }
 }
 
-async function initializePoeDropdown(path) {
-  try {
-    const poeDropdownPath = `${path}/poedropdown.json`;
-    console.log("Fetching POE dropdown from:", poeDropdownPath);
-
-    const response = await fetch(poeDropdownPath);
-
-    if (!response.ok) {
-      console.error(`Failed to fetch POE dropdown JSON. Status: ${response.status}`);
-      return;
-    }
-
-    const poeOptions = await response.json();
-
-    console.log("Loaded POE Options:", poeOptions);
-
-    if (!Array.isArray(poeOptions)) {
-      throw new TypeError("POE dropdown data is not an array. Check JSON format.");
-    }
-
-    resetDropdown(poeDropdown, "-- Select a Port --");
-
-    poeOptions.forEach((option) => {
-      const opt = document.createElement("option");
-      opt.value = option.value;
-      opt.textContent = option.label;
-      poeDropdown.appendChild(opt);
-    });
-
-    // 드롭다운 변경 이벤트 리스너
-    poeDropdown.addEventListener("change", handlePoeChange);
-  } catch (error) {
-    console.error("Failed to initialize POE dropdown:", error);
-  }
-}
-
-function handlePoeChange() {
-  const poeValue = poeDropdown.value;
-
-  if (poeValue) {
-    console.log("Selected POE value:", poeValue);
-    fetchData(); // POE 값이 변경되었을 때 데이터를 다시 가져옵니다.
-  } else {
-    console.warn("No POE value selected.");
-  }
-}
-
 function resetDropdown(dropdownElement, placeholder = "-- Select an Option --") {
   dropdownElement.innerHTML = `<option value="">${placeholder}</option>`;
 }
 
-// 페이지 로드 시 POE 드롭다운 초기화
+// 페이지 로드 시 드롭다운 초기화
 document.addEventListener("DOMContentLoaded", async () => {
   const params = new URLSearchParams(window.location.search);
   const path = params.get("path");
@@ -827,6 +835,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Path parameter missing in URL.");
   }
 });
+
 
 
 
