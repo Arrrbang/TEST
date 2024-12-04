@@ -757,6 +757,43 @@ async function fetchData() {
   }
 }
 
+    -----------------디버깅
+
+    async function initializePoeDropdown(path) {
+  try {
+    const poeDropdownPath = `${path}/poedropdown.json`;
+    console.log("Fetching POE dropdown from:", poeDropdownPath); // JSON 경로 확인
+
+    const response = await fetch(poeDropdownPath);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch POE dropdown JSON. Status: ${response.status}`);
+    }
+
+    const poeOptions = await response.json();
+    console.log("Loaded POE Options:", poeOptions); // JSON 데이터 확인
+
+    // 배열인지 확인
+    if (!Array.isArray(poeOptions)) {
+      throw new TypeError("POE dropdown data is not an array. Check JSON format.");
+    }
+
+    resetDropdown(poeDropdown, "-- Select a Port --");
+
+    poeOptions.forEach((option) => {
+      const opt = document.createElement("option");
+      opt.value = option.value;
+      opt.textContent = option.label;
+      poeDropdown.appendChild(opt);
+    });
+
+    poeDropdown.addEventListener("change", fetchData);
+  } catch (error) {
+    console.error("Failed to initialize POE dropdown:", error);
+  }
+}
+
+
 //-------------------드롭다운 초기화--------------------------
 function resetDropdown(dropdownElement, placeholder = "-- Select an Option --") {
   dropdownElement.innerHTML = `<option value="">${placeholder}</option>`;
