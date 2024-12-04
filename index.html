@@ -207,17 +207,18 @@ function updateMarkers() {
         var popupContent = `<strong>${location.name}</strong><br>`;
         if (location.links && location.links.length > 0) {
           location.links.forEach(link => {
-            // 경로를 URL 매개변수로 포함
-            const path = `data/usa/${location.name.toLowerCase().replace(/ /g, '')}/sos`;
+            // path 필드를 기반으로 URL 생성
+            const path = `data/usa/${location.path}/sos`;
             popupContent += `<a href="${link.url}?path=${encodeURIComponent(path)}"
                               style="text-decoration: none; color: ${link.color || 'black'};">${link.type}</a><br>`;
           });
         }
 
         // 팝업 연결
-        marker.bindPopup(popupContent);
-        markers.push(marker); // 마커 저장
-      });
+      var marker = L.marker([location.lat, location.lng], {icon: customIcon});
+      marker.bindPopup(popupContent);
+      markers.push(marker);
+    });
 
       updateMarkers(); // 초기 상태에서 마커 업데이트
     })
