@@ -1,0 +1,26 @@
+[
+  {
+    "lat": 33.749,
+    "lng": -84.388,
+    "name": "Atlanta, GA",
+    "links": [
+      {"type": "SOS", "url": "/TEST/home.html", "color": "blue"}
+    ]
+  },
+  {
+    "lat": 33.0362,
+    "lng": -85.0319,
+    "name": "LaGrange, GA",
+    "links": [
+      {"type": "SOS", "url": "/TEST/home.html", "color": "blue"}
+    ]
+  },
+  {
+    "lat": 33.4700,
+    "lng": -81.9748,
+    "name": "Augusta, GA",
+    "links": [
+      {"type": "SOS", "url": "/TEST/home.html", "color": "blue"}
+    ]
+  }
+]
