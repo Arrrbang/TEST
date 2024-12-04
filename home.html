@@ -711,8 +711,7 @@ async function fetchData() {
 
     console.log("Fetching data for path:", path);
 
-    // 드롭다운 값 확인
-    const poeValue = poeDropdown.value;
+    const poeValue = poeDropdown.value; // 드롭다운 값 가져오기
     if (!poeValue) {
       console.warn("POE value is not selected. Waiting for selection...");
       return; // 값이 선택되지 않은 경우 실행 중단
@@ -796,7 +795,6 @@ async function initializePoeDropdown(path) {
     });
 
     // 드롭다운 변경 이벤트 리스너
-    poeDropdown.removeEventListener("change", handlePoeChange); // 중복 방지
     poeDropdown.addEventListener("change", handlePoeChange);
   } catch (error) {
     console.error("Failed to initialize POE dropdown:", error);
@@ -829,6 +827,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Path parameter missing in URL.");
   }
 });
+
 
 
 
