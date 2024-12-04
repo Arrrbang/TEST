@@ -757,12 +757,12 @@ async function fetchData() {
   }
 }
 
-    -----------------디버깅
+    //-----------------디버깅
 
 async function initializePoeDropdown(path) {
   try {
     const poeDropdownPath = `${path}/poedropdown.json`;
-    console.log("Fetching POE dropdown from:", poeDropdownPath); // 경로 확인
+    console.log("Fetching POE dropdown from:", poeDropdownPath);
 
     const response = await fetch(poeDropdownPath);
 
@@ -772,12 +772,13 @@ async function initializePoeDropdown(path) {
     }
 
     const poeOptions = await response.json();
-    console.log("Loaded POE Options:", poeOptions); // JSON 데이터 확인
+    console.log("Loaded POE Options:", poeOptions);
 
     if (!Array.isArray(poeOptions)) {
       throw new TypeError("POE dropdown data is not an array. Check JSON format.");
     }
 
+    // 중복 함수 정의 제거
     resetDropdown(poeDropdown, "-- Select a Port --");
 
     poeOptions.forEach((option) => {
@@ -793,11 +794,11 @@ async function initializePoeDropdown(path) {
   }
 }
 
-
-//-------------------드롭다운 초기화--------------------------
+// 중복 함수 정의 제거
 function resetDropdown(dropdownElement, placeholder = "-- Select an Option --") {
   dropdownElement.innerHTML = `<option value="">${placeholder}</option>`;
 }
+
 
 // CBM 드롭다운 업데이트
 function updateDropdown(data) {
