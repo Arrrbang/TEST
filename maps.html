@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Leaflet MAPS with Nominatim</title>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css" />
+  <!-- Leaflet Awesome Markers CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css" />
+  <!-- Bootstrap CSS for Glyphicons -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- Leaflet JS -->
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+  <!-- Leaflet Awesome Markers JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+
+  <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #logo {
+      position: relative; /* 정적 위치 */
+      margin-left: 10px; /* 왼쪽 마진 */
+      margin-top: 20px; /* 상단 마진 */
+      width: 150px; /* 이미지 너비 */
+      margin-bottom: 30px; 
+    }
+    
+    #map {
+      flex: 1;
+      height: auto;
+    }
+    #search-container {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: white;
+      padding: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+      z-index: 1000;
+      display: flex;
+      gap: 5px;
+    }
+    #search-input {
+      width: 200px;
+      padding: 5px;
+    }
+    #results {
+      position: absolute;
+      top: 50px;
+      right: 0px;
+      background: white;
+      width: 220px;
+      max-height: 200px;
+      overflow-y: auto;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+      z-index: 1000;
+    }
+    #results div {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      cursor: pointer;
+    }
+    #results div:hover {
+      background: #f0f0f0;
+    }
+    
+     input[type="text"], input[type="search"] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      font-size: 16px;
+    }
+    
+    .leaflet-popup-content {
+      white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+      text-align: center;
+    }
+
+      .leaflet-popup-content strong {
+        font-weight: bold; /* 굵게 표시 */
+        font-size: 1.2em; /* 볼드 텍스트 크기 조정 (선택 사항) */
+      }
+        
+@media (max-width: 480px) {
+  #map {
+    height: calc(100vh - 10%); /* 지도를 전체 화면에 가깝게 확장 */
+  }
+
+  .leaflet-popup-content {
+    font-size: 1.5rem; /* 팝업 텍스트 크기 더 크게 */
+    max-width: 350px; /* 팝업 최대 너비 더 확대 */
+  }
+
+  .leaflet-popup-tip {
+    width: 15px; /* 팝업 화살표 크기 더 확대 */
+    height: 15px;
+  }
+
+  .leaflet-marker-icon {
+    transform: scale(2); /* 마커 크기 더 확대 */
+    width: auto; /* 자동 크기 설정 */
+    height: auto; /* 자동 크기 설정 */
+  }
+
+  .leaflet-marker-shadow {
+    transform: scale(2); /* 마커 그림자 크기 더 확대 */
+  }
+
+  /* 검색창 스타일 */
+  #search-container {
+    top: 15px; /* 상단 간격 */
+    right: 10px; /* 우측 간격 */
+    padding: 15px; /* 내부 여백 증가 */
+    gap: 10px; /* 입력 필드와 버튼 간 간격 증가 */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* 그림자 강조 */
+  }
+
+  #search-input {
+    width: 250px; /* 검색창 너비 확대 */
+    font-size: 1.2rem; /* 글씨 크기 확대 */
+    padding: 10px; /* 입력 필드 내부 여백 증가 */
+  }
+
+  #search-button {
+    font-size: 1.2rem; /* 버튼 텍스트 크기 확대 */
+    padding: 10px 15px; /* 버튼 내부 여백 증가 */
+  }
+}
+        
+  </style>
+</head>
+<body>
+  <img id="logo" src="https://arrrbang.github.io/frontend/image/pumexlogonew.png" alt="Logo">
+  <div id="search-container">
+    <input type="text" id="search-input" placeholder="Search for a location" />
+    <button id="search-button">Search</button>
+  </div>
+  <div id="results"></div>
+  <div id="map"></div>
+  <script>
+    // 인증 확인: 토큰 검증
+    function verifyToken() {
+      const token = localStorage.getItem('token'); // 로컬 스토리지에서 토큰 가져오기
+      if (!token) {
+        alert('로그인이 해제되었습니다. 다시 로그인해주세요.');
+        window.location.href = '/frontend/index.html'; // 로그인 페이지로 리다이렉션
+        return;
+      }
+
+      // 토큰 유효성 확인
+      fetch('https://backend-beta-lemon.vercel.app/verifyToken', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`, // 토큰 전송
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (!data.success) {
+            alert('Session expired. Please log in again.');
+            localStorage.removeItem('token'); // 유효하지 않은 토큰 삭제
+            window.location.href = 'index.html';
+          }
+        })
+        .catch(() => {
+          alert('Error verifying token. Redirecting to login page.');
+          localStorage.removeItem('token');
+          window.location.href = 'index.html';
+        });
+    }
+
+    // 페이지 로드 시 토큰 확인
+    verifyToken();
+
+// 지도 초기화 (줌 레벨에 따른 마커 표시 설정)
+var map = L.map('map', {
+  minZoom: 1,  // 최소 줌은 설정하지 않음
+}).setView([33.0, -83.5], 7);  // 기본 줌 레벨은 7로 설정
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+var markers = []; // 마커를 저장할 배열
+var minZoomForMarkersWeb = 7; // 웹에서는 7 이상에서만 마커 표시
+var minZoomForMarkersMobile = 4; // 모바일에서는 4 이상에서만 마커 표시
+
+// 마커 표시 여부를 제어하는 함수
+function updateMarkers() {
+  var currentZoom = map.getZoom(); // 현재 줌 레벨
+  var isMobile = window.innerWidth <= 480; // 모바일 화면 여부 확인
+  var minZoomForMarkers = isMobile ? minZoomForMarkersMobile : minZoomForMarkersWeb;
+
+  markers.forEach(marker => {
+    if (currentZoom >= minZoomForMarkers) {
+      if (!map.hasLayer(marker)) map.addLayer(marker); // 마커 추가
+    } else {
+      if (map.hasLayer(marker)) map.removeLayer(marker); // 마커 제거
+    }
+  });
+}
+
+// JSON 데이터 로드 후 마커 생성 및 초기화
+fetch('./location.json')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Failed to fetch JSON');
+    }
+    return response.json();
+  })
+  .then(locations => {
+    console.log('Loaded locations:', locations); // JSON 데이터 확인
+    
+    locations.forEach(location => {
+      // Leaflet Awesome Marker 설정
+      var customIcon = L.AwesomeMarkers.icon({
+        extraClasses: 'fa-rotate-0',
+        icon: 'info-sign',
+        iconColor: 'white',
+        markerColor: 'red',
+        prefix: 'glyphicon'
+      });
+
+      // 마커 생성
+      var marker = L.marker([location.lat, location.lng], {icon: customIcon});
+
+      // 팝업 내용 생성
+      var popupContent = `<strong>${location.name}</strong><br>`;
+      if (location.links && location.links.length > 0) {
+        location.links.forEach(link => {
+           // JSON에서 동적으로 스타일링
+          popupContent += `<a href="javascript:void(0)" onclick="navigateTo('${link.url}')" 
+                            style="text-decoration: none; color: ${link.color || 'black'};">${link.type}</a><br>`;
+        });
+      }
+
+      // 팝업 연결
+      marker.bindPopup(popupContent);
+      markers.push(marker); // 마커 저장
+    });
+
+    updateMarkers(); // 초기 상태에서 마커 업데이트
+  })
+  .catch(error => console.error('Error loading JSON:', error));
+
+// 줌 레벨 변경 시 마커 상태 업데이트
+map.on('zoomend', updateMarkers);
+
+// 지도 클릭 시 검색 결과 숨김
+map.on('click', function() {
+  document.getElementById('results').innerHTML = '';
+});
+
+// 줌 이벤트 핸들러 - 팝업 크기 업데이트
+map.on('zoomend', () => {
+  const currentZoom = map.getZoom();
+  markers.forEach(marker => {
+    const popup = marker.getPopup();
+    if (popup.isOpen()) {
+      resizePopup(popup, currentZoom);
+    }
+  });
+});
+
+// 팝업 크기를 동적으로 변경하는 함수
+function resizePopup(popup, zoomLevel) {
+  const baseSize = 150; // 기본 팝업 크기
+  const scaleFactor = 20; // 줌 레벨에 따른 크기 증가량
+  const newWidth = baseSize + (zoomLevel - minZoomForMarkersWeb) * scaleFactor;
+
+  popup.getElement().style.width = `${newWidth}px`;
+  popup.getElement().style.fontSize = `${14 + (zoomLevel - minZoomForMarkersWeb)}px`; // 폰트 크기 증가
+}
+
+// 페이지 이동 함수
+function navigateTo(link) {
+  window.location.assign(link); // 현재 창에서 이동
+}
+
+
+    // Nominatim API로 검색 기능 추가
+    document.getElementById('search-button').addEventListener('click', performSearch);
+    document.getElementById('search-input').addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        performSearch();
+      }
+    });
+
+    function performSearch() {
+      var query = document.getElementById('search-input').value;
+      if (!query) {
+        alert('Please enter a location to search.');
+        return;
+      }
+
+      var url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`;
+      fetch(url)
+        .then(response => response.json())
+        .then(results => {
+          if (results.length > 0) {
+            handleSearchResults(results); // 검색 결과 목록 표시
+          } else {
+            alert('Location not found.');
+          }
+        })
+        .catch(error => console.error('Error with Nominatim API:', error));
+    }
+
+    // 검색 결과 표시 함수
+    function handleSearchResults(data) {
+      const resultsContainer = document.getElementById('results');
+      resultsContainer.innerHTML = '';
+
+      data.forEach(result => {
+        const resultElement = document.createElement('div');
+        resultElement.textContent = result.display_name;
+        resultElement.onclick = () => moveToLocation(result.lat, result.lon);
+        resultsContainer.appendChild(resultElement);
+      });
+    }
+
+    function moveToLocation(lat, lon) {
+      map.setView([lat, lon], 12); // 줌 레벨 12
+    }
+  </script>
+</body>
+</html>
