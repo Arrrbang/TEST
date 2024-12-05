@@ -709,9 +709,12 @@ function updateLinks(links) {
     return;
   }
 
+  console.log("Link 1 URL:", links[0]?.url); // 추가 위치
+  console.log("Link 2 URL:", links[1]?.url); // 추가 위치
+
   if (links[0]) {
     link1Element.textContent = links[0].label;
-    link1Element.onclick = () => {
+    link1Element.onclick = function () {
       console.log(`Navigating to: ${links[0].url}`);
       window.location.href = links[0].url;
     };
@@ -719,12 +722,12 @@ function updateLinks(links) {
 
   if (links[1]) {
     link2Element.textContent = links[1].label;
-    link2Element.onclick = () => {
+    link2Element.onclick = function () {
       console.log(`Navigating to: ${links[1].url}`);
       window.location.href = links[1].url;
     };
   }
-}
+
 
 async function initializePoeDropdown(path) {
   try {
