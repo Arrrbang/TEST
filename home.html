@@ -692,6 +692,13 @@ const totalCostElement = document.getElementById("total-value");
 const poeDropdown = document.getElementById("poe-dropdown");
 const link1Element = document.getElementById("link1");
 const link2Element = document.getElementById("link2");
+
+// 링크 기본값 설정 
+link1Element.textContent = "Default Link 1";
+link1Element.onclick = () => console.log("Default Link 1 clicked");
+
+link2Element.textContent = "Default Link 2";
+link2Element.onclick = () => console.log("Default Link 2 clicked");
     
 async function initializePoeDropdown(path) {
   try {
@@ -736,21 +743,12 @@ async function initializePoeDropdown(path) {
 }
 
 function updateLinks(links) {
-  // 링크가 없거나 잘못된 경우 처리
   if (!links || links.length < 2) {
-    console.warn("Links data does not contain enough entries to update.");
-    if (link1Element) {
-      link1Element.textContent = "Default Link 1";
-      link1Element.onclick = () => console.warn("Default Link 1 clicked (no URL available)");
-    }
-    if (link2Element) {
-      link2Element.textContent = "Default Link 2";
-      link2Element.onclick = () => console.warn("Default Link 2 clicked (no URL available)");
-    }
+    console.warn("Links data does not contain enough entries.");
     return;
   }
 
-  // 링크 업데이트
+  // 첫 번째 링크 업데이트
   if (links[0]) {
     link1Element.textContent = links[0].label;
     link1Element.onclick = () => {
@@ -759,6 +757,7 @@ function updateLinks(links) {
     };
   }
 
+  // 두 번째 링크 업데이트
   if (links[1]) {
     link2Element.textContent = links[1].label;
     link2Element.onclick = () => {
@@ -893,10 +892,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Path parameter missing in URL.");
   }
 });
-
-
-
-
 
 
 
