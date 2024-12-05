@@ -838,17 +838,17 @@ console.log("Extra Cost JSON Path:", extraCostJsonPath);
     updateDescriptions(extraCostData);
 
         // 링크 업데이트
-    if (extraCostData.links) {
-      updateLinks(extraCostData.links);
-    }
-  } catch (error) {
-    console.error("Error in fetchData:", error);
-  }
+if (extraCostData.links) {
+  console.log("Updating links:", extraCostData.links);
+  updateLinks(extraCostData.links);
+} else {
+  console.error("Links data is missing in JSON");
 }
 
 function resetDropdown(dropdownElement, placeholder = "-- Select an Option --") {
   dropdownElement.innerHTML = `<option value="">${placeholder}</option>`;
 }
+console.log("Fetching extra cost JSON from:", extraCostJsonPath);
     
 function updateDescriptions(extraCostData) {
   const descriptionMappings = {
