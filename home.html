@@ -849,7 +849,7 @@ function resetDropdown(dropdownElement, placeholder = "-- Select an Option --") 
   dropdownElement.innerHTML = `<option value="">${placeholder}</option>`;
 }
 console.log("Fetching extra cost JSON from:", extraCostJsonPath);
-    
+
 function updateDescriptions(extraCostData) {
   const descriptionMappings = {
     "poc-description": extraCostData.POC?.description || "",
