@@ -16,19 +16,28 @@
       }
     ]
   },
-  
   {
     "name": "Savannah, GA",
     "lat": 32.080,
     "lng": -81.091,
-    "type": "sos",
-    "path": "data/usa/sos"
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos",
+        "color": "blue"
+      }
+    ]
   },
   {
     "name": "Charleston, SC",
     "lat": 32.776,
     "lng": -79.931,
-    "type": "sos",
-    "path": "data/usa/sos"
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos",
+        "color": "blue"
+      }
+    ]
   }
 ]
