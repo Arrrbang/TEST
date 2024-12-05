@@ -690,7 +690,9 @@ const storageperiodDropdown = document.getElementById("storageperiod");
 const storageValue = document.getElementById("storage-value");
 const totalCostElement = document.getElementById("total-value");
 const poeDropdown = document.getElementById("poe-dropdown");
-
+const link1Element = document.getElementById("link1");
+const link2Element = document.getElementById("link2");
+    
 async function initializePoeDropdown(path) {
   try {
     const poeDropdownPath = `${path}/poedropdown.json`;
@@ -733,6 +735,29 @@ async function initializePoeDropdown(path) {
   }
 }
 
+function updateLinks(links) {
+  // 링크가 없거나 잘못된 경우 기본값 설정
+  if (!links || links.length < 2) {
+    console.warn("Links data does not contain enough entries to update.");
+    link1Element.textContent = "Default Link 1";
+    link1Element.onclick = null;
+    link2Element.textContent = "Default Link 2";
+    link2Element.onclick = null;
+    return;
+  }
+
+  // 링크 업데이트
+  if (links[0]) {
+    link1Element.textContent = links[0].label;
+    link1Element.onclick = () => window.location.href = links[0].url;
+  }
+
+  if (links[1]) {
+    link2Element.textContent = links[1].label;
+    link2Element.onclick = () => window.location.href = links[1].url;
+  }
+}
+
 function handlePoeChange() {
   const poeValue = poeDropdown.value;
 
@@ -763,11 +788,8 @@ async function fetchData() {
     console.log("Fetching data for path:", path);
 
 const basePath = "https://arrrbang.github.io/TEST";
-
 const tableJsonPath = `${basePath}/${path}/poeis${poeValue}_tariff.json`;
 const modifiedPath = path.replace(/\/[^/]+\/?$/, "");
-
-// 경로 생성
 const extraCostJsonPath = `${basePath}/${modifiedPath}/poeis${poeValue}_extracost.json`;
 
 console.log("Table JSON Path:", tableJsonPath);
@@ -815,6 +837,10 @@ console.log("Extra Cost JSON Path:", extraCostJsonPath);
     updatestorageperiodDropdown();
     calculateTotalCost();
     updateDescriptions(extraCostData);
+
+    if (extraCostData.links) {
+      updateLinks(extraCostData.links);
+    }
   } catch (error) {
     console.error("Error in fetchData:", error);
   }
