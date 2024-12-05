@@ -180,46 +180,50 @@ function updateMarkers() {
 }
 
 // JSON 데이터 로드 후 마커 생성 및 초기화
-  fetch('./location.json')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Failed to fetch JSON');
-      }
-      return response.json();
-    })
-    .then(locations => {
-      console.log('Loaded locations:', locations); // JSON 데이터 확인
-      
-      locations.forEach(location => {
-        // Leaflet Awesome Marker 설정
-        var customIcon = L.AwesomeMarkers.icon({
-          extraClasses: 'fa-rotate-0',
-          icon: 'info-sign',
-          iconColor: 'white',
-          markerColor: 'red',
-          prefix: 'glyphicon'
-        });
-      
-        const marker = L.marker([location.lat, location.lng], { icon: customIcon });
-      if (location.links && Array.isArray(location.links)) {
-        const linksHTML = location.links
-          .map(
-            (link) =>
-              `<a href="home.html?path=${encodeURIComponent(
-                link.path
-              )}" style="color: ${link.color || "blue"};">${link.type || "View Details"}</a>`
-          )
-          .join("<br>");
-      
-        const popupContent = `<strong>${location.name}</strong><br>${linksHTML}`;
-        marker.bindPopup(popupContent);
-        markers.push(marker);
+fetch('./location.json')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Failed to fetch JSON');
+    }
+    return response.json();
+  })
+  .then(locations => {
+    console.log('Loaded locations:', locations); // JSON 데이터 확인
+    
+    locations.forEach(location => {
+      if (!location.links || !Array.isArray(location.links)) {
+        console.warn('Links are missing or not an array for location:', location.name);
+        return;
       }
       
-      updateMarkers(); // 초기 상태에서 마커 업데이트
+      const linksHTML = location.links
+        .map(
+          (link) =>
+            `<a href="home.html?path=${encodeURIComponent(
+              link.path
+            )}" style="color: ${link.color || "blue"};">${link.type || "View Details"}</a>`
+        )
+        .join("<br>");
+      
+      const popupContent = `<strong>${location.name}</strong><br>${linksHTML}`;
+      
+      const customIcon = L.AwesomeMarkers.icon({
+        extraClasses: 'fa-rotate-0',
+        icon: 'info-sign',
+        iconColor: 'white',
+        markerColor: 'red',
+        prefix: 'glyphicon'
+      });
+      
+      const marker = L.marker([location.lat, location.lng], { icon: customIcon });
+      marker.bindPopup(popupContent);
+      markers.push(marker);
+    });
 
-    })
-    .catch(error => console.error('Error loading JSON:', error));
+    updateMarkers();
+  })
+  .catch(error => console.error('Error loading JSON:', error));
+
 
 // 줌 레벨 변경 시 마커 상태 업데이트
 map.on('zoomend', updateMarkers);
