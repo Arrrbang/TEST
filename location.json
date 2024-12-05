@@ -3,10 +3,20 @@
     "name": "Atlanta, GA",
     "lat": 33.749,
     "lng": -84.388,
-    "type": "SOS",
-    "path": "data/usa/sos/atlanta",
-    "color": "blue"
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/atlanta",
+        "color": "blue"
+      },
+      {
+        "type": "KT",
+        "path": "data/usa/kt/atlanta",
+        "color": "green"
+      }
+    ]
   },
+  
   {
     "name": "Savannah, GA",
     "lat": 32.080,
