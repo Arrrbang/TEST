@@ -96,9 +96,11 @@
   },
   "HEAVY ITEM": {
     "description": "$100/1UNIT, 계단으로 이동할 경우 1층당 $100",
-    "1":"100",
-    "2":"200",
-    "3":"300"
+    "values": {
+      "1": "100",
+      "2": "200",
+      "3": "300"
+    }
   },
   "FULL SETTING CHARGE": {
   },
@@ -112,7 +114,7 @@
     "STORAGE CHARGE": {
     "description": "창고 보관 비용 :  $4/CBM/WEEK (MIN:$20/WEEK)"
   },
-    "STORAGE CHARGE": {
+    "DATA BASE": {
     "description": "해당 데이터 업데이트 일자는 2024.10 진행된 이트너스 비딩 조사 입니다."
   }
 }
