@@ -1,6 +1,6 @@
 {
   "POC": {
-    "description": "40HC의 전체 비용은 $1,850(사바나), $1,055(아틀란타) 입니다.",
+    "description": "",
     "NonDiplomat": {
       "CONSOLE": {
         "1-60": "INCLUDED"
@@ -33,7 +33,7 @@
     }
   },
   "DRAYAGE": {
-    "description": "",
+    "description": "40HC의 전체 비용은 $1,850(사바나), $1,055(아틀란타) 입니다.",
     "NonDiplomat": {
       "20DRY": "1850",
       "40HC": "1850"
