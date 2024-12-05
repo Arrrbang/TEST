@@ -736,28 +736,40 @@ async function initializePoeDropdown(path) {
 }
 
 function updateLinks(links) {
-  // 링크가 없거나 잘못된 경우 기본값 설정
+  // 링크가 없거나 잘못된 경우 처리
   if (!links || links.length < 2) {
     console.warn("Links data does not contain enough entries to update.");
-    link1Element.textContent = "Default Link 1";
-    link1Element.onclick = null;
-    link2Element.textContent = "Default Link 2";
-    link2Element.onclick = null;
+    if (link1Element) {
+      link1Element.textContent = "Default Link 1";
+      link1Element.onclick = () => console.warn("Default Link 1 clicked (no URL available)");
+    }
+    if (link2Element) {
+      link2Element.textContent = "Default Link 2";
+      link2Element.onclick = () => console.warn("Default Link 2 clicked (no URL available)");
+    }
     return;
   }
 
   // 링크 업데이트
   if (links[0]) {
     link1Element.textContent = links[0].label;
-    link1Element.onclick = () => window.location.href = links[0].url;
+    link1Element.onclick = () => {
+      console.log(`Navigating to: ${links[0].url}`);
+      window.location.href = links[0].url;
+    };
   }
 
   if (links[1]) {
     link2Element.textContent = links[1].label;
-    link2Element.onclick = () => window.location.href = links[1].url;
+    link2Element.onclick = () => {
+      console.log(`Navigating to: ${links[1].url}`);
+      window.location.href = links[1].url;
+    };
   }
 }
 
+
+    
 function handlePoeChange() {
   const poeValue = poeDropdown.value;
 
