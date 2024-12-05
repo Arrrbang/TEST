@@ -202,7 +202,7 @@ function updateMarkers() {
       
         const marker = L.marker([location.lat, location.lng], { icon: customIcon });
         const popupContent = `<strong>${location.name}</strong><br>` +
-          `<a href="home.html?path=${encodeURIComponent(location.path)}" style="color: blue;">View Details</a>`;
+          `<a href="home.html?path=${encodeURIComponent(location.path)}" style="color: ${location.color || "blue"};">${location.type || "View Details"}</a>`;
         marker.bindPopup(popupContent);
         markers.push(marker);
       });
