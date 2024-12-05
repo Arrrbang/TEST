@@ -690,12 +690,7 @@ const storageperiodDropdown = document.getElementById("storageperiod");
 const storageValue = document.getElementById("storage-value");
 const totalCostElement = document.getElementById("total-value");
 const poeDropdown = document.getElementById("poe-dropdown");
-const link1Element = document.getElementById("link1");
-const link2Element = document.getElementById("link2");
-    
-console.log("Link 1 Element:", link1Element);
-console.log("Link 2 Element:", link2Element);
-    
+
 async function initializePoeDropdown(path) {
   try {
     const poeDropdownPath = `${path}/poedropdown.json`;
@@ -737,26 +732,7 @@ async function initializePoeDropdown(path) {
     console.error("Failed to initialize POE dropdown:", error);
   }
 }
-    
-function updateLinks(links) {
-  // 링크가 없거나 2개 미만일 경우 처리
-  if (!links || links.length < 2) {
-    console.warn("Links data does not contain enough entries to update.");
-    if (link1Element) link1Element.textContent = "Default Link 1";
-    if (link2Element) link2Element.textContent = "Default Link 2";
-    return;
-  }
 
-  // 링크 업데이트 함수
-  const linkElements = [link1Element, link2Element];
-  linkElements.forEach((element, index) => {
-    if (element && links[index]) {
-      element.textContent = links[index].label; // 라벨 업데이트
-      element.onclick = () => window.location.href = links[index].url; // URL 연결
-    }
-  });
-}
-    
 function handlePoeChange() {
   const poeValue = poeDropdown.value;
 
@@ -785,10 +761,13 @@ async function fetchData() {
     }
 
     console.log("Fetching data for path:", path);
-    
+
 const basePath = "https://arrrbang.github.io/TEST";
+
 const tableJsonPath = `${basePath}/${path}/poeis${poeValue}_tariff.json`;
 const modifiedPath = path.replace(/\/[^/]+\/?$/, "");
+
+// 경로 생성
 const extraCostJsonPath = `${basePath}/${modifiedPath}/poeis${poeValue}_extracost.json`;
 
 console.log("Table JSON Path:", tableJsonPath);
@@ -836,19 +815,14 @@ console.log("Extra Cost JSON Path:", extraCostJsonPath);
     updatestorageperiodDropdown();
     calculateTotalCost();
     updateDescriptions(extraCostData);
-
-        // 링크 업데이트
-if (extraCostData.links) {
-  console.log("Updating links:", extraCostData.links);
-  updateLinks(extraCostData.links);
-} else {
-  console.error("Links data is missing in JSON");
+  } catch (error) {
+    console.error("Error in fetchData:", error);
+  }
 }
 
 function resetDropdown(dropdownElement, placeholder = "-- Select an Option --") {
   dropdownElement.innerHTML = `<option value="">${placeholder}</option>`;
 }
-console.log("Fetching extra cost JSON from:", extraCostJsonPath);
 
 function updateDescriptions(extraCostData) {
   const descriptionMappings = {
@@ -869,7 +843,7 @@ function updateDescriptions(extraCostData) {
     }
   }
 }
-    
+
 // 페이지 로드 시 드롭다운 초기화
 document.addEventListener("DOMContentLoaded", async () => {
   const params = new URLSearchParams(window.location.search);
@@ -881,6 +855,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Path parameter missing in URL.");
   }
 });
+
+
 
 
 
