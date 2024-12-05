@@ -1041,11 +1041,15 @@ function calculateStairCharge() {
     // ▼ HEAVY ITEM 드롭다운 업데이트
 function updateHeavyItemDropdown() {
   resetDropdown(heavyItemDropdown, "중량 화물 개수 선택");
-  Object.keys(basicExtraCost["HEAVY ITEM"] || {}).forEach((key) => {
-    const option = document.createElement("option");
-    option.value = key; // JSON 키를 값으로 설정
-    option.textContent = `${key} unit`; // 중량 화물 단위 cbm 또는 unit★★★★★★★★★★
-    heavyItemDropdown.appendChild(option);
+  
+  const heavyItemData = basicExtraCost["HEAVY ITEM"] || {}; // HEAVY ITEM 데이터 접근
+  Object.keys(heavyItemData).forEach((key) => {
+    if (key !== "description") { // description은 드롭다운 옵션에 포함하지 않음
+      const option = document.createElement("option");
+      option.value = key; // JSON 키를 값으로 설정
+      option.textContent = `${key} unit`; // 드롭다운 항목 텍스트
+      heavyItemDropdown.appendChild(option);
+    }
   });
 }
 
