@@ -729,7 +729,6 @@ function updateLinks(links) {
   }
 }
 
-
 async function initializePoeDropdown(path) {
   try {
     const poeDropdownPath = `${path}/poedropdown.json`;
@@ -837,8 +836,12 @@ async function fetchData() {
     calculateTotalCost();
     updateDescriptions(extraCostData);
 
+    console.log("Extra Cost Links:", extraCostData.links);
+
     if (extraCostData.links) {
       updateLinks(extraCostData.links);
+    } else {
+      console.warn("Links data missing in JSON.");
     }
   } catch (error) {
     console.error("Error in fetchData:", error);
