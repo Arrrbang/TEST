@@ -689,6 +689,7 @@ const storageperiodDropdown = document.getElementById("storageperiod");
 const storageValue = document.getElementById("storage-value");
 const totalCostElement = document.getElementById("total-value");
 const poeDropdown = document.getElementById("poe-dropdown");
+const linkContainer = document.querySelector(".link-container");
     
 async function initializePoeDropdown(path) {
   try {
@@ -731,7 +732,22 @@ async function initializePoeDropdown(path) {
     console.error("Failed to initialize POE dropdown:", error);
   }
 }
+    
+function updateLinks(links) {
+  // 기존 링크 초기화
+  linkContainer.innerHTML = "";
 
+  // JSON에서 links 배열의 각 항목으로 버튼 생성
+  links.forEach((link) => {
+    const button = document.createElement("div");
+    button.className = "link-box";
+    button.textContent = link.label; // JSON의 label 필드 사용
+    button.style.cursor = "pointer";
+    button.onclick = () => window.location.href = link.url; // JSON의 url 필드 사용
+    linkContainer.appendChild(button);
+  });
+}
+    
 function handlePoeChange() {
   const poeValue = poeDropdown.value;
 
@@ -762,11 +778,8 @@ async function fetchData() {
     console.log("Fetching data for path:", path);
     
 const basePath = "https://arrrbang.github.io/TEST";
-
 const tableJsonPath = `${basePath}/${path}/poeis${poeValue}_tariff.json`;
 const modifiedPath = path.replace(/\/[^/]+\/?$/, "");
-
-// 경로 생성
 const extraCostJsonPath = `${basePath}/${modifiedPath}/poeis${poeValue}_extracost.json`;
 
 console.log("Table JSON Path:", tableJsonPath);
@@ -814,6 +827,11 @@ console.log("Extra Cost JSON Path:", extraCostJsonPath);
     updatestorageperiodDropdown();
     calculateTotalCost();
     updateDescriptions(extraCostData);
+
+        // 링크 업데이트
+    if (extraCostData.links) {
+      updateLinks(extraCostData.links);
+    }
   } catch (error) {
     console.error("Error in fetchData:", error);
   }
