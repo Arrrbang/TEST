@@ -669,7 +669,6 @@
   <script>
     
 // json 데이터 로드
-
 let dataNonDiplomat = {};
 let dataDiplomat = {};
 let containerTypes = [];
@@ -693,13 +692,40 @@ const poeDropdown = document.getElementById("poe-dropdown");
 const link1Element = document.getElementById("link1");
 const link2Element = document.getElementById("link2");
 
-// 링크 기본값 설정 
-link1Element.textContent = "Default Link 1";
-link1Element.onclick = () => console.log("Default Link 1 clicked");
+// 링크 초기화
+function initializeLinks() {
+  link1Element.textContent = "Default Link 1";
+  link1Element.onclick = () => console.log("Default Link 1 clicked");
 
-link2Element.textContent = "Default Link 2";
-link2Element.onclick = () => console.log("Default Link 2 clicked");
-    
+  link2Element.textContent = "Default Link 2";
+  link2Element.onclick = () => console.log("Default Link 2 clicked");
+}
+
+// 링크 업데이트
+function updateLinks(links) {
+  if (!links || links.length < 2) {
+    console.warn("Links data does not contain enough entries.");
+    initializeLinks();
+    return;
+  }
+
+  if (links[0]) {
+    link1Element.textContent = links[0].label;
+    link1Element.onclick = () => {
+      console.log(`Navigating to: ${links[0].url}`);
+      window.location.href = links[0].url;
+    };
+  }
+
+  if (links[1]) {
+    link2Element.textContent = links[1].label;
+    link2Element.onclick = () => {
+      console.log(`Navigating to: ${links[1].url}`);
+      window.location.href = links[1].url;
+    };
+  }
+}
+
 async function initializePoeDropdown(path) {
   try {
     const poeDropdownPath = `${path}/poedropdown.json`;
@@ -714,14 +740,10 @@ async function initializePoeDropdown(path) {
 
     const poeOptions = await response.json();
 
-    console.log("Loaded POE Options:", poeOptions);
-
     if (!Array.isArray(poeOptions)) {
       throw new TypeError("POE dropdown data is not an array. Check JSON format.");
     }
 
-    // 드롭다운 초기화
-    const previousValue = poeDropdown.value; // 이전 선택값 저장
     resetDropdown(poeDropdown, "-- Select a Port --");
 
     poeOptions.forEach((option) => {
@@ -731,50 +753,18 @@ async function initializePoeDropdown(path) {
       poeDropdown.appendChild(opt);
     });
 
-    // 이전 선택값 복원
-    poeDropdown.value = previousValue;
-
-    // 드롭다운 값 변경 이벤트 리스너 추가 (중복 방지)
-    poeDropdown.removeEventListener("change", handlePoeChange); // 기존 리스너 제거
     poeDropdown.addEventListener("change", handlePoeChange);
   } catch (error) {
     console.error("Failed to initialize POE dropdown:", error);
   }
 }
 
-function updateLinks(links) {
-  if (!links || links.length < 2) {
-    console.warn("Links data does not contain enough entries.");
-    return;
-  }
-
-  // 첫 번째 링크 업데이트
-  if (links[0]) {
-    link1Element.textContent = links[0].label;
-    link1Element.onclick = () => {
-      console.log(`Navigating to: ${links[0].url}`);
-      window.location.href = links[0].url;
-    };
-  }
-
-  // 두 번째 링크 업데이트
-  if (links[1]) {
-    link2Element.textContent = links[1].label;
-    link2Element.onclick = () => {
-      console.log(`Navigating to: ${links[1].url}`);
-      window.location.href = links[1].url;
-    };
-  }
-}
-
-
-    
 function handlePoeChange() {
   const poeValue = poeDropdown.value;
 
   if (poeValue) {
     console.log("Selected POE value:", poeValue);
-    fetchData(); // 드롭다운 값이 변경될 때 fetchData 호출
+    fetchData();
   } else {
     console.warn("No POE value selected.");
   }
@@ -790,26 +780,21 @@ async function fetchData() {
       return;
     }
 
-    const poeValue = poeDropdown.value; // 드롭다운 값 가져오기
+    const poeValue = poeDropdown.value;
     if (!poeValue) {
       console.warn("POE value is not selected. Waiting for selection...");
-      return; // 값이 선택되지 않은 경우 실행 중단
+      return;
     }
 
     console.log("Fetching data for path:", path);
 
-const basePath = "https://arrrbang.github.io/TEST";
-const tableJsonPath = `${basePath}/${path}/poeis${poeValue}_tariff.json`;
-const modifiedPath = path.replace(/\/[^/]+\/?$/, "");
-const extraCostJsonPath = `${basePath}/${modifiedPath}/poeis${poeValue}_extracost.json`;
+    const basePath = "https://arrrbang.github.io/TEST";
+    const tableJsonPath = `${basePath}/${path}/poeis${poeValue}_tariff.json`;
+    const modifiedPath = path.replace(/\/[^/]+\/?$/, "");
+    const extraCostJsonPath = `${basePath}/${modifiedPath}/poeis${poeValue}_extracost.json`;
 
-console.log("Table JSON Path:", tableJsonPath);
-console.log("Extra Cost JSON Path:", extraCostJsonPath);
-
-    console.log("Fetching JSON files:", {
-      table: tableJsonPath,
-      extraCost: extraCostJsonPath,
-    });
+    console.log("Table JSON Path:", tableJsonPath);
+    console.log("Extra Cost JSON Path:", extraCostJsonPath);
 
     const [tableResponse, extraCostResponse] = await Promise.all([
       fetch(tableJsonPath),
@@ -834,7 +819,6 @@ console.log("Extra Cost JSON Path:", extraCostJsonPath);
       extraCostData,
     });
 
-    // 데이터를 업데이트하는 로직 추가
     basicExtraCost = extraCostData;
     dataNonDiplomat = tableData.nonDiplomat || {};
     dataDiplomat = tableData.diplomat || {};
@@ -881,8 +865,8 @@ function updateDescriptions(extraCostData) {
   }
 }
 
-// 페이지 로드 시 드롭다운 초기화
 document.addEventListener("DOMContentLoaded", async () => {
+  initializeLinks(); // 기본 링크 초기화
   const params = new URLSearchParams(window.location.search);
   const path = params.get("path");
 
