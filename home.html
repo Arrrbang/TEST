@@ -653,11 +653,12 @@
   </div>
 
   <div class="form-container">
-  <div class="link-container">
-    <div class="link-box" id="link1" onclick="window.location.href='https://www.notion.so/CHICAGO-VIA-LA-14d636872365463a8b236fb57d08be6e?pvs=4';">OFC</div>
-    <div class="link-box" id="link2" onclick="window.location.href='https://www.notion.so/CHICAGO-ATLANTA-SAVANNAH-SOS-351cc1319ef3455a9428cd2114261b3c';">NOTION</div>
+    <div class="link-container">
+      <div class="link-box" id="link1">OFC</div>
+      <div class="link-box" id="link2">NOTION</div>
+    </div>
   </div>
-</div>
+
 
 <div class="form-container">
   <p id="data-description" class="charge-info">
@@ -669,7 +670,7 @@
     
 // json 데이터 로드
 
-    let dataNonDiplomat = {};
+let dataNonDiplomat = {};
 let dataDiplomat = {};
 let containerTypes = [];
 let basicExtraCost = {};
@@ -689,7 +690,8 @@ const storageperiodDropdown = document.getElementById("storageperiod");
 const storageValue = document.getElementById("storage-value");
 const totalCostElement = document.getElementById("total-value");
 const poeDropdown = document.getElementById("poe-dropdown");
-const linkContainer = document.querySelector(".link-container");
+const link1Element = document.getElementById("link1");
+const link2Element = document.getElementById("link2");
     
 async function initializePoeDropdown(path) {
   try {
@@ -734,17 +736,21 @@ async function initializePoeDropdown(path) {
 }
     
 function updateLinks(links) {
-  // 기존 링크 초기화
-  linkContainer.innerHTML = "";
+  // 링크가 없거나 2개 미만일 경우 처리
+  if (!links || links.length < 2) {
+    console.warn("Links data does not contain enough entries to update.");
+    if (link1Element) link1Element.textContent = "Default Link 1";
+    if (link2Element) link2Element.textContent = "Default Link 2";
+    return;
+  }
 
-  // JSON에서 links 배열의 각 항목으로 버튼 생성
-  links.forEach((link) => {
-    const button = document.createElement("div");
-    button.className = "link-box";
-    button.textContent = link.label; // JSON의 label 필드 사용
-    button.style.cursor = "pointer";
-    button.onclick = () => window.location.href = link.url; // JSON의 url 필드 사용
-    linkContainer.appendChild(button);
+  // 링크 업데이트 함수
+  const linkElements = [link1Element, link2Element];
+  linkElements.forEach((element, index) => {
+    if (element && links[index]) {
+      element.textContent = links[index].label; // 라벨 업데이트
+      element.onclick = () => window.location.href = links[index].url; // URL 연결
+    }
   });
 }
     
