@@ -201,11 +201,20 @@ function updateMarkers() {
         });
       
         const marker = L.marker([location.lat, location.lng], { icon: customIcon });
-        const popupContent = `<strong>${location.name}</strong><br>` +
-          `<a href="home.html?path=${encodeURIComponent(location.path)}" style="color: ${location.color || "blue"};">${location.type || "View Details"}</a>`;
+      if (location.links && Array.isArray(location.links)) {
+        const linksHTML = location.links
+          .map(
+            (link) =>
+              `<a href="home.html?path=${encodeURIComponent(
+                link.path
+              )}" style="color: ${link.color || "blue"};">${link.type || "View Details"}</a>`
+          )
+          .join("<br>");
+      
+        const popupContent = `<strong>${location.name}</strong><br>${linksHTML}`;
         marker.bindPopup(popupContent);
         markers.push(marker);
-      });
+      }
       
       updateMarkers(); // 초기 상태에서 마커 업데이트
 
