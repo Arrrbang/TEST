@@ -822,6 +822,15 @@ async function fetchData() {
       extraCostData,
     });
 
+    // 링크 업데이트: tariff.json에서 links 데이터 가져오기
+    if (tableData.links && Array.isArray(tableData.links)) {
+      console.log("Links data from tariff JSON:", tableData.links);
+      updateLinks(tableData.links);
+    } else {
+      console.warn("Links data missing in tariff JSON.");
+      initializeLinks(); // 기본 링크 초기화
+    }
+
     basicExtraCost = extraCostData;
     dataNonDiplomat = tableData.nonDiplomat || {};
     dataDiplomat = tableData.diplomat || {};
