@@ -998,7 +998,46 @@ function updateContainerDropdown(containerTypes, containerDropdown, selectedValu
     containerDropdown.value = ""; // 선택값 초기화
   }
 }
+//------------------basic delivery 처리------------------------
+    // 외교 화물 유무와 CBM 드롭다운 값에 따라 기본 배송 비용 업데이트
+function updateBasicDeliveryCost() {
+  const selectedCBM = dropdown.value; // 선택된 CBM 값
+  const isNonDiplomat = nonDiplomat.checked; // Non-Diplomat 여부
+  const isDiplomat = diplomat.checked; // Diplomat 여부
 
+  // 유효성 검사: CBM 값과 체크박스 상태 확인
+  if (!selectedCBM) {
+    console.warn("CBM 값이 선택되지 않았습니다.");
+    result.textContent = "None"; // 기본값
+    return;
+  }
+
+  if (!isNonDiplomat && !isDiplomat) {
+    console.warn("외교 화물 유무를 선택하세요.");
+    result.textContent = "None"; // 기본값
+    return;
+  }
+
+  // JSON 데이터에서 해당 CBM 값 가져오기
+  const costData = isNonDiplomat ? dataNonDiplomat : isDiplomat ? dataDiplomat : {};
+  const costValue = costData[selectedCBM];
+
+  if (costValue !== undefined) {
+    result.textContent = costValue; // 기본 배송 비용 표시
+    console.log("기본 배송 비용 업데이트 완료:", costValue);
+  } else {
+    console.warn("선택된 CBM 값에 대한 데이터가 없습니다.");
+    result.textContent = "None"; // 기본값
+  }
+}
+
+// 이벤트 리스너 추가: 드롭다운 변경 시 기본 배송 비용 업데이트
+dropdown.addEventListener("change", updateBasicDeliveryCost);
+
+// 외교 화물 체크박스 변경 시 기본 배송 비용 업데이트
+nonDiplomat.addEventListener("change", updateBasicDeliveryCost);
+diplomat.addEventListener("change", updateBasicDeliveryCost);
+    
 //--------------------basic cost 처리---------------------------
 function updateDiplomatSensitiveResult(categoryKey) {
   const selectedContainer = containerDropdown.value; // 선택된 컨테이너 타입
