@@ -667,42 +667,6 @@
 </div>  
 
   <script>
-
-  // -----------------------로그인 검증 및 검증 실패시 로그인 페이지 이동------------------------------
-    
-function redirectToLogin(message) {
-  alert(message);
-  localStorage.removeItem('token'); 
-  window.location.href = 'index.html'; // 로그인 페이지로 리다이렉션
-}
-
-function verifyToken() {
-  const token = localStorage.getItem('token'); // 로컬 스토리지에서 토큰 가져오기
-  if (!token) {
-    redirectToLogin('로그인이 해제되었습니다. 다시 로그인해주세요.');
-    return;
-  }
-
-  fetch('https://backend-beta-lemon.vercel.app/verifyToken', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${token}`, 
-      'Content-Type': 'application/json'
-    }
-  })
-    .then(response => response.json())
-    .then(data => {
-      if (!data.success) {
-        redirectToLogin('로그인이 해제되었습니다. 다시 로그인해주세요.');
-      }
-    })
-    .catch(() => {
-      redirectToLogin('Error verifying token. Redirecting to login page.');
-    });
-}
-
-
-    verifyToken();
     
 // json 데이터 로드
 let dataNonDiplomat = {};
