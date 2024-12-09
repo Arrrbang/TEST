@@ -1004,35 +1004,41 @@ function updateContainerDropdown(containerTypes, containerDropdown, selectedValu
 
 //--------------------basic delivery 처리-----------------------
 function updateBasicDeliveryCost() {
+  // 1. 선택된 값 읽기
   const selectedContainer = containerDropdown.value;
   const selectedCBM = parseInt(dropdown.value, 10);
   const isNonDiplomat = nonDiplomat.checked;
   let result = "None";
 
-  // 유효성 검사
-  if (!selectedCBM) {
-    console.warn("CBM 값이 유효하지 않습니다:", selectedCBM);
-    return;
-  }
+  // 2. 유효성 검사
   if (!selectedContainer) {
     console.warn("컨테이너 값이 유효하지 않습니다:", selectedContainer);
     return;
   }
-
-  const costData = isNonDiplomat ? basicExtraCost.nonDiplomat : basicExtraCost.diplomat;
-
-  if (!costData) {
-    console.warn("Cost data is not available for the selected type.");
+  if (isNaN(selectedCBM)) {
+    console.warn("CBM 값이 유효하지 않습니다:", selectedCBM);
     return;
   }
 
-  if (costData[selectedCBM]) {
-    result = costData[selectedCBM];
-  } else {
-    console.warn("선택된 CBM 데이터가 없습니다. 기본 값을 사용합니다.");
-    result = "Default Value"; // 필요에 따라 수정
+  // 3. JSON 데이터 접근
+  const costData = isNonDiplomat
+    ? basicExtraCost?.NonDiplomat
+    : basicExtraCost?.Diplomat;
+
+  if (!costData || !costData[selectedContainer]) {
+    console.warn("선택된 컨테이너에 대한 데이터가 없습니다:", selectedContainer);
+    return;
   }
 
+  const cbmCost = costData[selectedContainer][selectedCBM];
+  if (cbmCost !== undefined) {
+    result = cbmCost;
+  } else {
+    console.warn("선택된 CBM 데이터가 없습니다. 기본 값을 사용합니다.");
+    result = "Default Value"; // 기본값 설정
+  }
+
+  // 4. 결과 DOM 업데이트
   const basicDeliveryElement = document.getElementById("basic-delivery-value");
   if (basicDeliveryElement) {
     basicDeliveryElement.textContent = result;
@@ -1040,7 +1046,6 @@ function updateBasicDeliveryCost() {
 
   console.log("기본 배송 비용 업데이트 완료:", result);
 }
-
 
 
 
