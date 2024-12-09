@@ -969,19 +969,6 @@ function updateDescriptions(extraCostData) {
   }
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
-  initializeLinks();
-
-  const params = new URLSearchParams(window.location.search);
-  const path = params.get("path");
-  if (path) {
-    await initializePoeDropdown(path);
-    await fetchData();
-  } else {
-    console.error("Path parameter missing in URL.");
-  }
-});
-
 
 // CBM 드롭다운 업데이트
 function updateDropdown(data, dropdownElement, selectedValue) {
@@ -1380,6 +1367,6 @@ stairCbmDropdown.addEventListener("change", calculateStairCharge);
 stairFloorDropdown.addEventListener("change", calculateStairCharge);
 
 document.addEventListener("DOMContentLoaded", fetchData);
-    </script>
+</script>
 </body>
 </html>
