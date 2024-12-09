@@ -1099,50 +1099,49 @@ function updateAdditionalCosts() {
   const selectedCBM = parseInt(dropdown.value, 10); // 선택된 CBM 값을 숫자로 변환
 
   // 추가 비용 더 있을 경우 추가★★★★★★★★★★
-  ["SHUTTLE CHARGE", "LONG CARRY CHARGE", "FULL SETTING CHARGE", "WEEKEND CHARGE", "UPLIGHT PIANO"].forEach((category) => {
-    const id = category.toLowerCase().replace(/ /g, "-");
-    let result = "None";
+["SHUTTLE CHARGE", "LONG CARRY CHARGE", "FULL SETTING CHARGE", "WEEKEND CHARGE", "UPLIGHT PIANO"].forEach((category) => {
+  const id = category.toLowerCase().replace(/ /g, "-");
+  let result = "None";
 
-    // `basicExtraCost[category]`가 존재하는지 확인
-    const costData = basicExtraCost[category];
-    if (costData) {
-      // 1. 정확한 값이 JSON에 있는지 확인
-      if (costData[selectedCBM] !== undefined) {
-        result = costData[selectedCBM];
-      } else {
-        // 2. 범위 키를 처리
-        result = Object.keys(costData).reduce((acc, key) => {
-          if (key.includes("-")) {
-            const [start, end] = key.split("-").map(Number);
-            if (selectedCBM >= start && selectedCBM <= end) {
-              return costData[key];
-            }
+  // `basicExtraCost[category]`가 존재하는지 확인
+  const costData = basicExtraCost[category];
+  if (costData) {
+    // 1. 정확한 값이 JSON에 있는지 확인
+    if (costData[selectedCBM] !== undefined) {
+      result = costData[selectedCBM];
+    } else {
+      // 2. 범위 키를 처리
+      result = Object.keys(costData).reduce((acc, key) => {
+        if (key.includes("-")) {
+          const [start, end] = key.split("-").map(Number);
+          if (selectedCBM >= start && selectedCBM <= end) {
+            return costData[key];
           }
-          return acc;
-        }, "None");
-
-        // 3. 범위에도 없는 경우 "ANY" 키 확인
-        if (result === "None") {
-          result = costData["ANY"] || "None";
         }
+        return acc;
+      }, "None");
 
-        // 4. "ANY" 키도 없으면 "CBM" 단가로 계산
-        if (result === "None" && !isNaN(selectedCBM)) {
-          const multiplier = costData.CBM || 0; // JSON에서 "CBM" 값을 가져옴, 기본값은 0
-          result = selectedCBM * multiplier;
-        }
-        const elementId = `${category.toLowerCase().replace(/ /g, "-")}-value`;
-        const element = document.getElementById(elementId);
-        if (element) {
-          element.textContent = result;
+      // 3. 범위에도 없는 경우 "ANY" 키 확인
+      if (result === "None") {
+        result = costData["ANY"] || "None";
+      }
+
+      // 4. "ANY" 키도 없으면 "CBM" 단가로 계산
+      if (result === "None" && !isNaN(selectedCBM)) {
+        const multiplier = costData.CBM || 0; // JSON에서 "CBM" 값을 가져옴, 기본값은 0
+        result = selectedCBM * multiplier;
       }
     }
 
-    // 결과를 해당 요소에 업데이트
-    const element = document.getElementById(id);
-    if (element) element.textContent = result;
-  }); // forEach 종료
-}
+    // 결과를 업데이트
+    const elementId = `${category.toLowerCase().replace(/ /g, "-")}-value`;
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.textContent = result;
+    }
+  }
+});
+
 
 
 // STAIR CHARGE 드롭다운 업데이트
