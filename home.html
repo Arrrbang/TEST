@@ -879,7 +879,7 @@ async function fetchData() {
 
     console.log("Fetching data for path:", path);
 
-    const basePath = "https://arrrbang.github.io/frontend";
+    const basePath = "https://arrrbang.github.io/TEST";
     const tableJsonPath = `${basePath}/${path}/poeis${poeValue}_tariff.json`;
     const modifiedPath = path.replace(/\/[^/]+\/?$/, "");
     const extraCostJsonPath = `${basePath}/${modifiedPath}/poeis${poeValue}_extracost.json`;
@@ -1135,6 +1135,33 @@ heavyItemDropdown.addEventListener("change", function () {
       }
     });
     
+//------------동적 코드 생성------------------
+    function ensureLabelAndValueElementsExist(categoryId) {
+  const labelId = `${categoryId}-label`;
+  const valueId = `${categoryId}-value`;
+
+  if (!document.getElementById(labelId)) {
+    const labelElement = document.createElement("div");
+    labelElement.id = labelId;
+    labelElement.className = "cost-label";
+    document.body.appendChild(labelElement); // 원하는 부모 요소에 추가
+    console.log(`Created missing label element: ${labelId}`);
+  }
+
+  if (!document.getElementById(valueId)) {
+    const valueElement = document.createElement("div");
+    valueElement.id = valueId;
+    valueElement.className = "cost-value";
+    document.body.appendChild(valueElement); // 원하는 부모 요소에 추가
+    console.log(`Created missing value element: ${valueId}`);
+  }
+}
+
+// 기본 비용 항목 순회 시 호출
+Object.keys(basicExtraCost).forEach((categoryId) => {
+  ensureLabelAndValueElementsExist(categoryId);
+  updateDiplomatSensitiveResult(categoryId);
+});
 
 // NON-DIPLOMAT/DIPLOMAT 영향을 받는 기본 배송 비용/THC/POC 등 업데이트------------------------------------------
     
