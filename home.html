@@ -530,13 +530,16 @@
     <div class="result-row">
       <span class="result-label" style="font-size: 1rem; font-weight: normal;" id="basic-cost-1-label">NONE</span>
       <span class="result-value" id="basic-cost-1-value">None</span>
+    <p id="basic-cost-1-description" class="charge-info">
+      This is a description for POC.
+    </p>
     </div>
 
     <div class="result-row">
       <span class="result-label" style="font-size: 1rem; font-weight: normal;" id="baisc-cost-2-label">NONE</span>
       <span class="result-value" id="basic-cost-2-value">None</span>
     </div>
-    <p id="poc-description" class="charge-info">
+    <p id="basic-cost-2-description" class="charge-info">
       This is a description for POC.
     </p>
     <div class="result-row">
@@ -896,16 +899,20 @@ async function fetchData() {
 // DOMContentLoaded 이벤트 리스너
 document.addEventListener("DOMContentLoaded", async () => {
   initializeLinks();
+
   const params = new URLSearchParams(window.location.search);
   const path = params.get("path");
 
   if (path) {
     await initializePoeDropdown(path);
-    await fetchData();
+    fetchData().then(() => {
+      updateBasicDelivery(); // 기본 배송 비용 업데이트
+    });
   } else {
     console.error("Path parameter missing in URL.");
   }
 });
+
     
 function resetDropdown(dropdownElement, placeholder = "-- Select an Option --") {
   if (!dropdownElement) {
@@ -941,13 +948,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const params = new URLSearchParams(window.location.search);
   const path = params.get("path");
+
   if (path) {
     await initializePoeDropdown(path);
-    await fetchData();
+    fetchData().then(() => {
+      updateBasicDelivery(); // 기본 배송 비용 업데이트
+    });
   } else {
     console.error("Path parameter missing in URL.");
   }
 });
+
 
 
 // CBM 드롭다운 업데이트
@@ -997,7 +1008,7 @@ function updateContainerDropdown(containerTypes, containerDropdown, selectedValu
 }
 
 //--------------------basic delivery 처리-----------------------
-  function updateBasicDelivery() {
+function updateBasicDelivery() {
   const selectedContainer = containerDropdown.value; // 선택된 컨테이너 타입
   const selectedCBM = parseInt(dropdown.value, 10); // 선택된 CBM 값
   let result = "None";
@@ -1005,7 +1016,6 @@ function updateContainerDropdown(containerTypes, containerDropdown, selectedValu
   const isNonDiplomat = nonDiplomat.checked;
   const currentData = isNonDiplomat ? dataNonDiplomat : dataDiplomat;
 
-  // 선택된 컨테이너와 CBM에 해당하는 기본 배송 비용 계산
   if (currentData[selectedContainer]) {
     const containerData = currentData[selectedContainer];
     if (typeof containerData === "object") {
@@ -1017,12 +1027,10 @@ function updateContainerDropdown(containerTypes, containerDropdown, selectedValu
         }
         return false;
       });
-      result = containerData[rangeKey] || "None";
+      result = rangeKey ? containerData[rangeKey] : "None";
     } else if (!isNaN(containerData)) {
-      // 단일 값
+      // 단일 값 처리
       result = selectedCBM * containerData;
-    } else {
-      result = containerData || "None";
     }
   }
 
@@ -1034,6 +1042,7 @@ function updateContainerDropdown(containerTypes, containerDropdown, selectedValu
 
   console.log("기본 배송 비용 업데이트 완료:", result);
 }
+
 
 //--------------------basic cost 처리---------------------------
   function updateDiplomatSensitiveResult(categoryKey) {
@@ -1127,6 +1136,9 @@ dropdown.addEventListener("change", updateAllDiplomatSensitiveResults);
 containerDropdown.addEventListener("change", updateAllDiplomatSensitiveResults);
 nonDiplomat.addEventListener("change", updateAllDiplomatSensitiveResults);
 diplomat.addEventListener("change", updateAllDiplomatSensitiveResults);
+dropdown.addEventListener("change", updateBasicDelivery);
+containerDropdown.addEventListener("change", updateBasicDelivery);
+
 
 </script>
 </body>
