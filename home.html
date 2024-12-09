@@ -800,8 +800,10 @@ function handlePoeChange() {
   if (poeValue) {
     console.log("Selected POE value:", poeValue);
     fetchData().then(() => {
-      updateBasicDelivery();
-      updateAllDiplomatSensitiveResults();
+      // 기본값 설정 후 업데이트 호출
+  console.log("basicExtraCost 데이터 확인:", basicExtraCost);
+  updateBasicDeliveryCost(); // 기본 배송 비용 업데이트
+  updateAllDiplomatSensitiveResults(); // 추가 비용 업데이트
     });
   } else {
     console.warn("No POE value selected.");
@@ -911,10 +913,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (path) {
     await initializePoeDropdown(path);
     fetchData().then(() => {
-        // 기본값 설정 후 업데이트 호출
-  containerDropdown.value = containerTypes[0] || ""; // 첫 번째 컨테이너 선택
-  dropdown.value = Object.keys(dataNonDiplomat)[0] || ""; // 첫 번째 CBM 선택
-
+      // 기본값 설정 후 업데이트 호출
+  console.log("basicExtraCost 데이터 확인:", basicExtraCost);
   updateBasicDeliveryCost(); // 기본 배송 비용 업데이트
   updateAllDiplomatSensitiveResults(); // 추가 비용 업데이트
 });
@@ -963,9 +963,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await initializePoeDropdown(path);
     fetchData().then(() => {
       // 기본값 설정 후 업데이트 호출
-  containerDropdown.value = containerTypes[0] || ""; // 첫 번째 컨테이너 선택
-  dropdown.value = Object.keys(dataNonDiplomat)[0] || ""; // 첫 번째 CBM 선택
-
+  console.log("basicExtraCost 데이터 확인:", basicExtraCost);
   updateBasicDeliveryCost(); // 기본 배송 비용 업데이트
   updateAllDiplomatSensitiveResults(); // 추가 비용 업데이트
 });
@@ -1023,50 +1021,26 @@ function updateContainerDropdown(containerTypes, containerDropdown, selectedValu
 }
 
 //--------------------basic delivery 처리-----------------------
-function updateBasicDeliveryCost() {
   const selectedContainer = containerDropdown.value; // 선택된 컨테이너 타입 (CONSOLE, 20DRY, 40HC)
   const selectedCBM = parseInt(dropdown.value, 10); // 선택된 CBM 값 (숫자로 변환)
-  const category = "basic-delivery"; // 기본 배송 비용 카테고리
+  const isNonDiplomat = nonDiplomat.checked; // 외교화물 여부
   let result = "None"; // 초기 값 설정
 
-  if (selectedContainer === "CONSOLE") {
-    // CONSOLE 타입 처리
-    const costData =
-      basicExtraCost[category]?.[nonDiplomat.checked ? "NonDiplomat" : "Diplomat"]?.CONSOLE;
+  // JSON 데이터에서 적절한 비용 데이터를 가져오기
+  const costData = isNonDiplomat
+    ? basicExtraCost.nonDiplomat
+    : basicExtraCost.diplomat;
 
-    // 범위 처리
-    if (typeof costData === "object") {
-      const rangeResult = Object.keys(costData || {}).find((key) => {
-        if (key.includes("-")) {
-          const [start, end] = key.split("-").map(Number);
-          return selectedCBM >= start && selectedCBM <= end;
-        }
-        return false;
-      });
-
-      result = costData[rangeResult] || "None";
-    } else if (typeof costData === "string" && costData === "INCLUDED") {
-      result = "INCLUDED"; // 문자열 처리
-    } else if (!isNaN(costData)) {
-      result = selectedCBM * costData; // 숫자 값 처리
-    }
-  } else {
-    // 20DRY 또는 40HC 처리
-    const costData =
-      basicExtraCost[category]?.[nonDiplomat.checked ? "NonDiplomat" : "Diplomat"]?.[selectedContainer];
-
-    if (costData === "INCLUDED") {
-      result = "INCLUDED"; // 문자열 처리
-    } else {
-      result = costData || "None";
-    }
+  if (!costData) {
+    console.warn("Cost data is not available for the selected type.");
+    return;
   }
 
-  // 기본값 처리
-  if (result === "None" && !isNaN(selectedCBM)) {
-    const defaultMultiplier =
-      basicExtraCost[category]?.[nonDiplomat.checked ? "NonDiplomat" : "Diplomat"]?.unitMultiplier || 0;
-    result = selectedCBM * defaultMultiplier;
+  // CBM 값 처리
+  if (selectedCBM && costData[selectedCBM]) {
+    result = costData[selectedCBM];
+  } else {
+    console.warn("Selected CBM is not found in cost data.");
   }
 
   // 결과 업데이트
@@ -1145,10 +1119,8 @@ function updateAllDiplomatSensitiveResults() {
 
 // JSON 데이터 로드 후 호출
 fetchData().then(() => {
-  // 기본값 설정 후 업데이트 호출
-  containerDropdown.value = containerTypes[0] || ""; // 첫 번째 컨테이너 선택
-  dropdown.value = Object.keys(dataNonDiplomat)[0] || ""; // 첫 번째 CBM 선택
-
+      // 기본값 설정 후 업데이트 호출
+  console.log("basicExtraCost 데이터 확인:", basicExtraCost);
   updateBasicDeliveryCost(); // 기본 배송 비용 업데이트
   updateAllDiplomatSensitiveResults(); // 추가 비용 업데이트
 });
