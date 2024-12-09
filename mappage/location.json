@@ -1,0 +1,329 @@
+[
+  {
+    "name": "Atlanta, GA",
+    "lat": 33.749,
+    "lng": -84.388,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/atlanta",
+        "color": "blue"
+      },
+      {
+        "type": "KT",
+        "path": "data/usa/kt/atlanta",
+        "color": "green"
+      }
+    ]
+  },
+  {
+    "name": "LaGrange, GA",
+    "lat": 33.0362,
+    "lng": -85.0319,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/lagrange",
+        "color": "blue"
+      }
+    ]
+  },
+  {
+    "name": "Augusta, GA",
+    "lat": 33.4700,
+    "lng": -81.9748,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/augusta",
+        "color": "blue"
+      },
+      {
+        "type": "KT",
+        "path": "data/usa/kt/augusta",
+        "color": "green"
+      }
+    ]
+  },
+  {
+    "name": "Savannah, GA",
+    "lat": 32.0835,
+    "lng": -81.0998,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/savannah",
+        "color": "blue"
+      },
+      {
+        "type": "KT",
+        "path": "data/usa/kt/savannah",
+        "color": "green"
+      }
+    ]
+  },
+  {
+    "name": "Auburn, AL",
+    "lat": 32.59778,
+    "lng": -85.48083,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/auburn",
+        "color": "blue"
+      }
+    ]
+  },
+  {
+    "name": "Birmingham, AL",
+    "lat": 33.5186,
+    "lng": -86.8104,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/birmingham",
+        "color": "blue"
+      }
+    ]
+  },
+  {
+    "name": "Huntsville, AL",
+    "lat": 34.7304,
+    "lng": -86.5861,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/huntsville",
+        "color": "blue"
+      }
+    ]
+  },
+  {
+    "name": "Montgomery, AL",
+    "lat": 32.3792,
+    "lng": -86.3077,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/montgomery",
+        "color": "blue"
+      }
+    ]
+  },
+  {
+    "name": "Mobile, AL",
+    "lat": 30.6954,
+    "lng": -88.1399,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/mobile",
+        "color": "blue"
+      }
+    ]
+  },
+  {
+    "name": "Gainesville, FL",
+    "lat": 29.6526,
+    "lng": -82.3437,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/gainesville",
+        "color": "blue"
+      }
+    ]
+  },
+  {
+    "name": "Orlando, FL",
+    "lat": 28.60468,
+    "lng": -81.20483,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/orlando",
+        "color": "blue"
+      }
+    ]
+  },
+  {
+    "name": "Miami, FL",
+    "lat": 25.761681,
+    "lng": -80.191788,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/miami",
+        "color": "blue"
+      }
+    ]
+  },
+  {
+    "name": "Charlotte, NC",
+    "lat": 35.2271,
+    "lng": -80.8431,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/charlotte",
+        "color": "blue"
+      }
+    ]
+  },
+  {
+    "name": "Greensboro, NC",
+    "lat": 36.0726,
+    "lng": -79.792,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/greensboro",
+        "color": "blue"
+      }
+    ]
+  },
+  {
+    "name": "Raleigh/Fayetteville, NC",
+    "lat": 35.7796,
+    "lng": -78.6382,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/raleigh",
+        "color": "blue"
+      }
+    ]
+  },
+  {
+    "name": "Wilmington, NC",
+    "lat": 34.2257,
+    "lng": -77.9447,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/wilmington",
+        "color": "blue"
+      }
+    ]
+  },
+  {
+    "name": "Columbia, SC",
+    "lat": 34.0004,
+    "lng": -81.0348,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/columbia",
+        "color": "blue"
+      }
+    ]
+  },
+  {
+    "name": "Charleston, SC",
+    "lat": 32.7766,
+    "lng": -79.9309,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/charleston",
+        "color": "blue"
+      }
+    ]
+  },
+  {
+    "name": "Nashville, TN",
+    "lat": 36.174465,
+    "lng": -86.76796,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/nashville",
+        "color": "blue"
+      }
+    ]
+  },
+  {
+    "name": "Knoxville, TN",
+    "lat": 35.964668,
+    "lng": -83.926453,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/knoxville",
+        "color": "blue"
+      }
+    ]
+  },
+  {
+    "name": "Memphis, TN",
+    "lat": 35.1175,
+    "lng": -89.971107,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/memphis",
+        "color": "blue"
+      }
+    ]
+  },
+  {
+    "name": "New Orleans, LA",
+    "lat": 29.96667,
+    "lng": -90.05,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/neworleans",
+        "color": "blue"
+      }
+    ]
+  },
+  {
+    "name": "Biloxi, MS",
+    "lat": 30.396,
+    "lng": -88.8853,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/biloxi",
+        "color": "blue"
+      }
+    ]
+  },
+  {
+    "name": "Little Rock, AR",
+    "lat": 34.7465,
+    "lng": -92.2896,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/littlerock",
+        "color": "blue"
+      }
+    ]
+  },
+  {
+    "name": "Chicago, IL",
+    "lat": 41.8781,
+    "lng": -87.6298,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/chicago",
+        "color": "blue"
+      }
+    ]
+  },
+  {
+    "name": "Champaign, IL",
+    "lat": 40.116421,
+    "lng": -88.243385,
+    "links": [
+      {
+        "type": "SOS",
+        "path": "data/usa/sos/champaign",
+        "color": "blue"
+      }
+    ]
+  }
+]
