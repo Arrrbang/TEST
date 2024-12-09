@@ -915,7 +915,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   containerDropdown.value = containerTypes[0] || ""; // 첫 번째 컨테이너 선택
   dropdown.value = Object.keys(dataNonDiplomat)[0] || ""; // 첫 번째 CBM 선택
 
-  updateBasicDelivery(); // 기본 배송 비용 업데이트
+  updateBasicDeliveryCost(); // 기본 배송 비용 업데이트
   updateAllDiplomatSensitiveResults(); // 추가 비용 업데이트
 });
   } else {
@@ -966,7 +966,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   containerDropdown.value = containerTypes[0] || ""; // 첫 번째 컨테이너 선택
   dropdown.value = Object.keys(dataNonDiplomat)[0] || ""; // 첫 번째 CBM 선택
 
-  updateBasicDelivery(); // 기본 배송 비용 업데이트
+  updateBasicDeliveryCost(); // 기본 배송 비용 업데이트
   updateAllDiplomatSensitiveResults(); // 추가 비용 업데이트
 });
   } else {
@@ -1023,46 +1023,49 @@ function updateContainerDropdown(containerTypes, containerDropdown, selectedValu
 }
 
 //--------------------basic delivery 처리-----------------------
-function updateBasicDelivery() {
-  const selectedContainer = containerDropdown.value || "CONSOLE"; // 기본 컨테이너 타입
-  const selectedCBM = parseInt(dropdown.value, 10) || 0; // 선택된 CBM (기본값 0)
-  const isNonDiplomat = nonDiplomat.checked;
-  let result = "None"; // 초기 결과
+function updateBasicDeliveryCost() {
+  const selectedContainer = containerDropdown.value; // 선택된 컨테이너 타입 (CONSOLE, 20DRY, 40HC)
+  const selectedCBM = parseInt(dropdown.value, 10); // 선택된 CBM 값 (숫자로 변환)
+  const category = "basic-delivery"; // 기본 배송 비용 카테고리
+  let result = "None"; // 초기 값 설정
 
   if (selectedContainer === "CONSOLE") {
-    // CONSOLE의 경우 CBM 범위 처리
+    // CONSOLE 타입 처리
     const costData =
-      basicExtraCost["basic-cost"]?.[isNonDiplomat ? "NonDiplomat" : "Diplomat"]?.CONSOLE;
+      basicExtraCost[category]?.[nonDiplomat.checked ? "NonDiplomat" : "Diplomat"]?.CONSOLE;
 
+    // 범위 처리
     if (typeof costData === "object") {
-      const rangeKey = Object.keys(costData).find((key) => {
+      const rangeResult = Object.keys(costData || {}).find((key) => {
         if (key.includes("-")) {
           const [start, end] = key.split("-").map(Number);
           return selectedCBM >= start && selectedCBM <= end;
         }
         return false;
       });
-      result = rangeKey ? costData[rangeKey] : "None";
+
+      result = costData[rangeResult] || "None";
     } else if (typeof costData === "string" && costData === "INCLUDED") {
-      result = "INCLUDED";
+      result = "INCLUDED"; // 문자열 처리
     } else if (!isNaN(costData)) {
-      result = selectedCBM * costData; // 단위 비용 계산
+      result = selectedCBM * costData; // 숫자 값 처리
     }
   } else {
     // 20DRY 또는 40HC 처리
     const costData =
-      basicExtraCost["basic-cost"]?.[isNonDiplomat ? "NonDiplomat" : "Diplomat"]?.[selectedContainer];
+      basicExtraCost[category]?.[nonDiplomat.checked ? "NonDiplomat" : "Diplomat"]?.[selectedContainer];
+
     if (costData === "INCLUDED") {
-      result = "INCLUDED";
+      result = "INCLUDED"; // 문자열 처리
     } else {
       result = costData || "None";
     }
   }
 
-  // 기본값이 없는 경우 (Default Multiplier)
+  // 기본값 처리
   if (result === "None" && !isNaN(selectedCBM)) {
     const defaultMultiplier =
-      basicExtraCost["basic-cost"]?.[isNonDiplomat ? "NonDiplomat" : "Diplomat"]?.unitMultiplier || 0;
+      basicExtraCost[category]?.[nonDiplomat.checked ? "NonDiplomat" : "Diplomat"]?.unitMultiplier || 0;
     result = selectedCBM * defaultMultiplier;
   }
 
@@ -1146,7 +1149,7 @@ fetchData().then(() => {
   containerDropdown.value = containerTypes[0] || ""; // 첫 번째 컨테이너 선택
   dropdown.value = Object.keys(dataNonDiplomat)[0] || ""; // 첫 번째 CBM 선택
 
-  updateBasicDelivery(); // 기본 배송 비용 업데이트
+  updateBasicDeliveryCost(); // 기본 배송 비용 업데이트
   updateAllDiplomatSensitiveResults(); // 추가 비용 업데이트
 });
     
