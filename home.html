@@ -530,10 +530,11 @@
     <div class="result-row">
       <span class="result-label" style="font-size: 1rem; font-weight: normal;" id="basic-cost-1-label">NONE</span>
       <span class="result-value" id="basic-cost-1-value">None</span>
+    </div>
     <p id="basic-cost-1-description" class="charge-info">
       This is a description for POC.
     </p>
-    </div>
+    
 
     <div class="result-row">
       <span class="result-label" style="font-size: 1rem; font-weight: normal;" id="baisc-cost-2-label">NONE</span>
@@ -1023,9 +1024,13 @@ function updateContainerDropdown(containerTypes, containerDropdown, selectedValu
 
 //--------------------basic delivery 처리-----------------------
 function updateBasicDelivery() {
-  const selectedContainer = containerDropdown.value || "CONSOLE"; // 기본값 설정
+  const selectedContainer = containerDropdown.value || "CONSOLE"; // 기본 컨테이너 값
   const selectedCBM = parseInt(dropdown.value, 10) || 0; // NaN 방지
   const isNonDiplomat = nonDiplomat.checked;
+
+  console.log("Selected Container:", selectedContainer);
+  console.log("Selected CBM:", selectedCBM);
+  console.log("Non-Diplomat Selected:", isNonDiplomat);
 
   let result = "None";
   const currentData = isNonDiplomat ? dataNonDiplomat : dataDiplomat;
@@ -1034,18 +1039,21 @@ function updateBasicDelivery() {
     const containerData = currentData[selectedContainer];
 
     if (typeof containerData === "object") {
+      // CBM 범위 매칭
       const rangeKey = Object.keys(containerData).find((key) => {
         const [start, end] = key.split("-").map(Number);
         return selectedCBM >= start && selectedCBM <= end;
       });
+
       result = rangeKey ? containerData[rangeKey] : "None";
     } else if (!isNaN(containerData)) {
-      result = selectedCBM * containerData; // 단일 값 계산
+      result = selectedCBM * containerData; // 단위 비용 계산
     } else {
-      result = containerData || "None"; // 문자열 처리
+      result = containerData || "None";
     }
   }
 
+  // 결과 업데이트
   const basicDeliveryElement = document.getElementById("basic-delivery-value");
   if (basicDeliveryElement) {
     basicDeliveryElement.textContent = result;
@@ -1053,7 +1061,6 @@ function updateBasicDelivery() {
 
   console.log("기본 배송 비용 업데이트 완료:", result);
 }
-
 
 //--------------------basic cost 처리---------------------------
 function updateDiplomatSensitiveResult(categoryKey) {
