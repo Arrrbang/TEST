@@ -881,15 +881,17 @@ async function fetchData() {
 
     // 드롭다운 및 데이터 업데이트
     if (dropdown) {
-      resetDropdown(dropdown);
-      updateDropdown(nonDiplomat.checked ? dataNonDiplomat : dataDiplomat, dropdown, currentCbmValue);
-    } else {
-      console.warn("fetchData: Dropdown element is not available in the DOM.");
+      updateDropdown(dataNonDiplomat, dropdown);
+      if (Object.keys(dataNonDiplomat).length > 0) {
+        dropdown.value = Object.keys(dataNonDiplomat)[0];
+      }
     }
 
     if (containerDropdown) {
-      resetDropdown(containerDropdown);
-      updateContainerDropdown(containerTypes, containerDropdown, currentContainerValue);
+      updateContainerDropdown(containerTypes, containerDropdown);
+      if (containerTypes.length > 0) {
+        containerDropdown.value = containerTypes[0];
+      }
     }
 
     updateAdditionalCosts();
@@ -897,6 +899,7 @@ async function fetchData() {
     updateHeavyItemDropdown();
     updatestorageperiodDropdown();
     calculateTotalCost();
+    console.log("basicExtraCost 데이터 확인:", basicExtraCost);
   } catch (error) {
     console.error("Error in fetchData:", error);
   }
@@ -1001,28 +1004,21 @@ function updateContainerDropdown(containerTypes, containerDropdown, selectedValu
 
 //--------------------basic delivery 처리-----------------------
 function updateBasicDeliveryCost() {
-  const selectedContainer = containerDropdown.value; // 선택된 컨테이너 타입
-  const selectedCBM = parseInt(dropdown.value, 10); // 선택된 CBM 값
-  const isNonDiplomat = nonDiplomat.checked; // 외교화물 여부
-  let result = "None"; // 초기 값
+  const selectedContainer = containerDropdown.value;
+  const selectedCBM = parseInt(dropdown.value, 10);
+  const isNonDiplomat = nonDiplomat.checked;
+  let result = "None";
 
-  console.log("선택된 컨테이너:", selectedContainer);
-  console.log("선택된 CBM:", selectedCBM);
-  console.log("외교화물 여부:", isNonDiplomat);
-  console.log("basicExtraCost 데이터:", basicExtraCost);
-
-  // **추가: selectedCBM 및 selectedContainer 유효성 검사**
+  // 유효성 검사
   if (!selectedCBM) {
     console.warn("CBM 값이 유효하지 않습니다:", selectedCBM);
     return;
   }
-
   if (!selectedContainer) {
     console.warn("컨테이너 값이 유효하지 않습니다:", selectedContainer);
     return;
   }
 
-  // JSON 데이터에서 비용 정보 가져오기
   const costData = isNonDiplomat ? basicExtraCost.nonDiplomat : basicExtraCost.diplomat;
 
   if (!costData) {
@@ -1030,16 +1026,13 @@ function updateBasicDeliveryCost() {
     return;
   }
 
-  // CBM 값 처리
   if (costData[selectedCBM]) {
     result = costData[selectedCBM];
   } else {
-    // **추가: CBM 값이 없는 경우 기본값 처리**
     console.warn("선택된 CBM 데이터가 없습니다. 기본 값을 사용합니다.");
-    result = "Default Value"; // 필요에 따라 기본값 설정
+    result = "Default Value"; // 필요에 따라 수정
   }
 
-  // 결과 업데이트
   const basicDeliveryElement = document.getElementById("basic-delivery-value");
   if (basicDeliveryElement) {
     basicDeliveryElement.textContent = result;
@@ -1047,6 +1040,7 @@ function updateBasicDeliveryCost() {
 
   console.log("기본 배송 비용 업데이트 완료:", result);
 }
+
 
 
 
