@@ -1,7 +1,7 @@
 {
   "basic-cost-1": {
     "name": "POC",
-    "description": "",
+    "description": "테스트중",
     "NonDiplomat": {
       "CONSOLE": {
         "1-60": "INCLUDED"
@@ -19,7 +19,7 @@
   },
   "basic-cost-2": {
     "name": "THC",
-    "description": "",
+    "description": "123",
     "NonDiplomat": {
       "CONSOLE": {
         "1-60": "INCLUDED"
