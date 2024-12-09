@@ -996,6 +996,46 @@ function updateContainerDropdown(containerTypes, containerDropdown, selectedValu
   }
 }
 
+//--------------------basic delivery 처리-----------------------
+  function updateBasicDelivery() {
+  const selectedContainer = containerDropdown.value; // 선택된 컨테이너 타입
+  const selectedCBM = parseInt(dropdown.value, 10); // 선택된 CBM 값
+  let result = "None";
+
+  const isNonDiplomat = nonDiplomat.checked;
+  const currentData = isNonDiplomat ? dataNonDiplomat : dataDiplomat;
+
+  // 선택된 컨테이너와 CBM에 해당하는 기본 배송 비용 계산
+  if (currentData[selectedContainer]) {
+    const containerData = currentData[selectedContainer];
+    if (typeof containerData === "object") {
+      // CBM 범위 처리
+      const rangeKey = Object.keys(containerData).find((key) => {
+        if (key.includes("-")) {
+          const [start, end] = key.split("-").map(Number);
+          return selectedCBM >= start && selectedCBM <= end;
+        }
+        return false;
+      });
+      result = containerData[rangeKey] || "None";
+    } else if (!isNaN(containerData)) {
+      // 단일 값
+      result = selectedCBM * containerData;
+    } else {
+      result = containerData || "None";
+    }
+  }
+
+  // 결과 업데이트
+  const basicDeliveryElement = document.getElementById("basic-delivery-value");
+  if (basicDeliveryElement) {
+    basicDeliveryElement.textContent = result;
+  }
+
+  console.log("기본 배송 비용 업데이트 완료:", result);
+}
+
+//--------------------basic cost 처리---------------------------
   function updateDiplomatSensitiveResult(categoryKey) {
   const selectedContainer = containerDropdown.value; // 선택된 컨테이너 타입 (CONSOLE, 20DRY, 40HC)
   const selectedCBM = parseInt(dropdown.value, 10); // 선택된 CBM 값 (숫자로 변환)
