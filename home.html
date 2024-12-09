@@ -881,16 +881,10 @@ async function fetchData() {
     // 드롭다운 및 데이터 업데이트
     if (dropdown) {
       updateDropdown(dataNonDiplomat, dropdown);
-      if (Object.keys(dataNonDiplomat).length > 0) {
-        dropdown.value = Object.keys(dataNonDiplomat)[0];
-      }
     }
 
     if (containerDropdown) {
       updateContainerDropdown(containerTypes, containerDropdown);
-      if (containerTypes.length > 0) {
-        containerDropdown.value = containerTypes[0];
-      }
     }
 
     updateAdditionalCosts();
