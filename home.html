@@ -1024,13 +1024,6 @@ function updateBasicDeliveryCost() {
     result.textContent = "None"; // 기본값
   }
 }
-
-// 이벤트 리스너 추가: 드롭다운 변경 시 기본 배송 비용 업데이트
-dropdown.addEventListener("change", updateBasicDeliveryCost);
-
-// 외교 화물 체크박스 변경 시 기본 배송 비용 업데이트
-nonDiplomat.addEventListener("change", updateBasicDeliveryCost);
-diplomat.addEventListener("change", updateBasicDeliveryCost);
     
 //--------------------basic cost 처리---------------------------
 function updateDiplomatSensitiveResult(categoryKey) {
@@ -1131,7 +1124,9 @@ dropdown.addEventListener("change", updateAllDiplomatSensitiveResults);
 containerDropdown.addEventListener("change", updateAllDiplomatSensitiveResults);
 nonDiplomat.addEventListener("change", updateAllDiplomatSensitiveResults);
 diplomat.addEventListener("change", updateAllDiplomatSensitiveResults);
-
+dropdown.addEventListener("change", updateBasicDeliveryCost);
+nonDiplomat.addEventListener("change", updateBasicDeliveryCost);
+diplomat.addEventListener("change", updateBasicDeliveryCost);
 
 
 
