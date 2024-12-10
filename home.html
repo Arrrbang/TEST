@@ -1299,7 +1299,7 @@ function updatestorageperiodDropdown() {
   // 2. storageperiod 드롭다운 옵션 생성
   resetDropdown(storageperiodDropdown, "보관 기간 선택");
 
-  for (let i = 1; i <= 90; i++) { // 1일부터 90일까지 옵션 생성
+  for (let i = freeStorageDays + 1; i <= freeStorageDays + 90; i++) { // 무료 보관 이후부터 90일까지 옵션 생성
     const option = document.createElement("option");
     option.value = i;
     option.textContent = `${i}일`;
