@@ -699,9 +699,8 @@ document.addEventListener("DOMContentLoaded", function () {
   fetchData().then(() => {
     // JSON 데이터를 불러온 후 추가적인 업데이트 수행
     // 여기에서는 CBM 드롭다운을 다시 JSON 값으로 덮어쓰지 않음
-    // 다른 드롭다운이나 데이터를 업데이트하는 로직만 수행
     const currentCbmValue = dropdown.value;
-    updateDropdown(dataNonDiplomat, dropdown, currentCbmValue);  // CBM 드롭다운을 제외한 다른 드롭다운만 업데이트
+    updateDropdown(dataNonDiplomat, containerDropdown, containerDropdown.value);  // 다른 드롭다운만 업데이트
   });
 });
 
