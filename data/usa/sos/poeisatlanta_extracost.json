@@ -1,12 +1,12 @@
 {
-  "화폐단위":"$",
+  "화폐단위": "$",
   
   "basic-cost-1": {
     "name": "POC",
     "description": "테스트중",
     "NonDiplomat": {
       "CONSOLE": {
-        "console단가":20
+        "console단가": 20
       },
       "20DRY": "INCLUDED",
       "40HC": "INCLUDED"
@@ -14,7 +14,7 @@
     "Diplomat": {
       "CONSOLE": {
         "1-60": "INCLUDED",
-        "console단가":15
+        "console단가": 15
       },
       "20DRY": "INCLUDED",
       "40HC": "INCLUDED"
@@ -42,14 +42,15 @@
     "description": "해당 업체의 계단 비용 단가는 $10*cbm*floor 입니다.",
     "CBM단가": 10
   },
-    "HEAVY ITEM": {
+  "HEAVY ITEM": {
     "description": "$100/1UNIT, 계단으로 이동할 경우 1층당 $100",
     "단위": "UNIT",
     "단가": 100
   },
-    "STORAGE CHARGE": {
+  "STORAGE CHARGE": {
     "description": "창고 보관 비용 :  $4/CBM/WEEK (MIN:$20/WEEK)",
     "무료 보관 기간 일자": 14,
     "보관 비용 단가": 4
-    }
+  }
 }
+
