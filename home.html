@@ -889,18 +889,11 @@ async function fetchData() {
     dataDiplomat = tableData.diplomat || {};
     containerTypes = tableData.containerType || [];
 
-    const currentCbmValue = dropdown?.value || null;
-    const currentContainerValue = containerDropdown?.value || null;
+    const currentCbmValue = dropdown.value;
+    const currentContainerValue = containerDropdown.value;
 
-    // 드롭다운 및 데이터 업데이트
-    if (dropdown) {
-      updateDropdown(dataNonDiplomat, dropdown);
-    }
-
-    if (containerDropdown) {
-      updateContainerDropdown(containerTypes, containerDropdown);
-    }
-
+    updateDropdown(dataNonDiplomat, dropdown, currentCbmValue); // 기존 CBM 값 유지
+    updateContainerDropdown(containerTypes, containerDropdown, currentContainerValue); // 기존 컨테이너 값 유지
     updateAdditionalCosts();
     updateStairChargeDropdown();
     updateHeavyItemDropdown();
@@ -968,7 +961,8 @@ function updateDropdown(data, dropdownElement, selectedValue) {
     return; // 함수 종료
   }
 
-  resetDropdown(dropdownElement, "-- Select an Option --");
+  // 기존 선택값을 보존하면서 드롭다운 업데이트
+  dropdownElement.innerHTML = "<option value=''>-- Select an Option --</option>";  // 초기화
   Object.keys(data).forEach((key) => {
     const option = document.createElement("option");
     option.value = key;
@@ -987,11 +981,15 @@ function updateDropdown(data, dropdownElement, selectedValue) {
   dropdownElement.dispatchEvent(new Event("change")); // 값이 변경되었음을 알림
 }
 
-
-
 // 컨테이너 타입 드롭다운 업데이트
 function updateContainerDropdown(containerTypes, containerDropdown, selectedValue) {
-  resetDropdown(containerDropdown, "-- Select a Container --");
+  if (!containerDropdown) {
+    console.error("updateContainerDropdown: Provided containerDropdown is null or undefined.");
+    return;
+  }
+
+  // 기존 선택값을 보존하면서 드롭다운 업데이트
+  containerDropdown.innerHTML = "<option value=''>-- Select a Container --</option>";  // 초기화
   containerTypes.forEach((type) => {
     const option = document.createElement("option");
     option.value = type;
@@ -999,13 +997,15 @@ function updateContainerDropdown(containerTypes, containerDropdown, selectedValu
     containerDropdown.appendChild(option);
   });
 
-  // 기존 선택 값 복원
-  if (selectedValue && containerTypes.includes(selectedValue)) {
+  // 기존 선택된 값 복원
+  if (selectedValue) {
     containerDropdown.value = selectedValue;
-  } else {
-    containerDropdown.value = ""; // 선택값 초기화
   }
+
+  // 강제로 UI 업데이트
+  containerDropdown.dispatchEvent(new Event("change"));
 }
+    
 //------------------basic delivery 처리------------------------
     // 외교 화물 유무와 CBM 드롭다운 값에 따라 기본 배송 비용 업데이트
 function updateBasicDeliveryCost() {
