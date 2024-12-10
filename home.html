@@ -1164,7 +1164,7 @@ function updateStairChargeDropdown() {
   resetDropdown(stairCbmDropdown, "이동 CBM 선택");
 
   const selectedCBM = parseInt(dropdown.value, 10); // 상위 CBM 선택값
-  if (!isNaN(selectedCBM)) {
+  if (!isNaN(selectedCBM) && selectedCBM > 0) {
     // STAIR CBM 옵션 추가 (1 ~ selectedCBM 범위)
     for (let i = 1; i <= selectedCBM; i++) {
       const option = document.createElement("option");
@@ -1265,7 +1265,7 @@ nonDiplomat.addEventListener("change", updateAllDiplomatSensitiveResults);
 diplomat.addEventListener("change", updateAllDiplomatSensitiveResults);
 stairCbmDropdown.addEventListener("change", calculateStairCharge);
 stairFloorDropdown.addEventListener("change", calculateStairCharge);
-
+dropdown.addEventListener("change", updateStairChargeDropdown);
 
 </script>
 </body>
