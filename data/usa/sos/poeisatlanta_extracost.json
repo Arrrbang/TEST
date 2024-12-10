@@ -35,5 +35,9 @@
       "20DRY": "INCLUDED",
       "40HC": "INCLUDED"
     }
+  },
+  "STAIR CHARGE": {
+    "description": "해당 업체의 계단 비용 단가는 $10*cbm*floor 입니다.",
+    "CBM단가": 10
   }
 }
