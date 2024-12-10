@@ -1112,17 +1112,18 @@ function updateDiplomatSensitiveResult(categoryKey) {
 function calculateTotalCost() {
   let totalCost = 0;
 
-  // basic-cost-? 값을 가져와서 숫자인 경우에만 더함
-  for (let i = 1; i <= 2; i++) {
-    const costValueElement = document.getElementById(`basic-cost-${i}-value`);
-    const costValueText = costValueElement ? costValueElement.textContent : "None";
+  // 'basic-cost-'로 시작하는 모든 값을 가져오기
+  const costValueElements = document.querySelectorAll('[id^="basic-cost-"][id$="-value"]');
+  
+  costValueElements.forEach(costValueElement => {
+    const costValueText = costValueElement.textContent || "None";
 
     // 숫자인지 체크
     const costValue = parseFloat(costValueText.replace(/[^0-9.-]+/g, ""));
     if (!isNaN(costValue)) {
       totalCost += costValue;
     }
-  }
+  });
 
   // basic-delivery-value 값도 추가
   const basicDeliveryValueElement = document.getElementById("basic-delivery-value");
@@ -1138,38 +1139,29 @@ function calculateTotalCost() {
   console.log("Total cost updated:", totalCost.toLocaleString());
 }
 
-// 기본 배송비와 추가 비용이 업데이트된 후에 호출
-function updateAllDiplomatSensitiveResults() {
-  Object.keys(basicExtraCost).forEach((categoryKey) => {
-    updateDiplomatSensitiveResult(categoryKey);
-  });
+// MutationObserver 설정
+function observeCostChanges() {
+  // 기본 배송비와 추가 비용의 변화를 감지할 observer 설정
+  const config = { childList: true, subtree: true };
 
-  // 기본 배송비와 추가 비용 업데이트 후 총합 계산
-  calculateTotalCost();
-}
+  // basic-cost-?와 basic-delivery-value를 관찰
+  const observedElements = [
+    ...document.querySelectorAll('[id^="basic-cost-"][id$="-value"]'),
+    document.getElementById("basic-delivery-value")
+  ];
 
-// 기본 배송비와 추가 비용이 변경될 때마다 총합을 업데이트
-function addEventListenersToCostValues() {
-  for (let i = 1; i <= 2; i++) {
-    const costValueElement = document.getElementById(`basic-cost-${i}-value`);
-
-    if (costValueElement) {
-      // 각 항목의 값이 변경될 때마다 총합을 다시 계산
-      costValueElement.addEventListener('DOMSubtreeModified', calculateTotalCost);
+  observedElements.forEach(element => {
+    if (element) {
+      const observer = new MutationObserver(calculateTotalCost);
+      observer.observe(element, config);
     }
-  }
-
-  // basic-delivery-value도 변경될 때마다 총합 계산
-  const basicDeliveryValueElement = document.getElementById("basic-delivery-value");
-  if (basicDeliveryValueElement) {
-    basicDeliveryValueElement.addEventListener('DOMSubtreeModified', calculateTotalCost);
-  }
+  });
 }
 
-// DOMContentLoaded 후에 이벤트 리스너를 추가하여 계산하도록 함
+// DOMContentLoaded 후에 호출
 document.addEventListener("DOMContentLoaded", () => {
-  // 초기 값 업데이트 및 이벤트 리스너 설정
-  addEventListenersToCostValues();
+  // 초기 값 업데이트 및 MutationObserver 설정
+  observeCostChanges();
   updateAllDiplomatSensitiveResults(); // 초기값을 설정하면서 총합을 업데이트
 });
 
