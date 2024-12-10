@@ -5,14 +5,16 @@
     "NonDiplomat": {
       "CONSOLE": {
         "1-30": "1-30",
-        "31-60": "31-60"
+        "31-60": "31-60",
+        "console단가":20
       },
       "20DRY": "INCLUDED",
       "40HC": "INCLUDED"
     },
     "Diplomat": {
       "CONSOLE": {
-        "1-60": "INCLUDED"
+        "1-60": "INCLUDED",
+        "console단가":15
       },
       "20DRY": "INCLUDED",
       "40HC": "INCLUDED"
