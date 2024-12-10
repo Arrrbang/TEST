@@ -195,7 +195,7 @@
       font-size: 1rem; /* 폰트 크기 */
       box-sizing: border-box; /* 패딩 포함 크기 계산 */
     }
-   
+
        #heavyitem-value {
       text-align: right; /* 텍스트를 오른쪽으로 정렬 */
       margin-left: auto; /* 왼쪽 여백을 자동으로 설정 */
@@ -212,7 +212,7 @@
       font-size: 1rem; /* 폰트 크기 */
       box-sizing: border-box; /* 패딩 포함 크기 계산 */
     }
-   
+
        #storage-value {
       text-align: right; /* 텍스트를 오른쪽으로 정렬 */
       margin-left: auto; /* 왼쪽 여백을 자동으로 설정 */
@@ -534,7 +534,7 @@
     <p id="basic-cost-1-description" class="charge-info">
       This is a description for POC.
     </p>
-    
+
 
     <div class="result-row">
       <span class="result-label" style="font-size: 1rem; font-weight: normal;" id="basic-cost-2-label">NONE</span>
@@ -694,32 +694,6 @@ const poeDropdown = document.getElementById("poe-dropdown");
 const link1Element = document.getElementById("link1");
 const link2Element = document.getElementById("link2");
 
-document.addEventListener("DOMContentLoaded", function () {
-  populateCbmDropdown(); // CBM 드롭다운을 하드코딩된 값으로 채운 후
-  fetchData().then(() => {
-    // JSON 데이터를 불러온 후 추가적인 업데이트 수행
-    // 여기에서는 CBM 드롭다운을 다시 JSON 값으로 덮어쓰지 않음
-    const currentCbmValue = dropdown.value;
-    updateDropdown(dataNonDiplomat, containerDropdown, containerDropdown.value);  // 다른 드롭다운만 업데이트
-  });
-});
-
-// CBM 드롭다운을 1부터 60까지 하드코딩된 값으로 채우는 함수
-function populateCbmDropdown() {
-  const cbmDropdown = document.getElementById("cbm-dropdown");
-
-  // CBM 드롭다운 초기화 (기존 내용 모두 제거)
-  cbmDropdown.innerHTML = "<option value=''>-- Select an Option --</option>";
-
-  // 1부터 60까지의 숫자 옵션 추가 (하드코딩된 값)
-  for (let i = 1; i <= 60; i++) {
-    const option = document.createElement("option");
-    option.value = i;
-    option.textContent = i;  // 텍스트로 숫자 표시
-    cbmDropdown.appendChild(option);
-  }
-}
-    
 // resetDropdown 함수 변경
 function resetDropdown(dropdownElement, placeholder = "-- Select an Option --") {
   if (!dropdownElement) {
@@ -728,7 +702,7 @@ function resetDropdown(dropdownElement, placeholder = "-- Select an Option --") 
   }
   dropdownElement.innerHTML = `<option value="">${placeholder}</option>`;
 }
-    
+
 // 링크 초기화
 function initializeLinks() {
   link1Element.textContent = "Default Link 1";
@@ -751,7 +725,7 @@ function updateLinks(links) {
     initializeLinks();
     return;
   }
-  
+
    // 링크 1 업데이트
   if (links[0]?.url) {
     link1Element.textContent = links[0].label || "Default Link 1";
@@ -820,35 +794,21 @@ async function initializePoeDropdown(path) {
   }
 }
 
-// POE Dropdown 변경 시 cbm과 container type을 리셋하지 않도록 처리
 function handlePoeChange() {
   const poeValue = poeDropdown.value;
 
   if (poeValue) {
     console.log("Selected POE value:", poeValue);
     fetchData().then(() => {
-      // fetchData가 끝나고 나서, JSON에서 가져온 값으로 드롭다운 업데이트
-      // cbm과 container type 값을 그대로 유지하면서도, 업데이트된 값을 반영
-      console.log("basicExtraCost 데이터 확인:", basicExtraCost);
-      updateAllDiplomatSensitiveResults(); // 추가 비용 업데이트
-      updateDropdownValue(dropdown, dataNonDiplomat);  // CBM 드롭다운 값 업데이트
-      updateContainerDropdownValue(containerDropdown, containerTypes); // Container Type 드롭다운 값 업데이트
+      // 기본값 설정 후 업데이트 호출
+  console.log("basicExtraCost 데이터 확인:", basicExtraCost);
+  updateAllDiplomatSensitiveResults(); // 추가 비용 업데이트
     });
   } else {
     console.warn("No POE value selected.");
   }
 }
 
-// 기존 값 그대로 두고, JSON에서 값을 가져와서 드롭다운 업데이트
-function updateDropdownValue(dropdownElement, data) {
-  const selectedValue = dropdownElement.value;  // 기존 선택된 값을 저장
-  updateDropdown(data, dropdownElement, selectedValue);  // 기존 선택된 값을 복원하면서 업데이트
-}
-
-function updateContainerDropdownValue(containerDropdown, containerTypes) {
-  const selectedValue = containerDropdown.value;  // 기존 선택된 값을 저장
-  updateContainerDropdown(containerTypes, containerDropdown, selectedValue);  // 기존 선택된 값을 복원하면서 업데이트
-}
 
 
 async function fetchData() {
@@ -893,6 +853,9 @@ async function fetchData() {
     // JSON 데이터 파싱
     const tableData = await tableResponse.json(); // 여기서 선언 및 초기화
     const extraCostData = await extraCostResponse.json();
+    console.log("Full extraCostData object:", extraCostData);
+
+    console.log("Loaded data:", { tableData, extraCostData });
 
     // 링크 업데이트: tableData.links를 우선 사용
     if (Array.isArray(tableData.links) && tableData.links.length > 0) {
@@ -905,16 +868,25 @@ async function fetchData() {
       console.warn("No valid links found in either JSON.");
       initializeLinks(); // 기본 링크 초기화
     }
-    
+
     // 데이터 업데이트
     basicExtraCost = extraCostData;
     dataNonDiplomat = tableData.nonDiplomat || {};
     dataDiplomat = tableData.diplomat || {};
     containerTypes = tableData.containerType || [];
 
-    const currentContainerValue = containerDropdown.value;
+    const currentCbmValue = dropdown?.value || null;
+    const currentContainerValue = containerDropdown?.value || null;
 
-    updateContainerDropdown(containerTypes, containerDropdown, currentContainerValue); // 기존 컨테이너 값 유지
+    // 드롭다운 및 데이터 업데이트
+    if (dropdown) {
+      updateDropdown(dataNonDiplomat, dropdown);
+    }
+
+    if (containerDropdown) {
+      updateContainerDropdown(containerTypes, containerDropdown);
+    }
+
     updateAdditionalCosts();
     updateStairChargeDropdown();
     updateHeavyItemDropdown();
@@ -925,7 +897,7 @@ async function fetchData() {
     console.error("Error in fetchData:", error);
   }
 }
-    
+
 // DOMContentLoaded 이벤트 리스너
 document.addEventListener("DOMContentLoaded", async () => {
   initializeLinks();
@@ -945,7 +917,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-    
+
 function resetDropdown(dropdownElement, placeholder = "-- Select an Option --") {
   if (!dropdownElement) {
     console.warn("resetDropdown: Provided dropdownElement is null or undefined.");
@@ -977,10 +949,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 // CBM 드롭다운 업데이트
 function updateDropdown(data, dropdownElement, selectedValue) {
-  const selectedValueExists = selectedValue && data[selectedValue]; // 기존 선택값이 있는지 체크
+  if (!dropdownElement) {
+    console.error("updateDropdown: Provided dropdownElement is null or undefined.");
+    return; // 함수 종료
+  }
 
-  // 기존 선택값을 보존하면서 드롭다운 업데이트
-  dropdownElement.innerHTML = "<option value=''>-- Select an Option --</option>";  // 초기화
+  resetDropdown(dropdownElement, "-- Select an Option --");
   Object.keys(data).forEach((key) => {
     const option = document.createElement("option");
     option.value = key;
@@ -989,7 +963,7 @@ function updateDropdown(data, dropdownElement, selectedValue) {
   });
 
   // 기존 선택 값 복원
-  if (selectedValueExists) {
+  if (selectedValue && data[selectedValue]) {
     dropdownElement.value = selectedValue;
   } else {
     dropdownElement.value = ""; // 기본값
@@ -999,15 +973,11 @@ function updateDropdown(data, dropdownElement, selectedValue) {
   dropdownElement.dispatchEvent(new Event("change")); // 값이 변경되었음을 알림
 }
 
+
+
 // 컨테이너 타입 드롭다운 업데이트
 function updateContainerDropdown(containerTypes, containerDropdown, selectedValue) {
-  if (!containerDropdown) {
-    console.error("updateContainerDropdown: Provided containerDropdown is null or undefined.");
-    return;
-  }
-
-  // 기존 선택값을 보존하면서 드롭다운 업데이트
-  containerDropdown.innerHTML = "<option value=''>-- Select a Container --</option>";  // 초기화
+  resetDropdown(containerDropdown, "-- Select a Container --");
   containerTypes.forEach((type) => {
     const option = document.createElement("option");
     option.value = type;
@@ -1015,22 +985,19 @@ function updateContainerDropdown(containerTypes, containerDropdown, selectedValu
     containerDropdown.appendChild(option);
   });
 
-  // 기존 선택된 값 복원
-  if (selectedValue) {
+  // 기존 선택 값 복원
+  if (selectedValue && containerTypes.includes(selectedValue)) {
     containerDropdown.value = selectedValue;
+  } else {
+    containerDropdown.value = ""; // 선택값 초기화
   }
-
-  // 강제로 UI 업데이트
-  containerDropdown.dispatchEvent(new Event("change"));
 }
-    
 //------------------basic delivery 처리------------------------
     // 외교 화물 유무와 CBM 드롭다운 값에 따라 기본 배송 비용 업데이트
 function updateBasicDeliveryCost() {
   const selectedCBM = dropdown.value; // 선택된 CBM 값
   const isNonDiplomat = nonDiplomat.checked; // Non-Diplomat 여부
   const isDiplomat = diplomat.checked; // Diplomat 여부
-  const selectedContainer = containerDropdown.value; // 선택된 컨테이너 타입 (CONSOLE, 20DRY, 40HC)
 
   // 유효성 검사: CBM 값과 체크박스 상태 확인
   if (!selectedCBM) {
@@ -1045,44 +1012,11 @@ function updateBasicDeliveryCost() {
     return;
   }
 
-  // 외교화물 체크에 따라 비용 데이터 결정
-  const data = isNonDiplomat ? dataNonDiplomat : isDiplomat ? dataDiplomat : {};
-  
-  // 선택한 컨테이너 타입에 해당하는 비용 데이터를 가져오기
-  let costData = data[selectedContainer];
+  // JSON 데이터에서 해당 CBM 값 가져오기
+  const costData = isNonDiplomat ? dataNonDiplomat : isDiplomat ? dataDiplomat : {};
+  const costValue = costData[selectedCBM];
 
-  // 선택한 컨테이너 타입에 해당하는 비용 데이터가 없을 경우 "console"에서 값 찾기
-  if (!costData) {
-    console.warn(`${selectedContainer}에서 해당 값이 없습니다. "console"에서 값을 가져옵니다.`);
-    costData = data["console"];
-  }
-
-  // CBM 값 처리 (범위나 숫자에 맞는 값을 찾기)
-  let costValue = "None";
-  if (costData) {
-    // "ANY" 키가 있으면 그 값을 반환
-    if (costData["ANY"]) {
-      costValue = costData["ANY"];
-    } else {
-      // CBM 값이 범위에 있는지 확인
-      for (const range in costData) {
-        if (range.includes("-")) {
-          // 범위 처리를 위한 로직
-          const [start, end] = range.split("-").map(Number);
-          if (selectedCBM >= start && selectedCBM <= end) {
-            costValue = costData[range];
-            break;
-          }
-        } else if (parseInt(range, 10) === parseInt(selectedCBM, 10)) {
-          costValue = costData[range];
-          break;
-        }
-      }
-    }
-  }
-
-  // 값을 찾은 후 화면에 표시
-  if (costValue !== "None") {
+  if (costValue !== undefined) {
     result.textContent = costValue; // 기본 배송 비용 표시
     console.log("기본 배송 비용 업데이트 완료:", costValue);
   } else {
@@ -1090,6 +1024,13 @@ function updateBasicDeliveryCost() {
     result.textContent = "None"; // 기본값
   }
 }
+
+// 이벤트 리스너 추가: 드롭다운 변경 시 기본 배송 비용 업데이트
+dropdown.addEventListener("change", updateBasicDeliveryCost);
+
+// 외교 화물 체크박스 변경 시 기본 배송 비용 업데이트
+nonDiplomat.addEventListener("change", updateBasicDeliveryCost);
+diplomat.addEventListener("change", updateBasicDeliveryCost);
 
 //--------------------basic cost 처리---------------------------
 function updateDiplomatSensitiveResult(categoryKey) {
@@ -1162,7 +1103,7 @@ fetchData().then(() => {
   updateBasicDeliveryCost(); // 기본 배송 비용 업데이트
   updateAllDiplomatSensitiveResults(); // 추가 비용 업데이트
 });
-    
+
 function updateAdditionalCosts() {
   console.warn("updateAdditionalCosts function is not implemented yet.");
   // 필요한 로직을 여기에 추가하세요.
@@ -1190,9 +1131,7 @@ dropdown.addEventListener("change", updateAllDiplomatSensitiveResults);
 containerDropdown.addEventListener("change", updateAllDiplomatSensitiveResults);
 nonDiplomat.addEventListener("change", updateAllDiplomatSensitiveResults);
 diplomat.addEventListener("change", updateAllDiplomatSensitiveResults);
-dropdown.addEventListener("change", updateBasicDeliveryCost);
-nonDiplomat.addEventListener("change", updateBasicDeliveryCost);
-diplomat.addEventListener("change", updateBasicDeliveryCost);
+
 
 
 
