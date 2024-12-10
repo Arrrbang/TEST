@@ -803,6 +803,12 @@ function handlePoeChange() {
       // 기본값 설정 후 업데이트 호출
   console.log("basicExtraCost 데이터 확인:", basicExtraCost);
   updateAllDiplomatSensitiveResults(); // 추가 비용 업데이트
+        const stairDescription = basicExtraCost["STAIR CHARGE"]?.description || "No description available.";
+      const stairDescriptionElement = document.getElementById("stair-description");
+      if (stairDescriptionElement) {
+        stairDescriptionElement.textContent = stairDescription; // 설명 업데이트
+        console.log("Updated stair description:", stairDescription);
+      }
     });
   } else {
     console.warn("No POE value selected.");
@@ -886,10 +892,18 @@ async function fetchData() {
     updatestorageperiodDropdown();
     calculateTotalCost();
     console.log("basicExtraCost 데이터 확인:", basicExtraCost);
+        // 추가: stair-description 업데이트
+    const stairDescription = basicExtraCost["STAIR CHARGE"]?.description || "No description available.";
+    const stairDescriptionElement = document.getElementById("stair-description");
+    if (stairDescriptionElement) {
+      stairDescriptionElement.textContent = stairDescription; // 설명 업데이트
+      console.log("Updated stair description:", stairDescription);
+    }
   } catch (error) {
     console.error("Error in fetchData:", error);
   }
 }
+
 
 // DOMContentLoaded 이벤트 리스너
 document.addEventListener("DOMContentLoaded", async () => {
