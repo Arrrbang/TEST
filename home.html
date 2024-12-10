@@ -1126,7 +1126,7 @@ function calculateTotalCost() {
     const costValueText = costValueElement.textContent || "None";
 
     // 화폐 단위 제거 및 숫자 추출
-    const numericValue = parseFloat(costValueText.replace(currencySymbol, "").replace(/[^0-9.-]+/g, ""));
+    const numericValue = parseFloat(costValueText.replace(/[\$€₩]/g, "").replace(/[^0-9.-]+/g, ""));
     if (!isNaN(numericValue)) {
       console.log(`Adding cost value: ${numericValue}`); // 디버그 로그
       totalCost += numericValue;
@@ -1137,7 +1137,7 @@ function calculateTotalCost() {
   const basicDeliveryValueElement = document.getElementById("basic-delivery-value");
   const basicDeliveryValueText = basicDeliveryValueElement ? basicDeliveryValueElement.textContent : "None";
 
-  const basicDeliveryValue = parseFloat(basicDeliveryValueText.replace(currencySymbol, "").replace(/[^0-9.-]+/g, ""));
+  const basicDeliveryValue = parseFloat(basicDeliveryValueText.replace(/[\$€₩]/g, "").replace(/[^0-9.-]+/g, ""));
   if (!isNaN(basicDeliveryValue)) {
     console.log(`Adding basic delivery value: ${basicDeliveryValue}`); // 디버그 로그
     totalCost += basicDeliveryValue;
