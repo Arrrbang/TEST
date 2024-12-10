@@ -875,7 +875,7 @@ async function fetchData() {
     dataDiplomat = tableData.diplomat || {};
     containerTypes = tableData.containerType || [];
 
-    const currentCbmValue = dropdown?.value || null;
+    const currentCbmValue = parseInt(dropdown?.value, 10) || null;  // 1부터 60까지의 값을 사용
     const currentContainerValue = containerDropdown?.value || null;
 
     // 드롭다운 및 데이터 업데이트
@@ -948,30 +948,27 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 // CBM 드롭다운 업데이트
-function updateDropdown(data, dropdownElement, selectedValue) {
-  if (!dropdownElement) {
-    console.error("updateDropdown: Provided dropdownElement is null or undefined.");
-    return; // 함수 종료
+function updateCbmDropdown(dropdownElement, selectedValue) {
+  resetDropdown(dropdownElement, "-- Select a CBM --");
+
+  // 1부터 60까지의 숫자 추가
+  for (let i = 1; i <= 60; i++) {
+    const option = document.createElement("option");
+    option.value = i;
+    option.textContent = i;
+    dropdownElement.appendChild(option);
   }
 
-  resetDropdown(dropdownElement, "-- Select an Option --");
-  Object.keys(data).forEach((key) => {
-    const option = document.createElement("option");
-    option.value = key;
-    option.textContent = key;
-    dropdownElement.appendChild(option);
-  });
-
   // 기존 선택 값 복원
-  if (selectedValue && data[selectedValue]) {
+  if (selectedValue && selectedValue >= 1 && selectedValue <= 60) {
     dropdownElement.value = selectedValue;
   } else {
     dropdownElement.value = ""; // 기본값
   }
 
-  // 강제로 UI 업데이트
-  dropdownElement.dispatchEvent(new Event("change")); // 값이 변경되었음을 알림
+  dropdownElement.dispatchEvent(new Event("change"));
 }
+
 
 
 
@@ -995,14 +992,14 @@ function updateContainerDropdown(containerTypes, containerDropdown, selectedValu
 //------------------basic delivery 처리------------------------
     // 외교 화물 유무와 CBM 드롭다운 값에 따라 기본 배송 비용 업데이트
 function updateBasicDeliveryCost() {
-  const selectedCBM = dropdown.value; // 선택된 CBM 값
+  const selectedCBM = parseInt(dropdown.value, 10); // 하드코딩된 값 사용
   const isNonDiplomat = nonDiplomat.checked; // Non-Diplomat 여부
   const isDiplomat = diplomat.checked; // Diplomat 여부
 
   // 유효성 검사: CBM 값과 체크박스 상태 확인
-  if (!selectedCBM) {
-    console.warn("CBM 값이 선택되지 않았습니다.");
-    result.textContent = "None"; // 기본값
+  if (isNaN(selectedCBM) || selectedCBM < 1 || selectedCBM > 60) {
+    console.warn("CBM 값이 선택되지 않았거나 범위를 벗어났습니다.");
+    result.textContent = "None";
     return;
   }
 
@@ -1013,8 +1010,8 @@ function updateBasicDeliveryCost() {
   }
 
   // JSON 데이터에서 해당 CBM 값 가져오기
-  const costData = isNonDiplomat ? dataNonDiplomat : isDiplomat ? dataDiplomat : {};
-  const costValue = costData[selectedCBM];
+const costValue = selectedCBM >= 1 && selectedCBM <= 60 ? selectedCBM * 10 : "None"; // 예시: 1부터 60까지의 CBM 값에 대해 비용을 계산
+
 
   if (costValue !== undefined) {
     result.textContent = costValue; // 기본 배송 비용 표시
