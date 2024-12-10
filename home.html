@@ -1159,6 +1159,19 @@ function observeCostChanges() {
 }
 
 //-------------------stair carry charge 업데이트---------------
+// POE 드롭다운 선택 시 설명 업데이트 및 계단 비용 계산
+poeDropdown.addEventListener("change", () => {
+  // POE 드롭다운이 선택된 후에만 description 업데이트
+  const stairDescription = basicExtraCost["STAIR CHARGE"]?.description || "No description available.";
+  const stairDescriptionElement = document.getElementById("stair-description");
+  if (stairDescriptionElement) {
+    stairDescriptionElement.textContent = stairDescription;
+  }
+
+  // POE 선택 후 계단 비용 계산도 바로 실행
+  calculateStairCharge(); // 추가된 부분: POE 변경 후 바로 계산이 되도록 호출
+});
+
 // 이동 CBM 드롭다운 업데이트
 function updateStairChargeDropdown() {
   resetDropdown(stairCbmDropdown, "이동 CBM 선택");
@@ -1210,18 +1223,6 @@ function calculateStairCharge() {
   }
 }
 
-// POE 드롭다운 선택 시 설명 업데이트 및 계단 비용 계산
-poeDropdown.addEventListener("change", () => {
-  // POE 드롭다운이 선택된 후에만 description 업데이트
-  const stairDescription = basicExtraCost["STAIR CHARGE"]?.description || "No description available.";
-  const stairDescriptionElement = document.getElementById("stair-description");
-  if (stairDescriptionElement) {
-    stairDescriptionElement.textContent = stairDescription;
-  }
-
-  // POE 선택 후 계단 비용 계산도 바로 실행
-  calculateStairCharge();
-});
 
 //--------------------------------------------------------------------------
     
