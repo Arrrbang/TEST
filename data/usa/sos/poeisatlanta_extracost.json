@@ -39,5 +39,10 @@
   "STAIR CHARGE": {
     "description": "해당 업체의 계단 비용 단가는 $10*cbm*floor 입니다.",
     "CBM단가": 10
+  },
+    "HEAVY ITEM": {
+    "description": "$100/1UNIT, 계단으로 이동할 경우 1층당 $100",
+    "단위": "UNIT",
+    "단가": 100
   }
 }
