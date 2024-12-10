@@ -1,34 +1,38 @@
 {
-  "POC": {
-    "description": "",
+  "basic-cost-1": {
+    "name": "POC savannah",
+    "description": "테스트중 savannah",
     "NonDiplomat": {
       "CONSOLE": {
-        "1-60": "INCLUDED"
+        "1-60": "INCLUDED1 savannah"
       },
-      "20DRY": "INCLUDED",
-      "40HC": "INCLUDED"
+      "20DRY": "INCLUDED2 savannah",
+      "40HC": "INCLUDED3savannah"
     },
     "Diplomat": {
       "CONSOLE": {
-        "1-60":"INCLUDED"
+        "1-60": "INCLUDED4D savannah"
       },
-      "20DRY": "INCLUDED",
-      "40HC": "INCLUDED"
+      "20DRY": "INCLUDED5D savannah",
+      "40HC": "INCLUDED6D savannah"
     }
   },
-  "THC": {
+  "basic-cost-2": {
+    "name": "THC savannah",
+    "description": "123 savannah",
     "NonDiplomat": {
       "CONSOLE": {
-        "1-60": "INCLUDED"
+        "1-60": "INCLUDED1 savannah"
       },
-      "20DRY": "INCLUDED",
-      "40HC": "INCLUDED"
+      "20DRY": "INCLUDED2 savannah",
+      "40HC": "INCLUDED3 savannah"
     },
     "Diplomat": {
       "CONSOLE": {
-        "1-60":"INCLUDED"
+        "1-60": "INCLUDED4 savannah"
       },
-      "20DRY": "INCLUDED",
-      "40HC": "INCLUDED"
+      "20DRY": "INCLUDED5 savannah",
+      "40HC": "INCLUDED6 savannah"
     }
   }
+}
