@@ -1288,15 +1288,16 @@ function updatestorageperiodDropdown() {
     return;
   }
 
-  // 1. 보관 비용 단가 설정
+  // 1. 무료 보관 기간과 보관 비용 단가 설정
+  const freeStorageDays = parseInt(storageData["무료 보관 기간 일자"], 10) || 0; // 기본값은 0
   const storageUnitCost = parseFloat(storageData["보관 비용 단가"]) || 0; // 기본 보관 단가
 
-  if (isNaN(storageUnitCost)) {
+  if (isNaN(freeStorageDays) || isNaN(storageUnitCost)) {
     console.warn("STORAGE CHARGE 데이터가 올바르지 않습니다.");
     return;
   }
 
-  // 2. storageperiod 드롭다운 옵션 생성
+  // 2. storageperiod 드롭다운 옵션 생성 (무료 보관 일수 이후부터 시작)
   resetDropdown(storageperiodDropdown, "보관 기간 선택");
 
   for (let i = freeStorageDays + 1; i <= freeStorageDays + 90; i++) { // 무료 보관 이후부터 90일까지 옵션 생성
@@ -1337,6 +1338,7 @@ function updatestorageperiodDropdown() {
     }
   });
 }
+
 
 //--------------------------------------------------------------------------------
 
