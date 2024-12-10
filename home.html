@@ -697,10 +697,10 @@ const link2Element = document.getElementById("link2");
 // 페이지 로드 시 CBM 드롭다운을 1부터 60까지 채워주는 코드 추가
 function populateCbmDropdown() {
   const cbmDropdown = document.getElementById("cbm-dropdown");
-  
-  // 드롭다운 초기화
+
+  // CBM 드롭다운 초기화 (기존 내용 모두 제거)
   cbmDropdown.innerHTML = "<option value=''>-- Select an Option --</option>";
-  
+
   // 1부터 60까지의 숫자 옵션 추가
   for (let i = 1; i <= 60; i++) {
     const option = document.createElement("option");
@@ -710,7 +710,7 @@ function populateCbmDropdown() {
   }
 }
 
-// 페이지 로드 시 드롭다운에 값 추가
+// 페이지 로드 시 CBM 드롭다운에 값 추가
 document.addEventListener("DOMContentLoaded", function () {
   populateCbmDropdown();
 });
