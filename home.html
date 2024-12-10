@@ -894,8 +894,6 @@ async function fetchData() {
     // JSON 데이터 파싱
     const tableData = await tableResponse.json(); // 여기서 선언 및 초기화
     const extraCostData = await extraCostResponse.json();
-    console.log("Full extraCostData object:", extraCostData);
-    console.log("Loaded data:", { tableData, extraCostData });
 
     // 링크 업데이트: tableData.links를 우선 사용
     if (Array.isArray(tableData.links) && tableData.links.length > 0) {
@@ -918,8 +916,6 @@ async function fetchData() {
     const currentCbmValue = dropdown.value;
     const currentContainerValue = containerDropdown.value;
 
-    populateCbmDropdown(); 
-    updateDropdown(dataNonDiplomat, dropdown, currentCbmValue); // 기존 CBM 값 유지
     updateContainerDropdown(containerTypes, containerDropdown, currentContainerValue); // 기존 컨테이너 값 유지
     updateAdditionalCosts();
     updateStairChargeDropdown();
