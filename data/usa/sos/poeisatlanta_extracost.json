@@ -1,4 +1,6 @@
 {
+  "화폐단위":"$",
+  
   "basic-cost-1": {
     "name": "POC",
     "description": "테스트중",
