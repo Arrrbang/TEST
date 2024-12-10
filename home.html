@@ -1158,15 +1158,64 @@ function observeCostChanges() {
   });
 }
 
+//-------------------stair carry charge 업데이트---------------
+  function updateStairChargeDropdown() {
+  resetDropdown(stairCbmDropdown, "이동 CBM 선택");
+
+  const selectedCBM = parseInt(dropdown.value, 10); // 상위 CBM 선택값
+  if (!isNaN(selectedCBM)) {
+    // STAIR CBM 옵션 추가 (1 ~ selectedCBM 범위)
+    for (let i = 1; i <= selectedCBM; i++) {
+      const option = document.createElement("option");
+      option.value = i;
+      option.textContent = i;
+      stairCbmDropdown.appendChild(option);
+    }
+  } else {
+    // 선택된 CBM이 유효하지 않은 경우 추가 옵션을 비웁니다.
+    resetDropdown(stairCbmDropdown, "이동 CBM 선택");
+  }
+
+  // STAIR FLOOR 옵션 추가 (2 ~ 10 고정)
+  resetDropdown(stairFloorDropdown, "이동 층 선택");
+  for (let i = 2; i <= 10; i++) {
+    const option = document.createElement("option");
+    option.value = i;
+    option.textContent = `${i}층`;
+    stairFloorDropdown.appendChild(option);
+  }
+}
+
+// ▼STAIR CHARGE 결과 계산
+function calculateStairCharge() {
+  const cbmValue = parseInt(stairCbmDropdown.value, 10);
+  const floorValue = parseInt(stairFloorDropdown.value, 10);
+
+  // JSON에서 "CBM단가" 값을 가져오기
+  const cbmUnitCost = basicExtraCost["STAIR CHARGE"]?.["CBM단가"] || 0; // 기본값은 0
+
+  // description 업데이트
+  const stairDescription = basicExtraCost["STAIR CHARGE"]?.description || "No description available.";
+  const stairDescriptionElement = document.getElementById("stair-description");
+  if (stairDescriptionElement) {
+    stairDescriptionElement.textContent = stairDescription; // description 업데이트
+  }
+
+  if (!isNaN(cbmValue) && !isNaN(floorValue)) {
+    const stairCharge = cbmValue * floorValue * cbmUnitCost; // JSON의 "CBM단가"를 사용
+    stairChargeResult.textContent = stairCharge.toFixed(2); // 소수점 2자리까지 표시
+  } else {
+    stairChargeResult.textContent = "None"; // 기본값
+  }
+}
+//--------------------------------------------------------------------------
+    
 // DOMContentLoaded 후에 호출
 document.addEventListener("DOMContentLoaded", () => {
-  // 초기 값 업데이트 및 MutationObserver 설정
-  observeCostChanges();
-  updateAllDiplomatSensitiveResults(); // 초기값을 설정하면서 총합을 업데이트
+  updateStairChargeDropdown(); // 페이지 로드 후 초기화
+  calculateStairCharge(); // 초기값 계산
 });
-
-
-//------------------------------------------------------
+    
 
 // 모든 카테고리를 동적으로 업데이트
 function updateAllDiplomatSensitiveResults() {
@@ -1188,10 +1237,6 @@ function updateAdditionalCosts() {
   // 필요한 로직을 여기에 추가하세요.
 }
 
-function updateStairChargeDropdown() {
-  console.warn("updateStairChargeDropdown function is not implemented yet.");
-  // 필요한 로직을 여기에 추가하세요.
-}
 function updateHeavyItemDropdown() {
   console.log("updateHeavyItemDropdown function is not implemented yet.");
   // 필요한 로직을 여기에 추가하세요.
@@ -1206,8 +1251,8 @@ dropdown.addEventListener("change", updateAllDiplomatSensitiveResults);
 containerDropdown.addEventListener("change", updateAllDiplomatSensitiveResults);
 nonDiplomat.addEventListener("change", updateAllDiplomatSensitiveResults);
 diplomat.addEventListener("change", updateAllDiplomatSensitiveResults);
-
-
+stairCbmDropdown.addEventListener("change", calculateStairCharge);
+stairFloorDropdown.addEventListener("change", calculateStairCharge);
 
 
 </script>
