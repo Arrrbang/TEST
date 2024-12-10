@@ -899,6 +899,7 @@ async function fetchData() {
       stairDescriptionElement.textContent = stairDescription; // 설명 업데이트
       console.log("Updated stair description:", stairDescription);
     }
+    updateHeavyItemDropdown(); // HEAVY ITEM 드롭다운 업데이트
   } catch (error) {
     console.error("Error in fetchData:", error);
   }
@@ -916,9 +917,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     await initializePoeDropdown(path);
     fetchData().then(() => {
       // 기본값 설정 후 업데이트 호출
-  console.log("basicExtraCost 데이터 확인:", basicExtraCost);
-  updateAllDiplomatSensitiveResults(); // 추가 비용 업데이트
-});
+      console.log("basicExtraCost 데이터 확인:", basicExtraCost);
+      updateAllDiplomatSensitiveResults(); // 추가 비용 업데이트
+      updateHeavyItemDropdown(); // HEAVY ITEM 드롭다운 업데이트
+    });
   } else {
     console.error("Path parameter missing in URL.");
   }
@@ -932,27 +934,6 @@ function resetDropdown(dropdownElement, placeholder = "-- Select an Option --") 
   }
   dropdownElement.innerHTML = `<option value="">${placeholder}</option>`;
 }
-
-
-document.addEventListener("DOMContentLoaded", async () => {
-  initializeLinks();
-
-  const params = new URLSearchParams(window.location.search);
-  const path = params.get("path");
-
-  if (path) {
-    await initializePoeDropdown(path);
-    fetchData().then(() => {
-      // 기본값 설정 후 업데이트 호출
-  console.log("basicExtraCost 데이터 확인:", basicExtraCost);
-  updateAllDiplomatSensitiveResults(); // 추가 비용 업데이트
-});
-  } else {
-    console.error("Path parameter missing in URL.");
-  }
-});
-
-
 
 // CBM 드롭다운 업데이트
 function updateCbmDropdown(dropdownElement, selectedValue) {
@@ -1238,8 +1219,50 @@ function calculateStairCharge() {
 }
 
 
-//--------------------------------------------------------------------------
-    
+//--------------------------------heavy items-----------------------------
+function updateHeavyItemDropdown() {
+  const heavyItemData = basicExtraCost["HEAVY ITEM"]; // JSON 데이터에서 HEAVY ITEM 가져오기
+
+  if (!heavyItemData) {
+    console.warn("HEAVY ITEM 데이터가 없습니다.");
+    return;
+  }
+
+  // 1. heavyitem-description 업데이트
+  const descriptionElement = document.getElementById("heavyitem-description");
+  if (descriptionElement) {
+    descriptionElement.textContent = heavyItemData.description || "No description available.";
+  }
+
+  // 2. heavyitemunit 드롭다운 옵션 생성
+  resetDropdown(heavyItemDropdown, "중량 화물 개수 선택");
+
+  const unit = heavyItemData["단위"] || ""; // 단위 가져오기
+  for (let i = 1; i <= 5; i++) {
+    const option = document.createElement("option");
+    option.value = i;
+    option.textContent = `${i}${unit}`; // 숫자 뒤에 단위 추가
+    heavyItemDropdown.appendChild(option);
+  }
+
+  // 3. 드롭다운 변경 시 값 계산
+  heavyItemDropdown.addEventListener("change", () => {
+    const selectedValue = parseInt(heavyItemDropdown.value, 10); // 선택된 숫자 값
+    const unitCost = heavyItemData["단가"] || 0; // 단가 가져오기
+
+    // 값 계산
+    const calculatedValue = !isNaN(selectedValue) ? selectedValue * unitCost : "None";
+
+    // heavyitem-value 업데이트
+    const valueElement = document.getElementById("heavyitem-value");
+    if (valueElement) {
+      valueElement.textContent = calculatedValue !== "None" ? calculatedValue.toLocaleString() : "None";
+    }
+
+    console.log("HEAVY ITEM 계산 결과:", calculatedValue);
+  });
+}
+//-----------------------------------------------------
 // DOMContentLoaded 후에 호출
 document.addEventListener("DOMContentLoaded", () => {
   updateStairChargeDropdown(); // 페이지 로드 후 초기화
@@ -1267,10 +1290,7 @@ function updateAdditionalCosts() {
   // 필요한 로직을 여기에 추가하세요.
 }
 
-function updateHeavyItemDropdown() {
-  console.log("updateHeavyItemDropdown function is not implemented yet.");
-  // 필요한 로직을 여기에 추가하세요.
-}
+
 function updatestorageperiodDropdown() {
   console.log("updatestorageperiodDropdown function is not implemented yet.");
   // 필요한 로직을 여기에 추가하세요.
