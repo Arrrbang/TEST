@@ -1064,16 +1064,23 @@ function updateDiplomatSensitiveResult(categoryKey) {
   const costData =
     categoryData[nonDiplomat.checked ? "NonDiplomat" : "Diplomat"]?.[selectedContainer];
 
+  // "CONSOLE" 타입 컨테이너일 경우, "console단가"를 찾아서 계산
   if (selectedContainer === "CONSOLE" && typeof costData === "object") {
-    // CBM 범위 값 처리
-    const rangeResult = Object.keys(costData).find((key) => {
-      if (key.includes("-")) {
-        const [start, end] = key.split("-").map(Number);
-        return selectedCBM >= start && selectedCBM <= end;
-      }
-      return false;
-    });
-    result = costData[rangeResult] || "None";
+    if (costData["console단가"]) {
+      // "console단가"가 존재하면, CBM 값과 곱하기
+      const consoleUnitCost = parseFloat(costData["console단가"]);
+      result = (selectedCBM * consoleUnitCost).toFixed(2); // 소수점 2자리로 처리
+    } else {
+      // "console단가"가 없다면 기존의 방식대로 처리
+      const rangeResult = Object.keys(costData).find((key) => {
+        if (key.includes("-")) {
+          const [start, end] = key.split("-").map(Number);
+          return selectedCBM >= start && selectedCBM <= end;
+        }
+        return false;
+      });
+      result = costData[rangeResult] || "None";
+    }
   } else if (costData === "INCLUDED") {
     result = "INCLUDED"; // 문자열 처리
   } else if (!isNaN(costData)) {
@@ -1099,11 +1106,13 @@ function updateDiplomatSensitiveResult(categoryKey) {
 
   console.log(`${categoryKey} 업데이트 완료:`, result, "Description:", categoryData.description);
 }
+
 //------------------------------basic cost total 계산------------------------------
+// total-value 계산 함수
 function calculateTotalCost() {
   let totalCost = 0;
 
-  // 모든 basic-cost-? 값을 가져와서 숫자인 경우에만 더함
+  // basic-cost-? 값을 가져와서 숫자인 경우에만 더함
   for (let i = 1; i <= 2; i++) {
     const costValueElement = document.getElementById(`basic-cost-${i}-value`);
     const costValueText = costValueElement ? costValueElement.textContent : "None";
@@ -1113,6 +1122,15 @@ function calculateTotalCost() {
     if (!isNaN(costValue)) {
       totalCost += costValue;
     }
+  }
+
+  // basic-delivery-value 값도 추가
+  const basicDeliveryValueElement = document.getElementById("basic-delivery-value");
+  const basicDeliveryValueText = basicDeliveryValueElement ? basicDeliveryValueElement.textContent : "None";
+
+  const basicDeliveryValue = parseFloat(basicDeliveryValueText.replace(/[^0-9.-]+/g, ""));
+  if (!isNaN(basicDeliveryValue)) {
+    totalCost += basicDeliveryValue;
   }
 
   // 결과 출력: 쉼표 추가하여 출력
@@ -1139,6 +1157,12 @@ function addEventListenersToCostValues() {
       // 각 항목의 값이 변경될 때마다 총합을 다시 계산
       costValueElement.addEventListener('DOMSubtreeModified', calculateTotalCost);
     }
+  }
+
+  // basic-delivery-value도 변경될 때마다 총합 계산
+  const basicDeliveryValueElement = document.getElementById("basic-delivery-value");
+  if (basicDeliveryValueElement) {
+    basicDeliveryValueElement.addEventListener('DOMSubtreeModified', calculateTotalCost);
   }
 }
 
