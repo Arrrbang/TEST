@@ -977,10 +977,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 // CBM 드롭다운 업데이트
 function updateDropdown(data, dropdownElement, selectedValue) {
-  if (!dropdownElement) {
-    console.error("updateDropdown: Provided dropdownElement is null or undefined.");
-    return; // 함수 종료
-  }
+  const selectedValueExists = selectedValue && data[selectedValue]; // 기존 선택값이 있는지 체크
 
   // 기존 선택값을 보존하면서 드롭다운 업데이트
   dropdownElement.innerHTML = "<option value=''>-- Select an Option --</option>";  // 초기화
