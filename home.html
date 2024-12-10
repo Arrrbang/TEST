@@ -1124,10 +1124,10 @@ function calculateTotalCost() {
   costValueElements.forEach(costValueElement => {
     const costValueText = costValueElement.textContent || "None";
 
-    // 숫자인지 체크
-    const costValue = parseFloat(costValueText.replace(/[^0-9.-]+/g, ""));
-    if (!isNaN(costValue)) {
-      totalCost += costValue;
+    // 화폐 단위 제거 및 숫자 추출
+    const numericValue = parseFloat(costValueText.replace(currencySymbol, "").replace(/[^0-9.-]+/g, ""));
+    if (!isNaN(numericValue)) {
+      totalCost += numericValue;
     }
   });
 
