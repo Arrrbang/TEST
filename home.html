@@ -1166,6 +1166,8 @@ function observeCostChanges() {
         calculateTotalCost();
       });
       observer.observe(element, config);
+    } else {
+      console.warn("Element not found or invalid for observation.");
     }
   });
 }
@@ -1284,6 +1286,7 @@ function updateHeavyItemDropdown() {
 document.addEventListener("DOMContentLoaded", () => {
   updateStairChargeDropdown(); // 페이지 로드 후 초기화
   calculateStairCharge(); // 초기값 계산
+  calculateTotalCost();
 });
     
 
