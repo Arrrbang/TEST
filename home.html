@@ -794,21 +794,35 @@ async function initializePoeDropdown(path) {
   }
 }
 
+// POE Dropdown 변경 시 cbm과 container type을 리셋하지 않도록 처리
 function handlePoeChange() {
   const poeValue = poeDropdown.value;
 
   if (poeValue) {
     console.log("Selected POE value:", poeValue);
     fetchData().then(() => {
-      // 기본값 설정 후 업데이트 호출
-  console.log("basicExtraCost 데이터 확인:", basicExtraCost);
-  updateAllDiplomatSensitiveResults(); // 추가 비용 업데이트
+      // fetchData가 끝나고 나서, JSON에서 가져온 값으로 드롭다운 업데이트
+      // cbm과 container type 값을 그대로 유지하면서도, 업데이트된 값을 반영
+      console.log("basicExtraCost 데이터 확인:", basicExtraCost);
+      updateAllDiplomatSensitiveResults(); // 추가 비용 업데이트
+      updateDropdownValue(dropdown, dataNonDiplomat);  // CBM 드롭다운 값 업데이트
+      updateContainerDropdownValue(containerDropdown, containerTypes); // Container Type 드롭다운 값 업데이트
     });
   } else {
     console.warn("No POE value selected.");
   }
 }
 
+// 기존 값 그대로 두고, JSON에서 값을 가져와서 드롭다운 업데이트
+function updateDropdownValue(dropdownElement, data) {
+  const selectedValue = dropdownElement.value;  // 기존 선택된 값을 저장
+  updateDropdown(data, dropdownElement, selectedValue);  // 기존 선택된 값을 복원하면서 업데이트
+}
+
+function updateContainerDropdownValue(containerDropdown, containerTypes) {
+  const selectedValue = containerDropdown.value;  // 기존 선택된 값을 저장
+  updateContainerDropdown(containerTypes, containerDropdown, selectedValue);  // 기존 선택된 값을 복원하면서 업데이트
+}
 
 
 async function fetchData() {
