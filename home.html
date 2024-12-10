@@ -1203,14 +1203,14 @@ function calculateStairCharge() {
   }
 
   if (!isNaN(cbmValue) && !isNaN(floorValue)) {
-    const stairCharge = cbmValue * floorValue * cbmUnitCost; // JSON의 "CBM단가"를 사용
+    const stairCharge = cbmValue * (floorValue - 1) * cbmUnitCost; // floor-1로 계산
     stairChargeResult.textContent = stairCharge.toFixed(2); // 소수점 2자리까지 표시
   } else {
     stairChargeResult.textContent = "None"; // 기본값
   }
 }
 
-// POE 드롭다운 선택 시 설명 업데이트
+// POE 드롭다운 선택 시 설명 업데이트 및 계단 비용 계산
 poeDropdown.addEventListener("change", () => {
   // POE 드롭다운이 선택된 후에만 description 업데이트
   const stairDescription = basicExtraCost["STAIR CHARGE"]?.description || "No description available.";
@@ -1218,6 +1218,9 @@ poeDropdown.addEventListener("change", () => {
   if (stairDescriptionElement) {
     stairDescriptionElement.textContent = stairDescription;
   }
+
+  // POE 선택 후 계단 비용 계산도 바로 실행
+  calculateStairCharge();
 });
 
 //--------------------------------------------------------------------------
