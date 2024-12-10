@@ -981,11 +981,11 @@ function updateContainerDropdown(containerTypes, containerDropdown, selectedValu
 }
     
 //------------------basic delivery 처리------------------------
-    // 외교 화물 유무와 CBM 드롭다운 값에 따라 기본 배송 비용 업데이트
 function updateBasicDeliveryCost() {
-  const selectedCBM = parseInt(dropdown.value, 10); // 하드코딩된 값 사용
+  const selectedCBM = parseInt(dropdown.value, 10); // CBM 값
   const isNonDiplomat = nonDiplomat.checked; // Non-Diplomat 여부
   const isDiplomat = diplomat.checked; // Diplomat 여부
+  const selectedContainer = containerDropdown.value; // 선택된 컨테이너 타입
 
   // 유효성 검사: CBM 값과 체크박스 상태 확인
   if (isNaN(selectedCBM) || selectedCBM < 1 || selectedCBM > 60) {
@@ -1000,25 +1000,42 @@ function updateBasicDeliveryCost() {
     return;
   }
 
-  // JSON 데이터에서 해당 CBM 값 가져오기
-const costValue = selectedCBM >= 1 && selectedCBM <= 60 ? selectedCBM * 10 : "None"; // 예시: 1부터 60까지의 CBM 값에 대해 비용을 계산
+  // Non-Diplomat 또는 Diplomat에 해당하는 데이터 가져오기
+  const category = isNonDiplomat ? "NonDiplomat" : "Diplomat";
+  const containerData = dataNonDiplomat[selectedContainer] || dataDiplomat[selectedContainer];
 
+  let costValue = "None"; // 기본 값 설정
 
-  if (costValue !== undefined) {
-    result.textContent = costValue; // 기본 배송 비용 표시
-    console.log("기본 배송 비용 업데이트 완료:", costValue);
-  } else {
-    console.warn("선택된 CBM 값에 대한 데이터가 없습니다.");
-    result.textContent = "None"; // 기본값
+  // 컨테이너 타입이 없을 경우, 기본적으로 CONSOLE 타입을 사용하여 값을 가져옵니다.
+  if (!containerData) {
+    console.warn(`선택한 컨테이너 타입 ${selectedContainer}의 데이터가 없습니다. 기본 CONSOLE 타입을 사용합니다.`);
+    containerData = dataNonDiplomat["CONSOLE"] || dataDiplomat["CONSOLE"];
   }
+
+  // CBM 값에 해당하는 범위 찾기
+  const costData = containerData[selectedCBM] || containerData["ANY"];
+  
+  if (costData) {
+    costValue = costData; // 해당하는 비용을 가져옴
+  } else {
+    console.warn(`CBM 값 ${selectedCBM}에 해당하는 데이터가 없습니다. 'ANY' 항목을 사용합니다.`);
+    costValue = containerData["ANY"]; // 'ANY' 값 사용
+  }
+
+  // 결과 업데이트
+  result.textContent = costValue;
+  console.log("기본 배송 비용 업데이트 완료:", costValue);
 }
 
-// 이벤트 리스너 추가: 드롭다운 변경 시 기본 배송 비용 업데이트
+// CBM 드롭다운 값 변경 시 기본 배송 비용 업데이트
 dropdown.addEventListener("change", updateBasicDeliveryCost);
 
 // 외교 화물 체크박스 변경 시 기본 배송 비용 업데이트
 nonDiplomat.addEventListener("change", updateBasicDeliveryCost);
 diplomat.addEventListener("change", updateBasicDeliveryCost);
+
+// 컨테이너 드롭다운 값 변경 시 기본 배송 비용 업데이트
+containerDropdown.addEventListener("change", updateBasicDeliveryCost);
 
 //--------------------basic cost 처리---------------------------
 function updateDiplomatSensitiveResult(categoryKey) {
