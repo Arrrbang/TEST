@@ -1319,7 +1319,11 @@ function updatestorageperiodDropdown() {
     const selectedCBM = parseInt(dropdown.value, 10); // 선택된 CBM 값
 
     if (!isNaN(selectedDays) && !isNaN(selectedCBM)) {
-      const calculatedValue = selectedDays * storageUnitCost * selectedCBM; // 비용 계산
+      // 선택된 일수에서 무료 보관 일수를 제외
+      const chargeableDays = selectedDays - freeStorageDays;
+
+      // 비용 계산: (유료 보관 일수 * 단가 * CBM)
+      const calculatedValue = chargeableDays * storageUnitCost * selectedCBM;
       const formattedValue = `${currencySymbol}${calculatedValue.toLocaleString()}`; // 형식화된 결과
 
       // id="storage-value" 업데이트
