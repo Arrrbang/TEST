@@ -1099,7 +1099,58 @@ function updateDiplomatSensitiveResult(categoryKey) {
 
   console.log(`${categoryKey} 업데이트 완료:`, result, "Description:", categoryData.description);
 }
+//------------------------------basic cost total 계산------------------------------
+function calculateTotalCost() {
+  let totalCost = 0;
 
+  // 모든 basic-cost-? 값을 가져와서 숫자인 경우에만 더함
+  for (let i = 1; i <= 2; i++) {
+    const costValueElement = document.getElementById(`basic-cost-${i}-value`);
+    const costValueText = costValueElement ? costValueElement.textContent : "None";
+
+    // 숫자인지 체크
+    const costValue = parseFloat(costValueText.replace(/[^0-9.-]+/g, ""));
+    if (!isNaN(costValue)) {
+      totalCost += costValue;
+    }
+  }
+
+  // 결과 출력: 쉼표 추가하여 출력
+  totalCostElement.textContent = totalCost.toLocaleString();
+  console.log("Total cost updated:", totalCost.toLocaleString());
+}
+
+// 기본 배송비와 추가 비용이 업데이트된 후에 호출
+function updateAllDiplomatSensitiveResults() {
+  Object.keys(basicExtraCost).forEach((categoryKey) => {
+    updateDiplomatSensitiveResult(categoryKey);
+  });
+
+  // 기본 배송비와 추가 비용 업데이트 후 총합 계산
+  calculateTotalCost();
+}
+
+// 기본 배송비와 추가 비용이 변경될 때마다 총합을 업데이트
+function addEventListenersToCostValues() {
+  for (let i = 1; i <= 2; i++) {
+    const costValueElement = document.getElementById(`basic-cost-${i}-value`);
+
+    if (costValueElement) {
+      // 각 항목의 값이 변경될 때마다 총합을 다시 계산
+      costValueElement.addEventListener('DOMSubtreeModified', calculateTotalCost);
+    }
+  }
+}
+
+// DOMContentLoaded 후에 이벤트 리스너를 추가하여 계산하도록 함
+document.addEventListener("DOMContentLoaded", () => {
+  // 초기 값 업데이트 및 이벤트 리스너 설정
+  addEventListenersToCostValues();
+  updateAllDiplomatSensitiveResults(); // 초기값을 설정하면서 총합을 업데이트
+});
+
+
+//------------------------------------------------------
 
 // 모든 카테고리를 동적으로 업데이트
 function updateAllDiplomatSensitiveResults() {
@@ -1131,10 +1182,6 @@ function updateHeavyItemDropdown() {
 }
 function updatestorageperiodDropdown() {
   console.log("updatestorageperiodDropdown function is not implemented yet.");
-  // 필요한 로직을 여기에 추가하세요.
-}
-function calculateTotalCost() {
-  console.log("calculateTotalCost function is not implemented yet.");
   // 필요한 로직을 여기에 추가하세요.
 }
 
