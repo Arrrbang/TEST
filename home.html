@@ -1159,7 +1159,8 @@ function observeCostChanges() {
 }
 
 //-------------------stair carry charge 업데이트---------------
-  function updateStairChargeDropdown() {
+// 이동 CBM 드롭다운 업데이트
+function updateStairChargeDropdown() {
   resetDropdown(stairCbmDropdown, "이동 CBM 선택");
 
   const selectedCBM = parseInt(dropdown.value, 10); // 상위 CBM 선택값
@@ -1208,6 +1209,17 @@ function calculateStairCharge() {
     stairChargeResult.textContent = "None"; // 기본값
   }
 }
+
+// POE 드롭다운 선택 시 설명 업데이트
+poeDropdown.addEventListener("change", () => {
+  // POE 드롭다운이 선택된 후에만 description 업데이트
+  const stairDescription = basicExtraCost["STAIR CHARGE"]?.description || "No description available.";
+  const stairDescriptionElement = document.getElementById("stair-description");
+  if (stairDescriptionElement) {
+    stairDescriptionElement.textContent = stairDescription;
+  }
+});
+
 //--------------------------------------------------------------------------
     
 // DOMContentLoaded 후에 호출
