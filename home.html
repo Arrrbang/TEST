@@ -694,14 +694,25 @@ const poeDropdown = document.getElementById("poe-dropdown");
 const link1Element = document.getElementById("link1");
 const link2Element = document.getElementById("link2");
 
-// 페이지 로드 시 CBM 드롭다운을 1부터 60까지 채워주는 코드 추가
+document.addEventListener("DOMContentLoaded", function () {
+  populateCbmDropdown(); // CBM 드롭다운을 하드코딩된 값으로 채운 후
+  fetchData().then(() => {
+    // JSON 데이터를 불러온 후 추가적인 업데이트 수행
+    // 여기에서는 CBM 드롭다운을 다시 JSON 값으로 덮어쓰지 않음
+    // 다른 드롭다운이나 데이터를 업데이트하는 로직만 수행
+    const currentCbmValue = dropdown.value;
+    updateDropdown(dataNonDiplomat, dropdown, currentCbmValue);  // CBM 드롭다운을 제외한 다른 드롭다운만 업데이트
+  });
+});
+
+// CBM 드롭다운을 1부터 60까지 하드코딩된 값으로 채우는 함수
 function populateCbmDropdown() {
   const cbmDropdown = document.getElementById("cbm-dropdown");
 
   // CBM 드롭다운 초기화 (기존 내용 모두 제거)
   cbmDropdown.innerHTML = "<option value=''>-- Select an Option --</option>";
 
-  // 1부터 60까지의 숫자 옵션 추가
+  // 1부터 60까지의 숫자 옵션 추가 (하드코딩된 값)
   for (let i = 1; i <= 60; i++) {
     const option = document.createElement("option");
     option.value = i;
@@ -709,17 +720,6 @@ function populateCbmDropdown() {
     cbmDropdown.appendChild(option);
   }
 }
-
-// 페이지 로드 시 CBM 드롭다운을 1부터 60까지 하드코딩하여 채우기
-document.addEventListener("DOMContentLoaded", function () {
-  populateCbmDropdown(); // CBM 드롭다운을 하드코딩된 값으로 채운 후
-  fetchData().then(() => {
-    // JSON 데이터를 불러온 후 추가적인 업데이트 수행
-    const currentCbmValue = dropdown.value;
-    // 여기서는 CBM 드롭다운을 다시 JSON 값으로 덮어쓰지 않음
-    updateDropdown(dataNonDiplomat, dropdown, currentCbmValue);  // 기존 선택값 유지
-  });
-});
     
 // resetDropdown 함수 변경
 function resetDropdown(dropdownElement, placeholder = "-- Select an Option --") {
@@ -913,7 +913,6 @@ async function fetchData() {
     dataDiplomat = tableData.diplomat || {};
     containerTypes = tableData.containerType || [];
 
-    const currentCbmValue = dropdown.value;
     const currentContainerValue = containerDropdown.value;
 
     updateContainerDropdown(containerTypes, containerDropdown, currentContainerValue); // 기존 컨테이너 값 유지
