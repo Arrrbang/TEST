@@ -46,5 +46,10 @@
     "description": "$100/1UNIT, 계단으로 이동할 경우 1층당 $100",
     "단위": "UNIT",
     "단가": 100
-  }
+  },
+    "STORAGE CHARGE": {
+    "description": "창고 보관 비용 :  $4/CBM/WEEK (MIN:$20/WEEK)",
+    "무료 보관 기간 일자":14
+    "보관 비용 단가":4
+    }
 }
