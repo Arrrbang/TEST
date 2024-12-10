@@ -579,9 +579,12 @@
   <div class="form-container">
     <h2>추가 비용</h2>
     <div class="result-row">
-      <span class="result-label" style="font-size: 1rem; font-weight: normal;">FULL SETTING CHARGE</span>
-      <span class="result-value" id="full-setting-charge">None</span>
+      <span class="result-label" style="font-size: 1rem; font-weight: normal;" id="extra-cost-1-label"></span>
+      <span class="result-value" id="extra-cost-1-value">None</span>
     </div>
+    <p id="extra-cost-1-description" class="charge-info">
+        none
+    </p>
     <div class="result-row">
       <span class="result-label" style="font-size: 1rem; font-weight: normal;">UPLIGHT PIANO</span>
       <span class="result-value" id="uplight-piano">None</span>
@@ -1170,6 +1173,63 @@ document.addEventListener("DOMContentLoaded", () => {
   observeCostChanges(); // MutationObserver 활성화
 });
 
+//-------------------extra cost 계산-------------------------
+  function updateExtraCostResult(categoryKey) {
+  const selectedContainer = containerDropdown.value; // 선택된 컨테이너 타입
+  const selectedCBM = parseInt(dropdown.value, 10); // 선택된 CBM 값 (숫자로 변환)
+  let result = "None"; // 초기 값 설정
+
+  const categoryData = basicExtraCost[categoryKey]; // JSON 데이터에서 categoryKey 가져오기
+  console.log("basicExtraCost 데이터 확인:", basicExtraCost);
+  console.log("selectedContainer:", selectedContainer);
+  console.log("selectedCBM:", selectedCBM);
+  console.log("categoryData:", categoryData);
+
+  if (!categoryData) {
+    console.warn(`Category "${categoryKey}" not found in basicExtraCost`);
+    return;
+  }
+
+  const costData = categoryData[selectedContainer];
+
+  if (costData) {
+    // 선택된 컨테이너의 데이터가 있는 경우
+    if (costData === "INCLUDED") {
+      result = "INCLUDED"; // INCLUDED 문자열 처리
+    } else if (typeof costData === "object" && costData["console단가"]) {
+      // console단가가 있는 경우
+      const consoleUnitCost = parseFloat(costData["console단가"]);
+      result = (selectedCBM * consoleUnitCost).toFixed(2); // CBM과 곱하기
+    }
+  } else {
+    // 선택된 컨테이너 데이터가 없는 경우, CONSOLE 데이터 확인
+    const consoleData = categoryData["CONSOLE"];
+    if (consoleData && consoleData["console단가"]) {
+      const consoleUnitCost = parseFloat(consoleData["console단가"]);
+      result = (selectedCBM * consoleUnitCost).toFixed(2); // CBM과 곱하기
+    } else {
+      console.warn(`CONSOLE 데이터가 없습니다. Category: ${categoryKey}`);
+      result = "None"; // 기본값 설정
+    }
+  }
+
+  // 결과 형식화 (숫자인 경우 화폐 단위 추가)
+  if (!isNaN(result) && result !== "None") {
+    result = `${currencySymbol}${parseFloat(result).toLocaleString()}`;
+  }
+
+  // 업데이트
+  const labelElement = document.getElementById(`${categoryKey}-label`);
+  const valueElement = document.getElementById(`${categoryKey}-value`);
+  const descriptionElement = document.getElementById(`${categoryKey}-description`);
+
+  if (labelElement) labelElement.textContent = categoryData.name || "NONE";
+  if (valueElement) valueElement.textContent = result;
+  if (descriptionElement) descriptionElement.textContent = categoryData.description || "No description available.";
+
+  console.log(`${categoryKey} 업데이트 완료:`, result, "Description:", categoryData.description);
+}
+
 //-------------------stair carry charge 업데이트---------------
 // POE 드롭다운 선택 시 설명 업데이트 및 계단 비용 계산
 poeDropdown.addEventListener("change", () => {
@@ -1356,9 +1416,19 @@ document.addEventListener("DOMContentLoaded", () => {
     
 
 // 모든 카테고리를 동적으로 업데이트
-function updateAllDiplomatSensitiveResults() {
+function updateAllCosts() {
+  // basic 비용 업데이트
   Object.keys(basicExtraCost).forEach((categoryKey) => {
-    updateDiplomatSensitiveResult(categoryKey);
+    if (categoryKey.startsWith("basic-cost-")) {
+      updateDiplomatSensitiveResult(categoryKey);
+    }
+  });
+
+  // Extra 비용 업데이트
+  Object.keys(basicExtraCost).forEach((categoryKey) => {
+    if (categoryKey.startsWith("extra-cost-")) {
+      updateExtraCostResult(categoryKey);
+    }
   });
 }
 
