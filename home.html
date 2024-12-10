@@ -1150,11 +1150,9 @@ function calculateTotalCost() {
 
 // MutationObserver 설정
 function observeCostChanges() {
-  console.log("Setting up MutationObserver..."); // 디버그 로그
-  // 기본 배송비와 추가 비용의 변화를 감지할 observer 설정
+  console.log("observeCostChanges() 설정 시작"); // 디버그 로그
   const config = { childList: true, subtree: true };
 
-  // basic-cost-?와 basic-delivery-value를 관찰
   const observedElements = [
     ...document.querySelectorAll('[id^="basic-cost-"][id$="-value"]'),
     document.getElementById("basic-delivery-value")
