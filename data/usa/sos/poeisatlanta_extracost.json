@@ -4,7 +4,8 @@
     "description": "테스트중",
     "NonDiplomat": {
       "CONSOLE": {
-        "1-60": "INCLUDED"
+        "1-30": "INCLUDED"
+        "31-60": "31-60"
       },
       "20DRY": "INCLUDED",
       "40HC": "INCLUDED"
