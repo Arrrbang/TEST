@@ -1280,7 +1280,7 @@ function updateHeavyItemDropdown() {
   });
 }
 //----------------------storage charge 계산-----------------
-    function updatestorageperiodDropdown() {
+function updatestorageperiodDropdown() {
   const storageData = basicExtraCost["STORAGE CHARGE"]; // JSON에서 STORAGE CHARGE 가져오기
 
   if (!storageData) {
@@ -1288,11 +1288,10 @@ function updateHeavyItemDropdown() {
     return;
   }
 
-  // 1. 무료 보관 기간 설정
-  const freeStorageDays = parseInt(storageData["무료 보관 기간 일자"], 10) || 0; // 기본값은 0
+  // 1. 보관 비용 단가 설정
   const storageUnitCost = parseFloat(storageData["보관 비용 단가"]) || 0; // 기본 보관 단가
 
-  if (isNaN(freeStorageDays) || isNaN(storageUnitCost)) {
+  if (isNaN(storageUnitCost)) {
     console.warn("STORAGE CHARGE 데이터가 올바르지 않습니다.");
     return;
   }
@@ -1300,7 +1299,7 @@ function updateHeavyItemDropdown() {
   // 2. storageperiod 드롭다운 옵션 생성
   resetDropdown(storageperiodDropdown, "보관 기간 선택");
 
-  for (let i = freeStorageDays + 1; i <= freeStorageDays + 90; i++) {
+  for (let i = 1; i <= 90; i++) { // 1일부터 90일까지 옵션 생성
     const option = document.createElement("option");
     option.value = i;
     option.textContent = `${i}일`;
@@ -1316,11 +1315,11 @@ function updateHeavyItemDropdown() {
   // 4. 드롭다운 변경 시 값 계산
   storageperiodDropdown.addEventListener("change", () => {
     const selectedDays = parseInt(storageperiodDropdown.value, 10); // 선택된 보관 기간
+    const selectedCBM = parseInt(dropdown.value, 10); // 선택된 CBM 값
 
-    if (!isNaN(selectedDays)) {
-      const chargeDays = selectedDays - freeStorageDays; // 무료 보관 기간을 제외한 유료 보관 일수
-      const calculatedValue = chargeDays * storageUnitCost; // 비용 계산
-      const formattedValue = `${currencySymbol}${Math.max(calculatedValue, 20).toLocaleString()}`; // 최소 $20 적용
+    if (!isNaN(selectedDays) && !isNaN(selectedCBM)) {
+      const calculatedValue = selectedDays * storageUnitCost * selectedCBM; // 비용 계산
+      const formattedValue = `${currencySymbol}${calculatedValue.toLocaleString()}`; // 형식화된 결과
 
       // id="storage-value" 업데이트
       const valueElement = document.getElementById("storage-value");
@@ -1338,6 +1337,7 @@ function updateHeavyItemDropdown() {
     }
   });
 }
+
 //--------------------------------------------------------------------------------
 
     
