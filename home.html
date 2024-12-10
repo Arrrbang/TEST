@@ -1279,7 +1279,68 @@ function updateHeavyItemDropdown() {
     console.log("HEAVY ITEM 계산 결과:", calculatedValue);
   });
 }
-//-----------------------------------------------------
+//----------------------storage charge 계산-----------------
+    function updatestorageperiodDropdown() {
+  const storageData = basicExtraCost["STORAGE CHARGE"]; // JSON에서 STORAGE CHARGE 가져오기
+
+  if (!storageData) {
+    console.warn("STORAGE CHARGE 데이터가 없습니다.");
+    return;
+  }
+
+  // 1. 무료 보관 기간 설정
+  const freeStorageDays = parseInt(storageData["무료 보관 기간 일자"], 10) || 0; // 기본값은 0
+  const storageUnitCost = parseFloat(storageData["보관 비용 단가"]) || 0; // 기본 보관 단가
+
+  if (isNaN(freeStorageDays) || isNaN(storageUnitCost)) {
+    console.warn("STORAGE CHARGE 데이터가 올바르지 않습니다.");
+    return;
+  }
+
+  // 2. storageperiod 드롭다운 옵션 생성
+  resetDropdown(storageperiodDropdown, "보관 기간 선택");
+
+  for (let i = freeStorageDays + 1; i <= freeStorageDays + 90; i++) {
+    const option = document.createElement("option");
+    option.value = i;
+    option.textContent = `${i}일`;
+    storageperiodDropdown.appendChild(option);
+  }
+
+  // 3. 설명 업데이트
+  const descriptionElement = document.getElementById("storage-description");
+  if (descriptionElement) {
+    descriptionElement.textContent = storageData.description || "No description available.";
+  }
+
+  // 4. 드롭다운 변경 시 값 계산
+  storageperiodDropdown.addEventListener("change", () => {
+    const selectedDays = parseInt(storageperiodDropdown.value, 10); // 선택된 보관 기간
+
+    if (!isNaN(selectedDays)) {
+      const chargeDays = selectedDays - freeStorageDays; // 무료 보관 기간을 제외한 유료 보관 일수
+      const calculatedValue = chargeDays * storageUnitCost; // 비용 계산
+      const formattedValue = `${currencySymbol}${Math.max(calculatedValue, 20).toLocaleString()}`; // 최소 $20 적용
+
+      // id="storage-value" 업데이트
+      const valueElement = document.getElementById("storage-value");
+      if (valueElement) {
+        valueElement.textContent = formattedValue;
+      }
+
+      console.log("STORAGE CHARGE 계산 결과:", formattedValue);
+    } else {
+      // 선택되지 않은 경우 기본값
+      const valueElement = document.getElementById("storage-value");
+      if (valueElement) {
+        valueElement.textContent = "None";
+      }
+    }
+  });
+}
+//--------------------------------------------------------------------------------
+
+    
 // DOMContentLoaded 후에 호출
 document.addEventListener("DOMContentLoaded", () => {
   updateStairChargeDropdown(); // 페이지 로드 후 초기화
@@ -1297,10 +1358,10 @@ function updateAllDiplomatSensitiveResults() {
 
 // JSON 데이터 로드 후 호출
 fetchData().then(() => {
-      // 기본값 설정 후 업데이트 호출
-  console.log("basicExtraCost 데이터 확인:", basicExtraCost);
   updateBasicDeliveryCost(); // 기본 배송 비용 업데이트
   updateAllDiplomatSensitiveResults(); // 추가 비용 업데이트
+  updateHeavyItemDropdown(); // HEAVY ITEM 드롭다운 업데이트
+  updatestorageperiodDropdown(); // STORAGE CHARGE 드롭다운 업데이트
 });
 
 function updateAdditionalCosts() {
@@ -1308,11 +1369,6 @@ function updateAdditionalCosts() {
   // 필요한 로직을 여기에 추가하세요.
 }
 
-
-function updatestorageperiodDropdown() {
-  console.log("updatestorageperiodDropdown function is not implemented yet.");
-  // 필요한 로직을 여기에 추가하세요.
-}
 
 poeDropdown.addEventListener("change", updateAllDiplomatSensitiveResults);
 dropdown.addEventListener("change", updateAllDiplomatSensitiveResults);
