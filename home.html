@@ -712,7 +712,13 @@ function populateCbmDropdown() {
 
 // 페이지 로드 시 CBM 드롭다운을 1부터 60까지 하드코딩하여 채우기
 document.addEventListener("DOMContentLoaded", function () {
-  populateCbmDropdown();
+  populateCbmDropdown(); // CBM 드롭다운을 하드코딩된 값으로 채운 후
+  fetchData().then(() => {
+    // JSON 데이터를 불러온 후 추가적인 업데이트 수행
+    const currentCbmValue = dropdown.value;
+    // 여기서는 CBM 드롭다운을 다시 JSON 값으로 덮어쓰지 않음
+    updateDropdown(dataNonDiplomat, dropdown, currentCbmValue);  // 기존 선택값 유지
+  });
 });
     
 // resetDropdown 함수 변경
@@ -989,7 +995,7 @@ function updateDropdown(data, dropdownElement, selectedValue) {
   });
 
   // 기존 선택 값 복원
-  if (selectedValue && data[selectedValue]) {
+  if (selectedValueExists) {
     dropdownElement.value = selectedValue;
   } else {
     dropdownElement.value = ""; // 기본값
