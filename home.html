@@ -809,8 +809,6 @@ function handlePoeChange() {
   }
 }
 
-
-
 async function fetchData() {
   try {
     const params = new URLSearchParams(window.location.search);
@@ -833,9 +831,6 @@ async function fetchData() {
     const modifiedPath = path.replace(/\/[^/]+\/?$/, "");
     const extraCostJsonPath = `${basePath}/${modifiedPath}/poeis${poeValue}_extracost.json`;
 
-    console.log("Table JSON Path:", tableJsonPath);
-    console.log("Extra Cost JSON Path:", extraCostJsonPath);
-
     // JSON 데이터 가져오기
     const [tableResponse, extraCostResponse] = await Promise.all([
       fetch(tableJsonPath),
@@ -851,7 +846,7 @@ async function fetchData() {
     }
 
     // JSON 데이터 파싱
-    const tableData = await tableResponse.json(); // 여기서 선언 및 초기화
+    const tableData = await tableResponse.json();
     const extraCostData = await extraCostResponse.json();
     console.log("Full extraCostData object:", extraCostData);
 
@@ -859,13 +854,10 @@ async function fetchData() {
 
     // 링크 업데이트: tableData.links를 우선 사용
     if (Array.isArray(tableData.links) && tableData.links.length > 0) {
-      console.log("Links data from tariff JSON:", tableData.links);
       updateLinks(tableData.links);
     } else if (Array.isArray(extraCostData.links) && extraCostData.links.length > 0) {
-      console.log("Links data from extraCost JSON:", extraCostData.links);
       updateLinks(extraCostData.links);
     } else {
-      console.warn("No valid links found in either JSON.");
       initializeLinks(); // 기본 링크 초기화
     }
 
@@ -878,13 +870,14 @@ async function fetchData() {
     const currentCbmValue = parseInt(dropdown?.value, 10) || null;  // 1부터 60까지의 값을 사용
     const currentContainerValue = containerDropdown?.value || null;
 
-    // 드롭다운 및 데이터 업데이트
+    // CBM 드롭다운 업데이트
     if (dropdown) {
-      updateDropdown(dataNonDiplomat, dropdown);
+      updateCbmDropdown(dropdown, currentCbmValue);
     }
 
+    // 컨테이너 드롭다운 업데이트
     if (containerDropdown) {
-      updateContainerDropdown(containerTypes, containerDropdown);
+      updateContainerDropdown(containerTypes, containerDropdown, currentContainerValue);
     }
 
     updateAdditionalCosts();
@@ -969,9 +962,6 @@ function updateCbmDropdown(dropdownElement, selectedValue) {
   dropdownElement.dispatchEvent(new Event("change"));
 }
 
-
-
-
 // 컨테이너 타입 드롭다운 업데이트
 function updateContainerDropdown(containerTypes, containerDropdown, selectedValue) {
   resetDropdown(containerDropdown, "-- Select a Container --");
@@ -989,6 +979,7 @@ function updateContainerDropdown(containerTypes, containerDropdown, selectedValu
     containerDropdown.value = ""; // 선택값 초기화
   }
 }
+    
 //------------------basic delivery 처리------------------------
     // 외교 화물 유무와 CBM 드롭다운 값에 따라 기본 배송 비용 업데이트
 function updateBasicDeliveryCost() {
