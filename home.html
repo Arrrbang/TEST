@@ -710,7 +710,7 @@ function populateCbmDropdown() {
   }
 }
 
-// 페이지 로드 시 CBM 드롭다운에 값 추가
+// 페이지 로드 시 CBM 드롭다운을 1부터 60까지 하드코딩하여 채우기
 document.addEventListener("DOMContentLoaded", function () {
   populateCbmDropdown();
 });
@@ -912,7 +912,7 @@ async function fetchData() {
     const currentCbmValue = dropdown.value;
     const currentContainerValue = containerDropdown.value;
 
-    populateCbmDropdown();
+    populateCbmDropdown(); 
     updateDropdown(dataNonDiplomat, dropdown, currentCbmValue); // 기존 CBM 값 유지
     updateContainerDropdown(containerTypes, containerDropdown, currentContainerValue); // 기존 컨테이너 값 유지
     updateAdditionalCosts();
