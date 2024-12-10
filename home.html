@@ -1446,11 +1446,12 @@ function updateAdditionalCosts() {
 }
 
 
-poeDropdown.addEventListener("change", updateAllDiplomatSensitiveResults);
-dropdown.addEventListener("change", updateAllDiplomatSensitiveResults);
-containerDropdown.addEventListener("change", updateAllDiplomatSensitiveResults);
-nonDiplomat.addEventListener("change", updateAllDiplomatSensitiveResults);
-diplomat.addEventListener("change", updateAllDiplomatSensitiveResults);
+poeDropdown.addEventListener("change", updateAllCosts);
+dropdown.addEventListener("change", updateAllCosts);
+containerDropdown.addEventListener("change", updateAllCosts);
+nonDiplomat.addEventListener("change", updateAllCosts);
+diplomat.addEventListener("change", updateAllCosts);
+
 stairCbmDropdown.addEventListener("change", calculateStairCharge);
 stairFloorDropdown.addEventListener("change", calculateStairCharge);
 dropdown.addEventListener("change", updateStairChargeDropdown);
