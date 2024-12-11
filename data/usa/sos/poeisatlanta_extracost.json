@@ -6,7 +6,6 @@
     "description": "",
     "NonDiplomat": {
       "CONSOLE": {
-        "1-60": "INCLUDED",
         "console단가": "INCLUDED"
       },
       "20DRY": "INCLUDED",
@@ -14,7 +13,6 @@
     },
     "Diplomat": {
       "CONSOLE": {
-        "1-60": "INCLUDED",
         "console단가": "INCLUDED"
       },
       "20DRY": "INCLUDED",
@@ -26,7 +24,6 @@
     "description": "",
     "NonDiplomat": {
       "CONSOLE": {
-        "1-60": "INCLUDED",
         "console단가": "INCLUDED"
       },
       "20DRY": "INCLUDED",
@@ -34,7 +31,6 @@
     },
     "Diplomat": {
       "CONSOLE": {
-        "1-60": "INCLUDED",
         "console단가": "INCLUDED"
       },
       "20DRY": "INCLUDED",
