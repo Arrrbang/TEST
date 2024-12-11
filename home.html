@@ -1098,15 +1098,8 @@ function updateDiplomatSensitiveResult(categoryKey) {
       const unitCost = parseFloat(costData["단가"]);
       result = (selectedCBM * unitCost).toFixed(2); // CBM 값과 곱하기
     } else {
-      // "단가"가 없으면, 범위 처리
-      const rangeResult = Object.keys(costData).find((key) => {
-        if (key.includes("-")) {
-          const [start, end] = key.split("-").map(Number);
-          return selectedCBM >= start && selectedCBM <= end;
-        }
-        return false;
-      });
-      result = costData[rangeResult] || "None"; // 범위에 맞는 값 또는 None
+      // "단가"가 없으면, 컨테이너 타입의 값을 그대로 출력
+      result = costData || "None"; // 범위에 맞는 값 또는 None
     }
   } else if (costData === "INCLUDED") {
     result = "INCLUDED"; // 문자열 처리
@@ -1115,7 +1108,7 @@ function updateDiplomatSensitiveResult(categoryKey) {
     const unitCost = parseFloat(costData["단가"]);
     result = (selectedCBM * unitCost).toFixed(2);
   } else if (typeof costData === "object") {
-    // "단가" 항목이 없으면, 값 그대로 출력
+    // "단가" 항목이 없으면, 값 그대로 출력 (컨테이너 타입 값 그대로)
     result = costData || "None";
   } else if (typeof costData === "string") {
     // 문자 그대로 출력
