@@ -69,8 +69,12 @@
     "name": "CUSTOMER ENTRY",
     "description": "BL당 $170 발생",
     "NonDiplomat": {
-      "CONSOLE": 170
-      },
+      "CONSOLE": 170,
+      "20DRY": 170,
+      "40HC": 170
+    },
+    "Diplomat": {
+      "CONSOLE": 170,
       "20DRY": 170,
       "40HC": 170
     }
