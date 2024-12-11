@@ -818,7 +818,7 @@ function handlePoeChange() {
       // 기본값 설정 후 업데이트 호출
   console.log("basicExtraCost 데이터 확인:", basicExtraCost);
   updateAllDiplomatSensitiveResults(); // 추가 비용 업데이트
-        const stairDescription = basicExtraCost["STAIR CHARGE"]?.description || "No description available.";
+        const stairDescription = basicExtraCost["STAIR CHARGE"]?.description || "";
       const stairDescriptionElement = document.getElementById("stair-description");
       if (stairDescriptionElement) {
         stairDescriptionElement.textContent = stairDescription; // 설명 업데이트
@@ -876,7 +876,7 @@ async function fetchData() {
     console.log("Currency Symbol:", currencySymbol);
 
     // "DATA BASE"의 description 값 가져오기
-    const dataBaseDescription = extraCostData["DATA BASE"]?.description || "No description available."; // 기본값 설정
+    const dataBaseDescription = extraCostData["DATA BASE"]?.description || ""; // 기본값 설정
     const dataDescriptionElement = document.getElementById("data-description");
     if (dataDescriptionElement) {
       dataDescriptionElement.textContent = dataBaseDescription;  // description을 업데이트
@@ -916,7 +916,7 @@ async function fetchData() {
     calculateTotalCost();
     console.log("basicExtraCost 데이터 확인:", basicExtraCost);
         // 추가: stair-description 업데이트
-    const stairDescription = basicExtraCost["STAIR CHARGE"]?.description || "No description available.";
+    const stairDescription = basicExtraCost["STAIR CHARGE"]?.description || "";
     const stairDescriptionElement = document.getElementById("stair-description");
     if (stairDescriptionElement) {
       stairDescriptionElement.textContent = stairDescription; // 설명 업데이트
@@ -1295,7 +1295,7 @@ function updateExtraCostResult(categoryKey) {
 
   if (labelElement) labelElement.textContent = categoryData.name || "NONE";
   if (valueElement) valueElement.textContent = result;
-  if (descriptionElement) descriptionElement.textContent = categoryData.description || "No description available.";
+  if (descriptionElement) descriptionElement.textContent = categoryData.description || "";
 
   console.log(`${categoryKey} 업데이트 완료:`, result, "Description:", categoryData.description);
 }
@@ -1305,7 +1305,7 @@ function updateExtraCostResult(categoryKey) {
 // POE 드롭다운 선택 시 설명 업데이트 및 계단 비용 계산
 poeDropdown.addEventListener("change", () => {
   // POE 드롭다운이 선택된 후에 바로 description 업데이트
-  const stairDescription = basicExtraCost["STAIR CHARGE"]?.description || "No description available.";
+  const stairDescription = basicExtraCost["STAIR CHARGE"]?.description || "";
   const stairDescriptionElement = document.getElementById("stair-description");
   if (stairDescriptionElement) {
     stairDescriptionElement.textContent = stairDescription;
@@ -1379,7 +1379,7 @@ function updateHeavyItemDropdown() {
   // 1. heavyitem-description 업데이트
   const descriptionElement = document.getElementById("heavyitem-description");
   if (descriptionElement) {
-    descriptionElement.textContent = heavyItemData.description || "No description available.";
+    descriptionElement.textContent = heavyItemData.description || "";
   }
 
   // 2. heavyitemunit 드롭다운 옵션 생성
@@ -1441,7 +1441,7 @@ function updatestorageperiodDropdown() {
   // 3. 설명 업데이트
   const descriptionElement = document.getElementById("storage-description");
   if (descriptionElement) {
-    descriptionElement.textContent = storageData.description || "No description available.";
+    descriptionElement.textContent = storageData.description || "";
   }
 
   // 4. 드롭다운 변경 시 값 계산
