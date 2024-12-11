@@ -1268,10 +1268,11 @@ function updateExtraCostResult(categoryKey) {
 
   if (labelElement) labelElement.textContent = categoryData.name || "NONE";
   if (valueElement) valueElement.textContent = result;
-  if (descriptionElement) descriptionElement.textContent = categoryData.description || "";
+  if (descriptionElement) descriptionElement.textContent = categoryData.description || "No description available.";
 
   console.log(`${categoryKey} 업데이트 완료:`, result, "Description:", categoryData.description);
 }
+
 
 //-------------------stair carry charge 업데이트---------------
 // POE 드롭다운 선택 시 설명 업데이트 및 계단 비용 계산
