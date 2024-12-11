@@ -1195,7 +1195,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 //-------------------extra cost 계산-------------------------
-  function updateExtraCostResult(categoryKey) {
+function updateExtraCostResult(categoryKey) {
   const selectedContainer = containerDropdown.value; // 선택된 컨테이너 타입
   const selectedCBM = parseInt(dropdown.value, 10); // 선택된 CBM 값 (숫자로 변환)
   let result = "None"; // 초기 값 설정
@@ -1217,8 +1217,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // 선택된 컨테이너의 데이터가 있는 경우
     if (costData === "INCLUDED") {
       result = "INCLUDED"; // INCLUDED 문자열 처리
+    } else if (typeof costData === "object" && costData["단가"]) {
+      // "단가"가 있는 경우
+      const unitCost = parseFloat(costData["단가"]);
+      result = (selectedCBM * unitCost).toFixed(2); // CBM과 곱하기
     } else if (typeof costData === "object" && costData["console단가"]) {
-      // console단가가 있는 경우
+      // "console단가"가 있는 경우
       const consoleUnitCost = parseFloat(costData["console단가"]);
       result = (selectedCBM * consoleUnitCost).toFixed(2); // CBM과 곱하기
     }
