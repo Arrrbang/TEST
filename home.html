@@ -954,6 +954,19 @@ document.addEventListener("DOMContentLoaded", async () => {
       fetchData(); // POE 변경 시 데이터를 다시 불러옵니다.
     }
   });
+
+  // 체크박스 동작 상호 배제
+  nonDiplomat.addEventListener("change", () => {
+    if (nonDiplomat.checked) {
+      diplomat.checked = false;
+    }
+  });
+
+  diplomat.addEventListener("change", () => {
+    if (diplomat.checked) {
+      nonDiplomat.checked = false;
+    }
+  });
 });
 
 
