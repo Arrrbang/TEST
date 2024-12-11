@@ -896,8 +896,7 @@ async function fetchData() {
     updateHeavyItemDropdown();
     updatestorageperiodDropdown();
     calculateTotalCost();
-    console.log("basicExtraCost 데이터 확인:", basicExtraCost);
-        // 추가: stair-description 업데이트
+    
     const stairDescription = basicExtraCost["STAIR CHARGE"]?.description || "";
     const stairDescriptionElement = document.getElementById("stair-description");
     if (stairDescriptionElement) {
@@ -920,8 +919,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (path) {
     await initializePoeDropdown(path);
     fetchData().then(() => {
-      // 기본값 설정 후 업데이트 호출
-      console.log("basicExtraCost 데이터 확인:", basicExtraCost);
       updateAllDiplomatSensitiveResults(); // 추가 비용 업데이트
       updateHeavyItemDropdown(); // HEAVY ITEM 드롭다운 업데이트
     });
@@ -1139,8 +1136,6 @@ function updateDiplomatSensitiveResult(categoryKey) {
   if (labelElement) labelElement.textContent = categoryData.name || "NONE";
   if (valueElement) valueElement.textContent = result;
   if (descriptionElement) descriptionElement.textContent = categoryData.description || "";
-
-  console.log(`${categoryKey} 업데이트 완료:`, result, "Description:", categoryData.description);
 }
 
 
@@ -1208,10 +1203,6 @@ function updateExtraCostResult(categoryKey) {
   let result = "None"; // 초기 값 설정
 
   const categoryData = basicExtraCost[categoryKey];
-  console.log("basicExtraCost 데이터 확인:", basicExtraCost);
-  console.log("selectedContainer:", selectedContainer);
-  console.log("selectedCBM:", selectedCBM);
-  console.log("categoryData:", categoryData);
 
   if (!categoryData) {
     return;
