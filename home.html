@@ -1139,7 +1139,7 @@ function updateDiplomatSensitiveResult(categoryKey) {
 
   if (labelElement) labelElement.textContent = categoryData.name || "NONE";
   if (valueElement) valueElement.textContent = result;
-  if (descriptionElement) descriptionElement.textContent = categoryData.description || "No description available.";
+  if (descriptionElement) descriptionElement.textContent = categoryData.description || "";
 
   console.log(`${categoryKey} 업데이트 완료:`, result, "Description:", categoryData.description);
 }
@@ -1209,7 +1209,7 @@ function updateExtraCostResult(categoryKey) {
   const selectedCBM = parseInt(dropdown.value, 10); // 선택된 CBM 값 (숫자로 변환)
   let result = "None"; // 초기 값 설정
 
-  const categoryData = basicExtraCost[categoryKey]; // JSON 데이터에서 categoryKey 가져오기
+  const categoryData = basicExtraCost[categoryKey];
   console.log("basicExtraCost 데이터 확인:", basicExtraCost);
   console.log("selectedContainer:", selectedContainer);
   console.log("selectedCBM:", selectedCBM);
@@ -1220,71 +1220,58 @@ function updateExtraCostResult(categoryKey) {
     return;
   }
 
+  // 해당 컨테이너 타입의 데이터 가져오기
   const costData = categoryData[selectedContainer];
 
-  if (costData) {
-    // 선택된 컨테이너의 데이터가 있는 경우
-    if (costData === "INCLUDED") {
-      result = "INCLUDED"; // INCLUDED 문자열 처리
-    } else if (typeof costData === "object" && costData["단가"]) {
-      // "단가"가 있는 경우
-      const unitCost = parseFloat(costData["단가"]);
-      result = (selectedCBM * unitCost).toFixed(2); // CBM과 곱하기
-    } else if (typeof costData === "object") {
-      // 범위 값을 처리하는 경우 (예: "1-40" 또는 "41-60")
-      const rangeKeys = Object.keys(costData); // "1-40", "41-60"과 같은 키 가져오기
-
-      // 선택된 CBM이 해당 범위에 속하는지 확인
-      for (let key of rangeKeys) {
-        const [start, end] = key.split("-").map(Number); // 범위 구분
-        if (selectedCBM >= start && selectedCBM <= end) {
-          result = costData[key]; // 해당 범위에 맞는 값 설정
-          break;
-        }
+  // 1. "단가"가 있는지 확인
+  if (typeof costData === "object" && costData["단가"]) {
+    const unitCost = parseFloat(costData["단가"]);
+    result = (selectedCBM * unitCost).toFixed(2); // CBM 값과 곱하기
+  }
+  // 2. "단가"가 없고, CBM 범위가 있는지 확인
+  else if (typeof costData === "object") {
+    // 범위 처리: "1-30", "31-60" 같은 범위 체크
+    const rangeKey = Object.keys(costData).find((key) => {
+      if (key.includes("-")) {
+        const [start, end] = key.split("-").map(Number);
+        return selectedCBM >= start && selectedCBM <= end;
       }
-    } else if (typeof costData === "string" && costData.includes("/CBM")) {
-      // "$10/CBM"와 같은 문자열 처리
-      const unitCost = parseFloat(costData.replace("/CBM", ""));
-      result = (selectedCBM * unitCost).toFixed(2); // CBM과 곱하기
-    } else if (typeof costData === "string") {
-      // 문자 그대로 처리 ("미확인" 같은 값은 그대로 출력)
-      result = costData;
-    }
-  } else {
-    // 선택된 컨테이너 데이터가 없는 경우, CONSOLE 데이터 확인
-    const consoleData = categoryData["CONSOLE"];
-    if (consoleData && consoleData["console단가"]) {
-      // "console단가"가 숫자일 경우, CBM 값과 곱하기
-      if (typeof consoleData["console단가"] === "number") {
-        const consoleUnitCost = parseFloat(consoleData["console단가"]);
-        result = (selectedCBM * consoleUnitCost).toFixed(2); // CBM과 곱하기
-      } else {
-        // "console단가"가 문자열일 경우 그대로 출력
-        result = consoleData["console단가"];
-      }
-    } else {
-      console.warn(`CONSOLE 데이터가 없습니다. Category: ${categoryKey}`);
-      result = "None"; // 기본값 설정
-    }
+      return false;
+    });
+    // 범위에 맞는 값을 출력
+    result = costData[rangeKey] || "None";
+  } 
+  // 3. "단가" 항목이 없고, 값 그대로 출력
+  else if (typeof costData === "number") {
+    result = costData; // 값 그대로 출력
+  } 
+  // 4. "단가" 항목도 없고, 문자 그대로 출력
+  else if (typeof costData === "string") {
+    result = costData; // 문자 그대로 출력
   }
 
-  // 결과 형식화 (숫자인 경우 화폐 단위 추가)
+  // 5. 기본값이 없을 경우 단위 비용 처리
+  if (result === "None" && !isNaN(selectedCBM)) {
+    const defaultMultiplier = categoryData?.unitMultiplier || 0;
+    result = selectedCBM * defaultMultiplier;
+  }
+
+  // 6. 화폐 단위 추가
   if (!isNaN(result) && result !== "None") {
-    result = `${currencySymbol}${parseFloat(result).toLocaleString()}`;
+    result = `${currencySymbol}${parseFloat(result).toLocaleString()}`; // 화폐 단위와 숫자 형식화
   }
 
-  // 업데이트
+  // 7. 업데이트
   const labelElement = document.getElementById(`${categoryKey}-label`);
   const valueElement = document.getElementById(`${categoryKey}-value`);
   const descriptionElement = document.getElementById(`${categoryKey}-description`);
 
   if (labelElement) labelElement.textContent = categoryData.name || "NONE";
   if (valueElement) valueElement.textContent = result;
-  if (descriptionElement) descriptionElement.textContent = categoryData.description || "No description available.";
+  if (descriptionElement) descriptionElement.textContent = categoryData.description || "";
 
   console.log(`${categoryKey} 업데이트 완료:`, result, "Description:", categoryData.description);
 }
-
 
 //-------------------stair carry charge 업데이트---------------
 // POE 드롭다운 선택 시 설명 업데이트 및 계단 비용 계산
