@@ -1008,68 +1008,67 @@ function updateContainerDropdown(containerTypes, containerDropdown, selectedValu
 //------------------basic delivery 처리------------------------
 function updateBasicDeliveryCost() {
   const selectedCBM = parseInt(dropdown.value, 10); // 선택된 CBM 값
+  const isNonDiplomat = nonDiplomat.checked; // Non-Diplomat 여부
+  const isDiplomat = diplomat.checked; // Diplomat 여부
   const selectedContainer = containerDropdown.value; // 선택된 컨테이너 타입
-  let result = "None"; // 초기 값 설정
 
-  // 유효성 검사: CBM 값 확인
+  // 유효성 검사: CBM 값과 체크박스 상태 확인
   if (isNaN(selectedCBM) || selectedCBM < 1 || selectedCBM > 60) {
     console.warn("CBM 값이 선택되지 않았거나 범위를 벗어났습니다.");
-    result = "None";
+    result.textContent = "None";
     return;
   }
 
-  // Non-Diplomat 또는 Diplomat 구분
-  const role = nonDiplomat.checked ? "NonDiplomat" : "Diplomat";
+  if (!isNonDiplomat && !isDiplomat) {
+    console.warn("외교 화물 유무를 선택하세요.");
+    result.textContent = "None"; // 기본값
+    return;
+  }
 
-  let categoryData = {};
-  if (role === "NonDiplomat") {
-    // NonDiplomat일 경우
-    categoryData = dataNonDiplomat;
-    // NonDiplomat의 경우는 컨테이너 타입이 없으므로 CBM 값에 따라 바로 출력
-    result = categoryData[selectedCBM] || categoryData["ANY"] || "None";
-  } else {
-    // Diplomat일 경우
-    categoryData = dataDiplomat;
+  // NonDiplomat 또는 Diplomat 데이터 선택
+  const dataCategory = isNonDiplomat ? dataNonDiplomat : dataDiplomat;
+  let costValue = "None"; // 기본값 설정
 
-    // 컨테이너 타입이 존재하는 경우
-    if (selectedContainer && categoryData[selectedContainer]) {
-      const containerData = categoryData[selectedContainer];
-      
-      // 1. "단가"가 있는지 확인
-      if (typeof containerData === "object" && containerData["단가"]) {
-        const unitCost = parseFloat(containerData["단가"]);
-        result = (selectedCBM * unitCost).toFixed(2); // CBM 값과 곱하기
-      } 
-      // 2. "단가"가 없고, CBM 범위가 있는지 확인
-      else if (typeof containerData === "object") {
-        const rangeKey = Object.keys(containerData).find((key) => {
-          if (key.includes("-")) {
-            const [start, end] = key.split("-").map(Number);
-            return selectedCBM >= start && selectedCBM <= end;
-          }
-          return false;
-        });
-        result = containerData[rangeKey] || "None";
-      } 
-      // 3. "단가" 항목도 없고, 값 그대로 출력
-      else if (typeof containerData === "number") {
-        result = containerData; // 값 그대로 출력
-      } 
-      // 4. "단가" 항목도 없고, 문자 그대로 출력
-      else if (typeof containerData === "string") {
-        result = containerData; // 문자 그대로 출력
+  if (typeof dataCategory[selectedContainer] === "object") {
+    // 컨테이너 타입이 있는 경우
+    const containerData = dataCategory[selectedContainer];
+    
+    // CBM 값에 해당하는 범위 또는 개별 값 찾기
+    const rangeKey = Object.keys(containerData).find(key => {
+      if (key.includes("-")) {
+        const [start, end] = key.split("-").map(Number);
+        return selectedCBM >= start && selectedCBM <= end;
       }
-    } else {
-      // 컨테이너 타입이 선택되지 않았거나, 해당 컨테이너 타입이 없는 경우
-      result = "None";
-    }
+      return selectedCBM == key;
+    });
+
+    // 범위 또는 개별값에 해당하는 비용 가져오기
+    costValue = rangeKey ? containerData[rangeKey] : containerData["ANY"];
+  } else {
+    // 컨테이너 타입이 없는 경우
+    const cbmData = dataCategory;
+
+    // CBM 값에 해당하는 범위 또는 개별 값 찾기
+    const rangeKey = Object.keys(cbmData).find(key => {
+      if (key.includes("-")) {
+        const [start, end] = key.split("-").map(Number);
+        return selectedCBM >= start && selectedCBM <= end;
+      }
+      return selectedCBM == key;
+    });
+
+    // 범위 또는 개별값에 해당하는 비용 가져오기
+    costValue = rangeKey ? cbmData[rangeKey] : "None";
+  }
+
+  // 값이 숫자인 경우 화폐 단위를 추가
+  if (!isNaN(costValue)) {
+    costValue = `${currencySymbol}${parseFloat(costValue).toLocaleString()}`; // 화폐 단위 추가 및 형식화
   }
 
   // 결과 업데이트
-  const resultElement = document.getElementById("basic-delivery-value");
-  resultElement.textContent = result;
-
-  console.log("기본 배송 비용 업데이트 완료:", result);
+  result.textContent = costValue;
+  console.log("기본 배송 비용 업데이트 완료:", costValue);
 }
 
 // CBM 드롭다운 값 변경 시 기본 배송 비용 업데이트
@@ -1081,8 +1080,7 @@ diplomat.addEventListener("change", updateBasicDeliveryCost);
 
 // 컨테이너 드롭다운 값 변경 시 기본 배송 비용 업데이트
 containerDropdown.addEventListener("change", updateBasicDeliveryCost);
-
-
+    
 //--------------------basic cost 처리---------------------------
 function updateDiplomatSensitiveResult(categoryKey) {
   const selectedContainer = containerDropdown.value; // 선택된 컨테이너 타입
