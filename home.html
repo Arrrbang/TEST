@@ -858,23 +858,21 @@ async function fetchData() {
     // JSON 데이터 파싱
     const tableData = await tableResponse.json();
     const extraCostData = await extraCostResponse.json();
-    console.log("Full extraCostData object:", extraCostData);
-
     console.log("Loaded data:", { tableData, extraCostData });
 
-        // 화폐 단위 저장
+    // 화폐 단위 저장
     currencySymbol = extraCostData["화폐단위"] || "";
     console.log("Currency Symbol:", currencySymbol);
 
-        // "DATA BASE"의 description 값 가져오기
-    const dataBaseDescription = extraCostData["DATA BASE"]?.description || "No description available.";
+    // "DATA BASE"의 description 값 가져오기
+    const dataBaseDescription = extraCostData["DATA BASE"]?.description || "No description available."; // 기본값 설정
     const dataDescriptionElement = document.getElementById("data-description");
     if (dataDescriptionElement) {
       dataDescriptionElement.textContent = dataBaseDescription;  // description을 업데이트
       console.log("Updated data description:", dataBaseDescription);
     }
 
-    // 링크 업데이트: tableData.links를 우선 사용
+    // 링크 업데이트
     if (Array.isArray(tableData.links) && tableData.links.length > 0) {
       updateLinks(tableData.links);
     } else if (Array.isArray(extraCostData.links) && extraCostData.links.length > 0) {
@@ -889,19 +887,17 @@ async function fetchData() {
     dataDiplomat = tableData.diplomat || {};
     containerTypes = tableData.containerType || [];
 
+    // 기타 드롭다운 및 값 업데이트
     const currentCbmValue = parseInt(dropdown?.value, 10) || null;  // 1부터 60까지의 값을 사용
     const currentContainerValue = containerDropdown?.value || null;
 
-    // CBM 드롭다운 업데이트
+    // CBM 드롭다운 및 기타 드롭다운 업데이트
     if (dropdown) {
       updateCbmDropdown(dropdown, currentCbmValue);
     }
-
-    // 컨테이너 드롭다운 업데이트
     if (containerDropdown) {
       updateContainerDropdown(containerTypes, containerDropdown, currentContainerValue);
     }
-
     updateAdditionalCosts();
     updateStairChargeDropdown();
     updateHeavyItemDropdown();
