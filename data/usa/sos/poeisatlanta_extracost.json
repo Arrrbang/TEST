@@ -3,10 +3,11 @@
   
   "basic-cost-1": {
     "name": "POC",
-    "description": "테스트중",
+    "description": "",
     "NonDiplomat": {
       "CONSOLE": {
-        "console단가": 20
+        "1-60": "INCLUDED",
+        "console단가": "INCLUDED"
       },
       "20DRY": "INCLUDED",
       "40HC": "INCLUDED"
@@ -14,7 +15,7 @@
     "Diplomat": {
       "CONSOLE": {
         "1-60": "INCLUDED",
-        "console단가": 15
+        "console단가": "INCLUDED"
       },
       "20DRY": "INCLUDED",
       "40HC": "INCLUDED"
@@ -22,34 +23,128 @@
   },
   "basic-cost-2": {
     "name": "THC",
-    "description": "123",
+    "description": "",
     "NonDiplomat": {
       "CONSOLE": {
-        "1-60": "INCLUDED"
+        "1-60": "INCLUDED",
+        "console단가": "INCLUDED"
       },
       "20DRY": "INCLUDED",
       "40HC": "INCLUDED"
     },
     "Diplomat": {
       "CONSOLE": {
-        "1-60": "INCLUDED"
+        "1-60": "INCLUDED",
+        "console단가": "INCLUDED"
       },
       "20DRY": "INCLUDED",
       "40HC": "INCLUDED"
     }
   },
+    "basic-cost-3": {
+    "name": "DRAYAGE",
+    "description": "콘솔 단가는 40HC 60CBM 콘솔 기준, 20/40동일",
+    "NonDiplomat": {
+      "CONSOLE": {
+        "console단가": 30
+      },
+      "20DRY": 1850,
+      "40HC": 1850
+    },
+    "Diplomat": {
+      "CONSOLE": {
+        "console단가": 30
+      },
+      "20DRY": 1850,
+      "40HC": 1850
+    }
+  },
+    "basic-cost-4": {
+    "name": "DEVANNING",
+    "description": "콘솔 단가는 40HC 60CBM 콘솔 기준",
+    "NonDiplomat": {
+      "CONSOLE": {
+        "console단가": 5
+      },
+      "20DRY": 200,
+      "40HC": 300
+    },
+    "Diplomat": {
+      "CONSOLE": {
+        "console단가": 5
+      },
+      "20DRY": 200,
+      "40HC": 300
+    }
+  },
+    "basic-cost-5": {
+    "name": "CUSTOMER ENTRY",
+    "description": "BL당 $170 발생",
+    "NonDiplomat": {
+      "CONSOLE": {
+        "1-60": 170,
+      },
+      "20DRY": 170,
+      "40HC": 170
+    },
   
   "extra-cost-1": {
-    "name": "FULL SETTING",
-    "description": "TEST",
+    "name": "INSPECTION",
+    "description": "컨테이너 전체 검사에 걸렸을 경우 발생되는 금액",
       "CONSOLE": {
-        "console단가": 10
+        "console단가": 3.5
+      },
+      "20DRY": 200,
+      "40HC": 200
+  },
+  "extra-cost-2": {
+    "name": "FULL SETTING",
+    "description": "",
+      "CONSOLE": {
+        "console단가": 30
       },
       "20DRY": {
         "단가": 30},
-      "40HC": "INCLUDED"
+      "40HC": {
+        "단가": 30}
   },
-
+    "extra-cost-3": {
+    "name": "SHUTTLE CHARGE",
+    "description": "",
+      "CONSOLE": {
+        "console단가": "미확인"
+      },
+      "20DRY": "미확인",
+      "40HC": "미확인"
+  },
+    "extra-cost-4": {
+    "name": "LONG CARRY CHARGE",
+    "description": "",
+      "CONSOLE": {
+        "console단가": "미확인"
+      },
+      "20DRY": "미확인",
+      "40HC": "미확인"
+  },
+    "extra-cost-5": {
+    "name": "WEEKEND CHARGE",
+    "description": "",
+      "CONSOLE": {
+        "1-40": 800,
+        "41-60": 1200
+      },
+      "20DRY": 800
+      "40HC": {
+        "1-40": 800,
+        "41-60": 1200}
+  },
+    "extra-cost-6": {
+    "name": "UPLIGHT PIANO",
+    "description": "",
+      "CONSOLE": 100
+      "20DRY": 100
+      "40HC": 100
+  },
   
     "STAIR CHARGE": {
     "description": "해당 업체의 계단 비용 단가는 $10*cbm*floor 입니다.",
@@ -71,4 +166,3 @@
     "description": "해당 데이터 업데이트 일자는 2024.10 진행된 이트너스 비딩 조사 입니다."
   }
 }
-
