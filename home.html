@@ -6,7 +6,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&display=swap" rel="stylesheet">
 
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dropdown with Conditional Logic</title>
+  <title>퓨멕스 현지비용 계산기 beta</title>
  <style>
   body {
     font-family: 'Noto Sans KR', Tahoma, Geneva, Verdana, sans-serif;
@@ -488,7 +488,7 @@
       <td>Port of Entry</td>
       <td>
           <select id="poe-dropdown" style="width: 100%;">
-            <option value="">-- Select a Port --</option>
+            <option value="">-- POE 선택 --</option>
           </select>
       </td>
     </tr> 
@@ -503,7 +503,7 @@
         <td>CBM</td>
         <td>
           <select id="cbm-dropdown" style="width: 100%;">
-            <option value="">-- Select an Option --</option>
+            <option value="">-- CBM 선택 --</option>
           </select>
         </td>
       </tr>
@@ -511,7 +511,7 @@
         <td>CONTAINER TYPE</td>
         <td>
           <select id="container-dropdown" style="width: 100%;">
-            <option value="">-- Select an Option --</option>
+            <option value="">-- CONTAINER TYPE 선택 --</option>
           </select>
         </td>
       </tr>
@@ -549,7 +549,7 @@
       </p>
     <div class="result-row">
       <span class="result-label" style="font-size: 1rem; font-weight: normal;" id="basic-cost-4-label"></span>
-      <span class="result-value" id="basic-cost-4-value">None</span>
+      <span class="result-value" id="basic-cost-4-value"></span>
     </div>
       <p id="basic-cost-4-description" class="charge-info">
       </p>
@@ -561,13 +561,13 @@
       </p>
     <div class="result-row">
       <span class="result-label" style="font-size: 1rem; font-weight: normal;" id="basic-cost-6-label"></span>
-      <span class="result-value" id="basic-cost-6-value">None</span>
+      <span class="result-value" id="basic-cost-6-value"></span>
     </div>
       <p id="basic-cost-6-description" class="charge-info">
       </p>
     <div class="result-row">
       <span class="result-label" style="font-size: 1rem; font-weight: normal;" id="basic-cost-7-label"></span>
-      <span class="result-value" id="basic-cost-7-value">None</span>
+      <span class="result-value" id="basic-cost-7-value"></span>
     </div>
       <p id="basic-cost-7-description" class="charge-info">
       </p>
@@ -583,33 +583,39 @@
     <h2>추가 비용</h2>
     <div class="result-row">
       <span class="result-label" style="font-size: 1rem; font-weight: normal;" id="extra-cost-1-label"></span>
-      <span class="result-value" id="extra-cost-1-value">None</span>
+      <span class="result-value" id="extra-cost-1-value"></span>
     </div>
     <p id="extra-cost-1-description" class="charge-info">
     </p>
     <div class="result-row">
       <span class="result-label" style="font-size: 1rem; font-weight: normal;" id="extra-cost-2-label"></span>
-      <span class="result-value" id="extra-cost-2-value">None</span>
+      <span class="result-value" id="extra-cost-2-value"></span>
     </div>
     <p id="extra-cost-2-description" class="charge-info">
     </p>
     <div class="result-row">
       <span class="result-label" style="font-size: 1rem; font-weight: normal;" id="extra-cost-3-label"></span>
-      <span class="result-value" id="extra-cost-3-value">None</span>
+      <span class="result-value" id="extra-cost-3-value"></span>
     </div>
     <p id="extra-cost-3-description" class="charge-info">
     </p>
     <div class="result-row">
       <span class="result-label" style="font-size: 1rem; font-weight: normal;" id="extra-cost-4-label"></span>
-      <span class="result-value" id="extra-cost-4-value">None</span>
+      <span class="result-value" id="extra-cost-4-value"></span>
     </div>
     <p id="extra-cost-4-description" class="charge-info">
     </p>
     <div class="result-row">
       <span class="result-label" style="font-size: 1rem; font-weight: normal;" id="extra-cost-5-label"></span>
-      <span class="result-value" id="extra-cost-5-value">None</span>
+      <span class="result-value" id="extra-cost-5-value"></span>
     </div>
     <p id="extra-cost-5-description" class="charge-info">
+    </p>
+    <div class="result-row">
+      <span class="result-label" style="font-size: 1rem; font-weight: normal;" id="extra-cost-6-label"></span>
+      <span class="result-value" id="extra-cost-6-value"></span>
+    </div>
+    <p id="extra-cost-6-description" class="charge-info">
     </p>
 
               <!-- STAIR CHARGE OPTIONS 추가 -->
@@ -684,7 +690,7 @@
 </div>  
 
   <script>
-
+ 
 let currencySymbol = ""; // 화폐 단위를 저장할 변수
 let dataNonDiplomat = {};
 let dataDiplomat = {};
@@ -710,9 +716,8 @@ const link1Element = document.getElementById("link1");
 const link2Element = document.getElementById("link2");
 
 // resetDropdown 함수 변경
-function resetDropdown(dropdownElement, placeholder = "-- Select an Option --") {
+function resetDropdown(dropdownElement, placeholder = "-- CBM 선택 --") {
   if (!dropdownElement) {
-    console.warn("resetDropdown: Provided dropdownElement is not available in the DOM.");
     return; // 잘못된 호출 무시
   }
   dropdownElement.innerHTML = `<option value="">${placeholder}</option>`;
@@ -733,10 +738,8 @@ function initializeLinks() {
 
 // 링크 업데이트
 function updateLinks(links) {
-  console.log("Links passed to updateLinks:", links);
 
   if (!Array.isArray(links) || links.length < 2) {
-    console.warn("Links data does not contain enough entries:", links);
     initializeLinks();
     return;
   }
@@ -747,11 +750,9 @@ function updateLinks(links) {
     link1Element.style.pointerEvents = "auto";
     link1Element.style.color = "white";
     link1Element.onclick = () => {
-      console.log(`Navigating to: ${links[0].url}`);
       window.open(links[0].url, "_blank");
     };
   } else {
-    console.warn("Link 1 is invalid:", links[0]);
     link1Element.textContent = "Default Link 1";
     link1Element.style.pointerEvents = "none";
     link1Element.style.color = "gray";
@@ -763,11 +764,9 @@ function updateLinks(links) {
     link2Element.style.pointerEvents = "auto";
     link2Element.style.color = "white";
     link2Element.onclick = () => {
-      console.log(`Navigating to: ${links[1].url}`);
       window.open(links[1].url, "_blank");
     };
   } else {
-    console.warn("Link 2 is invalid:", links[1]);
     link2Element.textContent = "Default Link 2";
     link2Element.style.pointerEvents = "none";
     link2Element.style.color = "gray";
@@ -779,12 +778,10 @@ function updateLinks(links) {
 async function initializePoeDropdown(path) {
   try {
     const poeDropdownPath = `${path}/poedropdown.json`;
-    console.log("Fetching POE dropdown from:", poeDropdownPath);
 
     const response = await fetch(poeDropdownPath);
 
     if (!response.ok) {
-      console.error(`Failed to fetch POE dropdown JSON. Status: ${response.status}`);
       return;
     }
 
@@ -794,7 +791,7 @@ async function initializePoeDropdown(path) {
       throw new TypeError("POE dropdown data is not an array. Check JSON format.");
     }
 
-    resetDropdown(poeDropdown, "-- Select a Port --");
+    resetDropdown(poeDropdown, "-- POE 선택 --");
 
     poeOptions.forEach((option) => {
       const opt = document.createElement("option");
@@ -804,29 +801,23 @@ async function initializePoeDropdown(path) {
     });
 
     poeDropdown.addEventListener("change", handlePoeChange);
-  } catch (error) {
-    console.error("Failed to initialize POE dropdown:", error);
+    } catch {
   }
-}
 
 function handlePoeChange() {
   const poeValue = poeDropdown.value;
 
   if (poeValue) {
-    console.log("Selected POE value:", poeValue);
     fetchData().then(() => {
       // 기본값 설정 후 업데이트 호출
-  console.log("basicExtraCost 데이터 확인:", basicExtraCost);
   updateAllDiplomatSensitiveResults(); // 추가 비용 업데이트
         const stairDescription = basicExtraCost["STAIR CHARGE"]?.description || "";
       const stairDescriptionElement = document.getElementById("stair-description");
       if (stairDescriptionElement) {
         stairDescriptionElement.textContent = stairDescription; // 설명 업데이트
-        console.log("Updated stair description:", stairDescription);
       }
     });
   } else {
-    console.warn("No POE value selected.");
   }
 }
 
@@ -841,11 +832,9 @@ async function fetchData() {
 
     const poeValue = poeDropdown.value;
     if (!poeValue) {
-      console.warn("POE value is not selected. Waiting for selection...");
       return;
     }
 
-    console.log("Fetching data for path:", path);
 
     const basePath = "https://arrrbang.github.io/TEST";
     const tableJsonPath = `${basePath}/${path}/poeis${poeValue}_tariff.json`;
@@ -859,28 +848,21 @@ async function fetchData() {
     ]);
 
     if (!tableResponse.ok || !extraCostResponse.ok) {
-      console.error("Failed to fetch JSON files:", {
-        tableStatus: tableResponse.status,
-        extraCostStatus: extraCostResponse.status,
-      });
       return;
     }
 
     // JSON 데이터 파싱
     const tableData = await tableResponse.json();
     const extraCostData = await extraCostResponse.json();
-    console.log("Loaded data:", { tableData, extraCostData });
 
     // 화폐 단위 저장
     currencySymbol = extraCostData["화폐단위"] || "";
-    console.log("Currency Symbol:", currencySymbol);
 
     // "DATA BASE"의 description 값 가져오기
     const dataBaseDescription = extraCostData["DATA BASE"]?.description || ""; // 기본값 설정
     const dataDescriptionElement = document.getElementById("data-description");
     if (dataDescriptionElement) {
       dataDescriptionElement.textContent = dataBaseDescription;  // description을 업데이트
-      console.log("Updated data description:", dataBaseDescription);
     }
 
     // 링크 업데이트
@@ -909,7 +891,6 @@ async function fetchData() {
     if (containerDropdown) {
       updateContainerDropdown(containerTypes, containerDropdown, currentContainerValue);
     }
-    updateAdditionalCosts();
     updateStairChargeDropdown();
     updateHeavyItemDropdown();
     updatestorageperiodDropdown();
@@ -924,7 +905,6 @@ async function fetchData() {
     }
     updateHeavyItemDropdown(); // HEAVY ITEM 드롭다운 업데이트
   } catch (error) {
-    console.error("Error in fetchData:", error);
   }
 }
 
@@ -974,9 +954,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 
-function resetDropdown(dropdownElement, placeholder = "-- Select an Option --") {
+function resetDropdown(dropdownElement, placeholder = "-- CBM 선택2 --") {
   if (!dropdownElement) {
-    console.warn("resetDropdown: Provided dropdownElement is null or undefined.");
     return; // 잘못된 호출 무시
   }
   dropdownElement.innerHTML = `<option value="">${placeholder}</option>`;
@@ -984,7 +963,7 @@ function resetDropdown(dropdownElement, placeholder = "-- Select an Option --") 
 
 // CBM 드롭다운 업데이트
 function updateCbmDropdown(dropdownElement, selectedValue) {
-  resetDropdown(dropdownElement, "-- Select a CBM --");
+  resetDropdown(dropdownElement, "-- CBM 선택 --");
 
   // 1부터 60까지의 숫자 추가
   for (let i = 1; i <= 60; i++) {
@@ -1006,7 +985,7 @@ function updateCbmDropdown(dropdownElement, selectedValue) {
 
 // 컨테이너 타입 드롭다운 업데이트
 function updateContainerDropdown(containerTypes, containerDropdown, selectedValue) {
-  resetDropdown(containerDropdown, "-- Select a Container --");
+  resetDropdown(containerDropdown, "-- CONTANIER TYPE 선택 --");
   containerTypes.forEach((type) => {
     const option = document.createElement("option");
     option.value = type;
@@ -1031,13 +1010,11 @@ function updateBasicDeliveryCost() {
 
   // 유효성 검사: CBM 값과 체크박스 상태 확인
   if (isNaN(selectedCBM) || selectedCBM < 1 || selectedCBM > 60) {
-    console.warn("CBM 값이 선택되지 않았거나 범위를 벗어났습니다.");
     result.textContent = "None";
     return;
   }
 
   if (!isNonDiplomat && !isDiplomat) {
-    console.warn("외교 화물 유무를 선택하세요.");
     result.textContent = "None"; // 기본값
     return;
   }
@@ -1085,7 +1062,6 @@ function updateBasicDeliveryCost() {
 
   // 결과 업데이트
   result.textContent = costValue;
-  console.log("기본 배송 비용 업데이트 완료:", costValue);
 }
 
 // CBM 드롭다운 값 변경 시 기본 배송 비용 업데이트
@@ -1105,13 +1081,8 @@ function updateDiplomatSensitiveResult(categoryKey) {
   let result = "None"; // 초기 값 설정
 
   const categoryData = basicExtraCost[categoryKey];
-  console.log("basicExtraCost 데이터 확인:", basicExtraCost);
-  console.log("selectedContainer:", selectedContainer);
-  console.log("selectedCBM:", selectedCBM);
-  console.log("categoryData:", categoryData);
 
   if (!categoryData) {
-    console.warn(`Category "${categoryKey}" not found in basicExtraCost`);
     return;
   }
 
@@ -1202,7 +1173,6 @@ function calculateTotalCost() {
 
   // 결과 출력: 화폐 단위를 포함한 형식
   totalCostElement.textContent = `${currencySymbol || ""}${totalCost.toLocaleString()}`;
-  console.log("Total cost updated:", `${currencySymbol || ""}${totalCost.toLocaleString()}`);
 }
 
 // MutationObserver 설정
@@ -1243,7 +1213,6 @@ function updateExtraCostResult(categoryKey) {
   console.log("categoryData:", categoryData);
 
   if (!categoryData) {
-    console.warn(`Category "${categoryKey}" not found in basicExtraCost`);
     return;
   }
 
@@ -1297,7 +1266,6 @@ function updateExtraCostResult(categoryKey) {
   if (valueElement) valueElement.textContent = result;
   if (descriptionElement) descriptionElement.textContent = categoryData.description || "";
 
-  console.log(`${categoryKey} 업데이트 완료:`, result, "Description:", categoryData.description);
 }
 
 
@@ -1372,7 +1340,6 @@ function updateHeavyItemDropdown() {
   const heavyItemData = basicExtraCost["HEAVY ITEM"]; // JSON 데이터에서 HEAVY ITEM 가져오기
 
   if (!heavyItemData) {
-    console.warn("HEAVY ITEM 데이터가 없습니다.");
     return;
   }
 
@@ -1383,7 +1350,7 @@ function updateHeavyItemDropdown() {
   }
 
   // 2. heavyitemunit 드롭다운 옵션 생성
-  resetDropdown(heavyItemDropdown, "중량 화물 개수 선택");
+  resetDropdown(heavyItemDropdown, "중량 화물 단위 선택");
 
   const unit = heavyItemData["단위"] || ""; // 단위 가져오기
   for (let i = 1; i <= 5; i++) {
@@ -1406,8 +1373,6 @@ function updateHeavyItemDropdown() {
     if (valueElement) {
       valueElement.textContent = calculatedValue !== "None" ? calculatedValue.toLocaleString() : "None";
     }
-
-    console.log("HEAVY ITEM 계산 결과:", calculatedValue);
   });
 }
 //----------------------storage charge 계산-----------------
@@ -1415,7 +1380,6 @@ function updatestorageperiodDropdown() {
   const storageData = basicExtraCost["STORAGE CHARGE"]; // JSON에서 STORAGE CHARGE 가져오기
 
   if (!storageData) {
-    console.warn("STORAGE CHARGE 데이터가 없습니다.");
     return;
   }
 
@@ -1424,7 +1388,6 @@ function updatestorageperiodDropdown() {
   const storageUnitCost = parseFloat(storageData["보관 비용 단가"]) || 0; // 기본 보관 단가
 
   if (isNaN(freeStorageDays) || isNaN(storageUnitCost)) {
-    console.warn("STORAGE CHARGE 데이터가 올바르지 않습니다.");
     return;
   }
 
@@ -1462,8 +1425,6 @@ function updatestorageperiodDropdown() {
       if (valueElement) {
         valueElement.textContent = formattedValue;
       }
-
-      console.log("STORAGE CHARGE 계산 결과:", formattedValue);
     } else {
       // 선택되지 않은 경우 기본값
       const valueElement = document.getElementById("storage-value");
@@ -1510,11 +1471,6 @@ fetchData().then(() => {
   updateHeavyItemDropdown(); // HEAVY ITEM 드롭다운 업데이트
   updatestorageperiodDropdown(); // STORAGE CHARGE 드롭다운 업데이트
 });
-
-function updateAdditionalCosts() {
-  console.warn("updateAdditionalCosts function is not implemented yet.");
-  // 필요한 로직을 여기에 추가하세요.
-}
 
 
 poeDropdown.addEventListener("change", updateAllCosts);
