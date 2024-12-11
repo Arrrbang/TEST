@@ -52,7 +52,7 @@
     "무료 보관 기간 일자": 14,
     "보관 비용 단가": 4
   },
-    "extra-cost-1": {
+  "extra-cost-1": {
     "name": "FULL SETTING",
     "description": "TEST",
       "CONSOLE": {
@@ -60,6 +60,9 @@
       },
       "20DRY": "INCLUDED",
       "40HC": "INCLUDED"
+  },
+  "DATA BASE": {
+    "description": "해당 데이터 업데이트 일자는 2024.10 진행된 이트너스 비딩 조사 입니다."
   }
 }
 
