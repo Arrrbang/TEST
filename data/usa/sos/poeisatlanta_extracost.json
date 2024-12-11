@@ -111,9 +111,7 @@
   "extra-cost-4": {
     "name": "LONG CARRY CHARGE",
     "description": "",
-    "CONSOLE": {
-      "단가": "미확인"
-    },
+    "CONSOLE": "미확인",
     "20DRY": "미확인",
     "40HC": "미확인"
   },
