@@ -83,7 +83,7 @@
     "name": "INSPECTION",
     "description": "컨테이너 전체 검사에 걸렸을 경우 발생되는 금액",
     "CONSOLE": {
-      "console단가": 3.5
+      "단가": 3.5
     },
     "20DRY": 200,
     "40HC": 200
@@ -92,7 +92,7 @@
     "name": "FULL SETTING",
     "description": "",
     "CONSOLE": {
-      "console단가": 30
+      "단가": 30
     },
     "20DRY": {
       "단가": 30
@@ -104,9 +104,7 @@
   "extra-cost-3": {
     "name": "SHUTTLE CHARGE",
     "description": "",
-    "CONSOLE": {
-      "console단가": "미확인"
-    },
+    "CONSOLE": "미확인",
     "20DRY": "미확인",
     "40HC": "미확인"
   },
@@ -114,7 +112,7 @@
     "name": "LONG CARRY CHARGE",
     "description": "",
     "CONSOLE": {
-      "console단가": "미확인"
+      "단가": "미확인"
     },
     "20DRY": "미확인",
     "40HC": "미확인"
