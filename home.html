@@ -1221,10 +1221,22 @@ function updateExtraCostResult(categoryKey) {
       // "단가"가 있는 경우
       const unitCost = parseFloat(costData["단가"]);
       result = (selectedCBM * unitCost).toFixed(2); // CBM과 곱하기
-    } else if (typeof costData === "object" && costData["console단가"]) {
-      // "console단가"가 있는 경우
-      const consoleUnitCost = parseFloat(costData["console단가"]);
-      result = (selectedCBM * consoleUnitCost).toFixed(2); // CBM과 곱하기
+    } else if (typeof costData === "object") {
+      // 범위 값을 처리하는 경우 (예: "1-40" 또는 "41-60")
+      const rangeKeys = Object.keys(costData); // "1-40", "41-60"과 같은 키 가져오기
+
+      // 선택된 CBM이 해당 범위에 속하는지 확인
+      for (let key of rangeKeys) {
+        const [start, end] = key.split("-").map(Number); // 범위 구분
+        if (selectedCBM >= start && selectedCBM <= end) {
+          result = costData[key]; // 해당 범위에 맞는 값 설정
+          break;
+        }
+      }
+    } else if (typeof costData === "string" && costData.includes("/CBM")) {
+      // "$10/CBM"와 같은 문자열 처리
+      const unitCost = parseFloat(costData.replace("/CBM", ""));
+      result = (selectedCBM * unitCost).toFixed(2); // CBM과 곱하기
     }
   } else {
     // 선택된 컨테이너 데이터가 없는 경우, CONSOLE 데이터 확인
@@ -1254,6 +1266,7 @@ function updateExtraCostResult(categoryKey) {
 
   console.log(`${categoryKey} 업데이트 완료:`, result, "Description:", categoryData.description);
 }
+
 
 //-------------------stair carry charge 업데이트---------------
 // POE 드롭다운 선택 시 설명 업데이트 및 계단 비용 계산
