@@ -45,7 +45,8 @@
       "CONSOLE": {
         "console단가": 10
       },
-      "20DRY": "INCLUDED",
+      "20DRY": {
+        "단가": 30},
       "40HC": "INCLUDED"
   },
 
