@@ -1109,7 +1109,7 @@ function updateDiplomatSensitiveResult(categoryKey) {
     result = (selectedCBM * unitCost).toFixed(2);
   } else if (typeof costData === "object") {
     // "단가" 항목이 없으면, 값 그대로 출력 (컨테이너 타입 값 그대로)
-    result = costData || "None";
+    result = costData[selectedContainer] || "None"; // 선택된 컨테이너 타입의 값을 출력
   } else if (typeof costData === "string") {
     // 문자 그대로 출력
     result = costData;
@@ -1137,7 +1137,6 @@ function updateDiplomatSensitiveResult(categoryKey) {
 
   console.log(`${categoryKey} 업데이트 완료:`, result, "Description:", categoryData.description);
 }
-
 
 
 //------------------------------basic cost total 계산------------------------------
