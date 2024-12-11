@@ -866,6 +866,14 @@ async function fetchData() {
     currencySymbol = extraCostData["화폐단위"] || "";
     console.log("Currency Symbol:", currencySymbol);
 
+        // "DATA BASE"의 description 값 가져오기
+    const dataBaseDescription = extraCostData["DATA BASE"]?.description || "No description available.";
+    const dataDescriptionElement = document.getElementById("data-description");
+    if (dataDescriptionElement) {
+      dataDescriptionElement.textContent = dataBaseDescription;  // description을 업데이트
+      console.log("Updated data description:", dataBaseDescription);
+    }
+
     // 링크 업데이트: tableData.links를 우선 사용
     if (Array.isArray(tableData.links) && tableData.links.length > 0) {
       updateLinks(tableData.links);
@@ -932,6 +940,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   } else {
     console.error("Path parameter missing in URL.");
   }
+
+    poeDropdown.addEventListener("change", () => {
+    const poeValue = poeDropdown.value;
+    if (poeValue) {
+      fetchData(); // POE 변경 시 데이터를 다시 불러옵니다.
+    }
+  });
 });
 
 
