@@ -5,12 +5,12 @@
     "name": "POC",
     "description": "",
     "NonDiplomat": {
-      "CONSOLE": "INCLUDED"
+      "CONSOLE": "INCLUDED",
       "20DRY": "INCLUDED",
       "40HC": "INCLUDED"
     },
     "Diplomat": {
-      "CONSOLE": "INCLUDED"
+      "CONSOLE": "INCLUDED",
       "20DRY": "INCLUDED",
       "40HC": "INCLUDED"
     }
@@ -19,12 +19,12 @@
     "name": "THC",
     "description": "",
     "NonDiplomat": {
-      "CONSOLE": "INCLUDED"
+      "CONSOLE": "INCLUDED",
       "20DRY": "INCLUDED",
       "40HC": "INCLUDED"
     },
     "Diplomat": {
-      "CONSOLE": "INCLUDED"
+      "CONSOLE": "INCLUDED",
       "20DRY": "INCLUDED",
       "40HC": "INCLUDED"
     }
