@@ -1243,13 +1243,22 @@ function updateExtraCostResult(categoryKey) {
       // "$10/CBM"와 같은 문자열 처리
       const unitCost = parseFloat(costData.replace("/CBM", ""));
       result = (selectedCBM * unitCost).toFixed(2); // CBM과 곱하기
+    } else if (typeof costData === "string") {
+      // 문자 그대로 처리 ("미확인" 같은 값은 그대로 출력)
+      result = costData;
     }
   } else {
     // 선택된 컨테이너 데이터가 없는 경우, CONSOLE 데이터 확인
     const consoleData = categoryData["CONSOLE"];
     if (consoleData && consoleData["console단가"]) {
-      const consoleUnitCost = parseFloat(consoleData["console단가"]);
-      result = (selectedCBM * consoleUnitCost).toFixed(2); // CBM과 곱하기
+      // "console단가"가 숫자일 경우, CBM 값과 곱하기
+      if (typeof consoleData["console단가"] === "number") {
+        const consoleUnitCost = parseFloat(consoleData["console단가"]);
+        result = (selectedCBM * consoleUnitCost).toFixed(2); // CBM과 곱하기
+      } else {
+        // "console단가"가 문자열일 경우 그대로 출력
+        result = consoleData["console단가"];
+      }
     } else {
       console.warn(`CONSOLE 데이터가 없습니다. Category: ${categoryKey}`);
       result = "None"; // 기본값 설정
