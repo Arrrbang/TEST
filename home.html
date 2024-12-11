@@ -1091,17 +1091,14 @@ function updateDiplomatSensitiveResult(categoryKey) {
   const costData =
     categoryData[nonDiplomat.checked ? "NonDiplomat" : "Diplomat"]?.[selectedContainer];
 
-  // "CONSOLE" 타입 컨테이너일 경우, "console단가"를 찾아서 계산
+  // 컨테이너 타입이 "CONSOLE"일 때 처리
   if (selectedContainer === "CONSOLE" && typeof costData === "object") {
-    if (costData["console단가"] === "INCLUDED") {
-      // "console단가"가 "INCLUDED"인 경우, 그 값 그대로 출력
-      result = "INCLUDED";
-    } else if (typeof costData["console단가"] === "number") {
-      // "console단가"가 숫자일 경우 CBM 값과 곱하기
-      const consoleUnitCost = parseFloat(costData["console단가"]);
-      result = (selectedCBM * consoleUnitCost).toFixed(2); // 소수점 2자리로 처리
+    // "단가"가 있는 경우
+    if (costData["단가"]) {
+      const unitCost = parseFloat(costData["단가"]);
+      result = (selectedCBM * unitCost).toFixed(2); // CBM 값과 곱하기
     } else {
-      // "console단가"가 없으면 기존 방식대로 처리
+      // "단가"가 없으면, 범위 처리
       const rangeResult = Object.keys(costData).find((key) => {
         if (key.includes("-")) {
           const [start, end] = key.split("-").map(Number);
@@ -1109,14 +1106,20 @@ function updateDiplomatSensitiveResult(categoryKey) {
         }
         return false;
       });
-      result = costData[rangeResult] || "None";
+      result = costData[rangeResult] || "None"; // 범위에 맞는 값 또는 None
     }
   } else if (costData === "INCLUDED") {
     result = "INCLUDED"; // 문자열 처리
-  } else if (!isNaN(costData)) {
-    result = selectedCBM * costData; // 숫자 값 처리
-  } else {
+  } else if (typeof costData === "object" && costData["단가"]) {
+    // "단가" 항목이 있을 경우, CBM과 곱한 값을 처리
+    const unitCost = parseFloat(costData["단가"]);
+    result = (selectedCBM * unitCost).toFixed(2);
+  } else if (typeof costData === "object") {
+    // "단가" 항목이 없으면, 값 그대로 출력
     result = costData || "None";
+  } else if (typeof costData === "string") {
+    // 문자 그대로 출력
+    result = costData;
   }
 
   // 기본값이 없을 경우 단위 비용 처리
@@ -1141,6 +1144,7 @@ function updateDiplomatSensitiveResult(categoryKey) {
 
   console.log(`${categoryKey} 업데이트 완료:`, result, "Description:", categoryData.description);
 }
+
 
 
 //------------------------------basic cost total 계산------------------------------
