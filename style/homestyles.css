@@ -1,0 +1,463 @@
+  body {
+    font-family: 'Noto Sans KR', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 80px;
+    overflow-y: auto;
+  }
+
+  .form-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 90%; /* 반응형 크기 */
+    max-width: 500px;
+    margin: 0 auto 30px;
+    text-align: center;
+    min-height: auto;
+  }
+
+  h2 {
+    background-color: #8BC34A;
+    color: white;
+    padding: 10px 0;
+    margin: 0;
+    border-radius: 5px 5px 0 0;
+    font-size: 1.2rem; /* 폰트 크기 */
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+
+  td {
+    padding: 10px;
+    vertical-align: middle;
+    word-wrap: break-word; /* 글자 줄바꿈 허용 */
+    font-size: 1rem; /* 기본 폰트 크기 */
+  }
+
+  td:first-child {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem; /* 테이블 주요 텍스트 크기 */
+  }
+
+  tr:nth-child(1) {
+    border-bottom: 1px dashed #8BC34A;
+  }
+
+  label {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap; /* 줄바꿈 금지 */
+    white-space: nowrap; /* 텍스트 줄바꿈 금지 */
+    max-width: 100%; /* 부모 컨테이너 너비에 맞춤 */
+  }
+
+  input[type="checkbox"] {
+    margin-right: 5px; /* 체크박스와 텍스트 사이 간격 추가 */
+    width: 18px; /* 체크박스 크기 고정 */
+    height: 18px;
+  }
+
+  select {
+    width: 100%; /* 드롭다운 너비 */
+    max-width: 100%; /* 부모 컨테이너를 넘지 않도록 제한 */
+    box-sizing: border-box; /* 패딩 포함하여 크기 계산 */
+    font-size: 1rem;
+    padding: 8px;
+  }
+
+  select, input[type="checkbox"] {
+    margin: 5px 0;
+  }
+
+  /* 현지 비용 스타일링 */
+  .result-row {
+  display: flex; /* 플렉스 레이아웃으로 설정 */
+  justify-content: space-between; /* 양 끝으로 정렬 */
+  align-items: center; /* 세로 축 가운데 정렬 */
+  padding: 10px 0; /* 상하 간격 */
+}
+
+  .result-label {
+    display: table-cell;
+    font-size: 1rem;
+    text-align: left;
+    font-weight: bold;
+    padding-left: 10px;
+  }
+
+  .result-value {
+    display: table-cell;
+    font-size: 1rem;
+    text-align: right;
+    padding-right: 10px;
+  }
+
+#basic-delivery-label {
+  font-size: 1.2rem; /* 폰트 크기 */
+  font-weight: bold; /* 굵기 추가 */
+  text-align: left;
+  padding-left: 10px; /* 라벨 왼쪽 간격 */
+}
+
+#basic-delivery-value {
+  font-size: 1.2rem; /* 폰트 크기 */
+  font-weight: bold; /* 굵기 추가 */
+  text-align: right; /* 오른쪽 정렬 */
+  padding-right: 10px; /* 값 오른쪽 간격 */
+  display: block; /* 블록 스타일 */
+}
+
+   .form-container h2 {
+    background-color: #8BC34A;
+    color: white;
+    padding: 10px 0;
+    margin: 0;
+    border-radius: 5px 5px 0 0;
+    font-size: 1.2rem;
+  }
+
+  .result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0; /* 줄 간격 줄임 */
+    margin: 0 10px; /* 좌우 여백 */
+  }
+
+  /* 추가 비용 섹션 */
+   #stairchargetitle {
+     border-top: 1px dashed #8BC34A; /* 초록색 구분선 */
+     margin-top: 10px; /* 위쪽 간격 */
+     padding-top: 10px; /* 구분선과 텍스트 간격 */
+    }
+
+
+      /* CBM과 FLOOR의 라벨 스타일 */
+
+     .stair-container { 
+    display: flex;
+    justify-content: flex-end; /* 라벨을 오른쪽 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    gap: 30px; /* 라벨과 드롭다운 간의 간격 */
+    width: 100%; /* 부모 컨테이너의 너비를 채우기 */
+  }
+
+    .stairchargelabel {
+      text-align: right; /* 텍스트 우측 정렬 */
+      font-size: 1rem; /* 기본 폰트 크기 */
+      white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+    }
+
+    /* 드롭다운 스타일 */
+    #staircbm, #stairfloor {
+      width: 180px; /* 드롭다운 너비 */
+      padding: 8px; /* 내부 여백 */
+      font-size: 1rem; /* 폰트 크기 */
+      box-sizing: border-box; /* 패딩 포함 크기 계산 */
+    }
+
+    #heavyitemrow {
+     border-top: 1px dashed #8BC34A; /* 초록색 구분선 */
+     margin-top: 10px; /* 위쪽 간격 */
+     padding-top: 10px; /* 구분선과 텍스트 간격 */
+    }
+     #heavyitemunit {
+      width: 180px; /* 드롭다운 크기 설정 */
+      padding: 8px; /* 내부 여백 */
+      font-size: 1rem; /* 폰트 크기 */
+      box-sizing: border-box; /* 패딩 포함 크기 계산 */
+    }
+
+       #heavyitem-value {
+      text-align: right; /* 텍스트를 오른쪽으로 정렬 */
+      margin-left: auto; /* 왼쪽 여백을 자동으로 설정 */
+    }
+
+      #storagerow {
+     border-top: 1px dashed #8BC34A; /* 초록색 구분선 */
+     margin-top: 10px; /* 위쪽 간격 */
+     padding-top: 10px; /* 구분선과 텍스트 간격 */
+    }
+     #storageperiod {
+      width: 180px; /* 드롭다운 크기 설정 */
+      padding: 8px; /* 내부 여백 */
+      font-size: 1rem; /* 폰트 크기 */
+      box-sizing: border-box; /* 패딩 포함 크기 계산 */
+    }
+
+       #storage-value {
+      text-align: right; /* 텍스트를 오른쪽으로 정렬 */
+      margin-left: auto; /* 왼쪽 여백을 자동으로 설정 */
+    }
+
+    .charge-info {
+      font-size: 0.8rem;
+      margin: 0 auto;
+      text-align: left;
+      max-width: 90%; /* 부모 컨테이너 크기를 초과하지 않도록 제한 */
+      display:block;
+      color: #ff6666; /* 빨간색 경고 텍스트 */
+    }
+
+      #total-cost {
+     border-top: 1px dashed #8BC34A; /* 초록색 구분선 */
+     margin-top: 10px; /* 위쪽 간격 */
+     padding-top: 10px; /* 구분선과 텍스트 간격 */
+    }
+
+         .link-container {
+        display: flex;
+        justify-content: space-between; /* 좌우 공간 균등 배치 */
+        gap: 20px; /* 컨테이너 간 간격 */
+        margin-top: 20px; /* 위쪽 여백 */
+      }
+
+      /* 링크 박스 스타일 */
+      .link-box {
+        background-color: #8BC34A; /* 기본 초록색 */
+        color: white; /* 텍스트 색상 */
+        font-size: 1.2rem; /* 폰트 크기 */
+        font-weight: bold; /* 텍스트 굵게 */
+        padding: 20px; /* 내부 여백 */
+        text-align: center; /* 텍스트 가운데 정렬 */
+        border-radius: 8px; /* 둥근 모서리 */
+        flex: 1; /* 각 컨테이너가 동일한 크기 */
+        cursor: pointer; /* 클릭 가능 표시 */
+        transition: background-color 0.3s ease; /* 배경색 전환 효과 */
+      }
+
+      /* 마우스 오버 효과 */
+      .link-box:hover {
+        background-color: #4CAF50; /* 마우스 올렸을 때 진한 초록색 */
+      }
+
+
+
+  /* 모바일 반응형 */
+  @media (max-width: 576px) {
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 중앙 정렬 */
+    justify-content: flex-start; /* 상단부터 시작 */
+    padding: 20px 10px; /* 여백 조정 */
+    margin: 0; /* 기본 margin 제거 */
+    margin-bottom: 20px;
+    min-height: 100vh; /* 화면 높이를 꽉 채우도록 설정 */
+    overflow-y: auto; /* 세로 스크롤 활성화 */
+    box-sizing: border-box;
+  }
+
+  .form-container {
+    width: 90%; /* 화면 너비 꽉 채우기 */
+    max-width: 480px; /* 최대 너비 설정 */
+    margin: 10px 0; /* 상단 여백 추가 */
+    padding: 20px; /* 내부 여백 유지 */
+    background-color: #ffffff; /* 흰색 배경 유지 */
+    border-radius: 8px; /* 둥근 모서리 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 약간의 그림자 */
+    box-sizing: border-box; /* 패딩을 포함한 크기 계산 */
+  }
+
+  h2 {
+    font-size: 1.5rem; /* 제목 폰트 크기 */
+    text-align: center; /* 제목 가운데 정렬 */
+    margin-bottom: 15px; /* 제목과 아래 요소 간격 */
+  }
+
+  table {
+    width: 100%; /* 테이블이 컨테이너 안에서 꽉 차도록 설정 */
+    margin: 0 auto; /* 중앙 정렬 */
+  }
+
+  td {
+    display: block; /* 모바일에서 셀을 블록 요소로 처리 */
+    width: 100%; /* 셀이 컨테이너의 너비를 모두 차지 */
+    text-align: center; /* 텍스트를 가운데 정렬 */
+    padding: 5px 0; /* 위아래 간격 유지 */
+  }
+
+  .checkbox-group {
+    display: flex;
+    flex-direction: column; /* 체크박스 그룹 세로 배치 */
+    align-items: center; /* 그룹 전체를 가운데 정렬 */
+    gap: 10px; /* 체크박스 간 간격 */
+    margin-bottom: 20px; /* CBM과의 간격 */
+    margin-top: 15px; /*외교화물 유무 타이틀과 간격*/
+  }
+
+  .checkbox-group label {
+    display: flex; /* 체크박스와 텍스트를 가로로 정렬 */
+    align-items: center; /* 체크박스와 텍스트 세로 정렬 */
+    gap: 5px; /* 체크박스와 텍스트 간격 */
+    text-align: left; /* 텍스트 정렬 */
+  }
+
+  /* CBM 관련 스타일 */
+  td:nth-child(1) {
+    margin-top: 8px;
+    margin-bottom: 0; /* 텍스트 아래 여백 제거 */
+    padding-bottom: 0; /* 텍스트 아래 패딩 제거 */
+  }
+
+  #cbm-dropdown {
+    margin-top: -5px; /* 드롭다운과 텍스트 간격 줄이기 */
+    margin-bottom: 10px;
+  }
+
+  /* CONTAINER TYPE 텍스트와 드롭다운 간 간격 줄이기 */
+  td:nth-child(1):nth-of-type(3) {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  #container-dropdown {
+    margin-top: -5px; /* CONTAINER TYPE 드롭다운과 텍스트 간격 */
+    margin-bottom: 10px;
+  }
+
+
+  select {
+    width: 90%; /* 드롭다운 메뉴 너비를 조정 */
+    margin: 5px auto; /* 드롭다운 메뉴를 가운데 정렬 */
+    font-size: 1.2rem; /* 폰트 크기 */
+    padding: 10px; /* 내부 여백 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+  }
+
+  .result-label {
+    font-size: 1.4rem;
+    text-align: left;
+    flex: 1;
+  }
+
+  .result-value {
+    font-size: 1rem; /* 결과 텍스트 크기 */
+    text-align: right; /* 결과 텍스트 오른쪽 정렬 */
+    flex: 1;
+  }
+
+   #basic-delivery-label {
+      font-size: 1.1rem; /* 폰트 크기 */
+      font-weight: bold; /* 굵기 추가 */
+      text-align: left;
+    }
+
+    #basic-delivery-value {
+      font-size: 1.1rem; /* 폰트 크기 */
+      font-weight: bold; /* 굵기 추가 */
+      text-align: right;
+    }
+
+/* "외교화물 유무" 글씨 크기 키우기 */
+  td:first-child {
+    font-size: 1.4rem; /* 글씨 크기 키움 */
+    font-weight: bold; /* 굵기 추가 */
+    margin-bottom: 10px; /* 아래쪽 간격 추가 */
+  }
+
+  .stair-container {
+      display: flex !important;
+      justify-content: flex-end !important;
+      align-items: center !important;
+      width: 100% !important;
+      gap: 10;
+      margin
+      padding: 0 10px; /* 좌우 패딩 추가 */
+      display: flex !important; /* 플렉스 컨테이너 */
+      justify-content: space-between !important; /* 양 끝 배치 */
+      align-items: center !important; /* 수직 가운데 정렬 */
+      width: calc(100% - 40px) !important; /* 부모의 padding 값을 제외한 너비 */
+      margin: 0 auto !important; /* 좌우 중앙 정렬 */
+      box-sizing: border-box; /* 패딩 포함 크기 계산 */
+  }
+
+  .stairchargelabel {
+      font-size: 1rem !important;
+      white-space: nowrap !important;
+      font-size: 1rem !important; /* 텍스트 크기 */
+      white-space: nowrap !important; /* 줄바꿈 방지 */
+      text-align: left !important; /* 좌측 정렬 */
+  }
+
+  #staircbm, #stairfloor {
+      width: 140px !important; /* 드롭다운 너비 */
+      font-size: 0.8rem !important;
+      padding: 6px !important;
+      box-sizing: border-box !important;
+      margin-left: 0;
+      margin: 0 !important; /* 여백 초기화 */
+  }
+
+    #heavyitemrow {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+    #heavyitemrow .result-label {
+        margin-bottom: 10px; /* 라벨과 드롭다운 사이 간격 */
+      }
+
+    #heavyitemunit {
+      display: block; /* margin auto를 위해 블록 요소로 변경 */
+      width: 160px; /* 드롭다운 너비 설정 */
+      font-size: 0.8rem;
+      padding: 6px;
+      box-sizing: border-box;
+      margin-left: 0;
+      margin: 0 auto; /* 수평 가운데 정렬 */
+      margin-bottom: 20px; /* 드롭다운과 설명 텍스트 사이 간격 */
+  }
+
+    #storagerow {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    #storagerow .result-label {
+        margin-bottom: 10px; /* 라벨과 드롭다운 사이 간격 */
+      }
+
+    #storageperiod {
+      display: block; /* margin auto를 위해 블록 요소로 변경 */
+      width: 160px; /* 드롭다운 너비 설정 */
+      font-size: 0.8rem;
+      padding: 6px;
+      box-sizing: border-box;
+      margin-left: 0;
+      margin: 0 auto; /* 수평 가운데 정렬 */
+      margin-bottom: 20px; /* 드롭다운과 설명 텍스트 사이 간격 */
+  }
+
+
+      .charge-info {
+      text-align: left; /* 텍스트 좌측 정렬 */
+      font-size: clamp(0.5rem, 2.5vw, 1.5rem); /* 컨테이너에 맞게 동적 폰트 크기 조정 */
+      white-space: nowrap; /* 줄바꿈 방지 */
+      overflow: hidden; /* 텍스트 넘침 방지 */
+      text-overflow: clip; /* 말줄임표 없이 넘침 방지 */
+      margin: 0 auto; /* 수평 가운데 정렬 */
+      max-width: 90%; /* 부모 컨테이너 크기를 초과하지 않도록 제한 */
+      display: block; /* margin auto 적용을 위해 블록 요소로 변경 */
+    }
+}
