@@ -540,6 +540,14 @@ function calculateTotalCost() {
     totalCost += basicDeliveryValue;
   }
 
+    const ofcValueElement = document.getElementById("average-ofc-value");
+  const ofcValueText = ofcValueElement ? ofcValueElement.textContent : "None";
+
+  const ofcValue = parseFloat(ofcValueText.replace(/[\$€₩]/g, "").replace(/[^0-9.-]+/g, ""));
+  if (!isNaN(ofcValue)) {
+    totalCost += ofcValue;
+  }
+
   // 결과 출력: 화폐 단위를 포함한 형식
   totalCostElement.textContent = `${currencySymbol || ""}${totalCost.toLocaleString()}`;
 }
@@ -553,6 +561,7 @@ function observeCostChanges() {
   const observedElements = [
     ...document.querySelectorAll('[id^="basic-cost-"][id$="-value"]'),
     document.getElementById("basic-delivery-value")
+    document.getElementById("average-ofc-value") // OFC 값 추가
   ];
 
   observedElements.forEach(element => {
