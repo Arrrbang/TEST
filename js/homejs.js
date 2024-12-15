@@ -307,24 +307,32 @@ function updateContainerDropdown(containerTypes, containerDropdown, selectedValu
   }
 }
 //------------------OFC비용 가져오기---------------------------
-// POE 또는 Container 드롭다운 값 변경 시 데이터 업데이트
 async function updateOfcValue() {
   const poeValue = poeDropdown.value; // POE 드롭다운의 VALUE 값
   const containerType = containerDropdown.value; // Container Type 값
   const cbmValue = parseFloat(cbmDropdown.value); // CBM 드롭다운 값 (숫자 변환)
 
+  console.log("updateOfcValue 시작");
+  console.log("poeValue:", poeValue, "containerType:", containerType, "cbmValue:", cbmValue);
+
   if (!poeValue || !containerType) {
     ofcValueElement.textContent = "값 없음";
+    console.log("poeValue 또는 containerType이 없습니다.");
     return;
   }
 
   try {
+    console.log("백엔드 호출 시작:", notionBackendURL);
+
     const response = await fetch(notionBackendURL);
+    console.log("fetch 완료, status:", response.status);
+
     if (!response.ok) {
       throw new Error(`백엔드 호출 실패: ${response.status}`);
     }
 
     const notionData = await response.json();
+    console.log("백엔드 데이터:", notionData);
 
     // 이름(POE) 값이 일치하는 데이터를 찾습니다.
     const matchingData = notionData.data.find(
@@ -333,18 +341,22 @@ async function updateOfcValue() {
 
     if (!matchingData || !matchingData[`value${containerType}`]) {
       ofcValueElement.textContent = "값 없음";
+      console.log("일치하는 데이터 없음");
       return;
     }
 
     let value = matchingData[`value${containerType}`];
+    console.log("매칭된 값:", value);
 
     // 컨테이너 타입이 "CONSOLE"이면 계산을 수행
     if (containerType.toLowerCase() === "console") {
       if (!cbmValue || isNaN(cbmValue)) {
         ofcValueElement.textContent = "CBM 값 없음";
+        console.log("CBM 값 없음");
         return;
       }
       value = (value / 60) * cbmValue; // 값 ÷ 60 × CBM 값
+      console.log("CONSOLE 계산된 값:", value);
     }
 
     // 화폐 단위와 숫자 형식화 적용
@@ -354,6 +366,7 @@ async function updateOfcValue() {
 
     // 최종 값을 화면에 표시
     ofcValueElement.textContent = value !== null ? value : "값 없음";
+    console.log("최종 OFC 값:", value);
   } catch (error) {
     console.error("Error fetching OFC value:", error);
     ofcValueElement.textContent = "오류 발생";
