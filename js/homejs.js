@@ -22,7 +22,7 @@ const poeDropdown = document.getElementById("poe-dropdown");
 const link1Element = document.getElementById("link1");
 const link2Element = document.getElementById("link2");
 const notionBackendURL = 'https://notion-backend-liard.vercel.app/notion';
-const ofcValueElement = document.getElementById('ofcvalue');
+const ofcValueElement = document.getElementById('average-ofc-value');
 
 // resetDropdown 함수 변경
 function resetDropdown(dropdownElement, placeholder = "-- CBM 선택 --") {
