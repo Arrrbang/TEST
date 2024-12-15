@@ -21,6 +21,8 @@ const totalCostElement = document.getElementById("total-value");
 const poeDropdown = document.getElementById("poe-dropdown");
 const link1Element = document.getElementById("link1");
 const link2Element = document.getElementById("link2");
+const notionBackendURL = 'https://notion-backend-liard.vercel.app/notion';
+const ofcValueElement = document.getElementById('ofcvalue');
 
 // resetDropdown 함수 변경
 function resetDropdown(dropdownElement, placeholder = "-- CBM 선택 --") {
@@ -304,7 +306,54 @@ function updateContainerDropdown(containerTypes, containerDropdown, selectedValu
     containerDropdown.value = ""; // 선택값 초기화
   }
 }
-    
+//------------------OFC비용 가져오기---------------------------
+// POE 또는 Container 드롭다운 값 변경 시 데이터 업데이트
+async function updateOfcValue() {
+  const poeValue = poeDropdown.value; // POE 값
+  const containerType = containerDropdown.value; // Container Type 값
+
+  // POE 또는 Container Type이 선택되지 않았다면 기본값 표시
+  if (!poeValue || !containerType) {
+    ofcValueElement.textContent = "값 없음";
+    return;
+  }
+
+  try {
+    // 백엔드 호출
+    const response = await fetch(notionBackendURL);
+    if (!response.ok) {
+      throw new Error(`백엔드 호출 실패: ${response.status}`);
+    }
+
+    const notionData = await response.json();
+
+    // 노션 데이터에서 POE와 컨테이너 타입에 맞는 값 찾기
+    const matchingData = notionData.data.find(
+      (item) => item.name === poeValue // POE 이름 매칭
+    );
+
+    // 해당 데이터가 없거나 컨테이너 타입이 일치하지 않으면 기본값 표시
+    if (!matchingData || !matchingData[`value${containerType}`]) {
+      ofcValueElement.textContent = "값 없음";
+      return;
+    }
+
+    // 값 업데이트
+    const value = matchingData[`value${containerType}`];
+    ofcValueElement.textContent = value !== null ? value.toLocaleString() : "값 없음"; // 숫자 형식화
+  } catch (error) {
+    console.error('Error fetching OFC value:', error);
+    ofcValueElement.textContent = "오류 발생";
+  }
+}
+
+// 드롭다운 변경 시 데이터 업데이트
+poeDropdown.addEventListener('change', updateOfcValue);
+containerDropdown.addEventListener('change', updateOfcValue);
+
+// 초기화 시 OFC 값 업데이트
+document.addEventListener('DOMContentLoaded', updateOfcValue);
+
 //------------------basic delivery 처리------------------------
 function updateBasicDeliveryCost() {
   const selectedCBM = parseInt(dropdown.value, 10); // 선택된 CBM 값
