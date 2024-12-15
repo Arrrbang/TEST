@@ -347,21 +347,19 @@ async function updateOfcValue() {
       value = (value / 60) * cbmValue; // 값 ÷ 60 × CBM 값
     }
 
+    // 화폐 단위와 숫자 형식화 적용
+    if (!isNaN(value) && value !== "None") {
+      value = `${currencySymbol}${parseFloat(value).toLocaleString()}`;
+    }
+
     // 최종 값을 화면에 표시
-    ofcValueElement.textContent = value !== null ? value.toLocaleString() : "값 없음";
+    ofcValueElement.textContent = value !== null ? value : "값 없음";
   } catch (error) {
     console.error("Error fetching OFC value:", error);
     ofcValueElement.textContent = "오류 발생";
   }
 }
 
-// 드롭다운 변경 시 데이터 업데이트
-poeDropdown.addEventListener('change', updateOfcValue);
-containerDropdown.addEventListener('change', updateOfcValue);
-cbmDropdown.addEventListener('change', updateOfcValue); // CBM 드롭다운도 리스너 추가
-
-// 초기화 시 OFC 값 업데이트
-document.addEventListener('DOMContentLoaded', updateOfcValue);
 
 //------------------basic delivery 처리------------------------
 function updateBasicDeliveryCost() {
@@ -818,6 +816,8 @@ function updateAllCosts() {
       updateExtraCostResult(categoryKey);
     }
   });
+  updateOfcValue();
+  calculateTotalCost();
 }
 
 // JSON 데이터 로드 후 호출
@@ -832,6 +832,7 @@ fetchData().then(() => {
 poeDropdown.addEventListener("change", updateAllCosts);
 dropdown.addEventListener("change", updateAllCosts);
 containerDropdown.addEventListener("change", updateAllCosts);
+cbmDropdown.addEventListener("change", updateAllCosts);
 nonDiplomat.addEventListener("change", updateAllCosts);
 diplomat.addEventListener("change", updateAllCosts);
 
