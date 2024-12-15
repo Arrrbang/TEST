@@ -307,14 +307,16 @@ function updateContainerDropdown(containerTypes, containerDropdown, selectedValu
   }
 }
 //------------------OFC비용 가져오기---------------------------
+// POE 또는 Container 드롭다운 값 변경 시 데이터 업데이트
 //------------------OFC 비용 가져오기---------------------------
 // POE 또는 Container 드롭다운 값 변경 시 데이터 업데이트
 async function updateOfcValue() {
   const poeValue = poeDropdown.value; // POE 드롭다운의 VALUE 값
   const containerType = containerDropdown.value; // Container Type 값
+  const selectedCbm = parseInt(dropdown.value, 10); // 선택된 CBM 값
 
-  // POE 또는 컨테이너 타입 값이 없을 경우 처리
-  if (!poeValue || !containerType) {
+  // POE, 컨테이너 타입 값, 또는 CBM 값이 없을 경우 처리
+  if (!poeValue || !containerType || isNaN(selectedCbm)) {
     ofcValueElement.textContent = "값 없음";
     return;
   }
@@ -334,18 +336,32 @@ async function updateOfcValue() {
     );
 
     // 매칭 데이터가 없을 경우
-    if (!matchingData || !matchingData[`value${containerType}`]) {
+    if (!matchingData) {
       ofcValueElement.textContent = "값 없음";
       return;
     }
 
-    // 값 가져오기
+    // 컨테이너 타입이 CONSOLE인 경우 40HC 값 사용
+    if (containerType === "CONSOLE") {
+      const value40HC = matchingData[`value40HC`];
+      if (!isNaN(value40HC)) {
+        // 40HC 값을 60으로 나누고 CBM 값을 곱한 결과 계산
+        const consoleValue = (value40HC / 60) * selectedCbm;
+        ofcValueElement.textContent = `${currencySymbol}${consoleValue.toFixed(2).toLocaleString()}`;
+      } else {
+        ofcValueElement.textContent = "값 없음";
+      }
+      return; // CONSOLE 값 처리 완료 후 함수 종료
+    }
+
+    // 일반 컨테이너 타입 처리
     let value = matchingData[`value${containerType}`];
 
-    // 값이 숫자라면 화폐 단위를 포함해 형식화
+    // 값이 숫자라면 화폐 단위를 포함해 형식화 (소수점 두 번째 자리까지)
     if (!isNaN(value)) {
-      value = `${currencySymbol}${parseFloat(value).toLocaleString()}`;
+      value = `${currencySymbol}${parseFloat(value).toFixed(2).toLocaleString()}`;
     }
+
 
     // 값 업데이트
     ofcValueElement.textContent = value !== null ? value : "값 없음";
@@ -354,6 +370,7 @@ async function updateOfcValue() {
     ofcValueElement.textContent = "오류 발생";
   }
 }
+
 
 //------------------basic delivery 처리------------------------
 function updateBasicDeliveryCost() {
