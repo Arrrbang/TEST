@@ -549,7 +549,7 @@ function calculateTotalCost() {
   }
 
   // 결과 출력: 화폐 단위를 포함한 형식
-  totalCostElement.textContent = `${currencySymbol || ""}${totalCost.toLocaleString()}`;
+  totalCostElement.textContent = `${currencySymbol || ""}${totalCost.toFixed(2).toLocaleString()}`;
 }
 
 // MutationObserver 설정
@@ -560,7 +560,7 @@ function observeCostChanges() {
   // basic-cost-?와 basic-delivery-value를 관찰
   const observedElements = [
     ...document.querySelectorAll('[id^="basic-cost-"][id$="-value"]'),
-    document.getElementById("basic-delivery-value")
+    document.getElementById("basic-delivery-value"),
     document.getElementById("average-ofc-value") // OFC 값 추가
   ];
 
