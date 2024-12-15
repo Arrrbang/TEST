@@ -312,14 +312,12 @@ async function updateOfcValue() {
   const poeValue = poeDropdown.value; // POE 드롭다운의 VALUE 값
   const containerType = containerDropdown.value; // Container Type 값
 
-  // POE 또는 Container Type이 선택되지 않았다면 기본값 표시
   if (!poeValue || !containerType) {
-    ofcValueElement.textContent = "None"; // 기본값
+    ofcValueElement.textContent = "값 없음";
     return;
   }
 
   try {
-    // 백엔드 호출
     const response = await fetch(notionBackendURL);
     if (!response.ok) {
       throw new Error(`백엔드 호출 실패: ${response.status}`);
@@ -327,23 +325,20 @@ async function updateOfcValue() {
 
     const notionData = await response.json();
 
-    // 노션 데이터에서 POE VALUE와 컨테이너 타입에 맞는 값 찾기
     const matchingData = notionData.data.find(
-      (item) => item.name === poeValue // POE의 VALUE와 매칭
+      (item) => item.name.toLowerCase() === poeValue.toLowerCase() // 대소문자 무시 비교
     );
 
-    // 해당 데이터가 없거나 컨테이너 타입에 맞는 값이 없으면 기본값 표시
     if (!matchingData || !matchingData[`value${containerType}`]) {
-      ofcValueElement.textContent = "None"; // 기본값
+      ofcValueElement.textContent = "값 없음";
       return;
     }
 
-    // 값 업데이트
     const value = matchingData[`value${containerType}`];
-    ofcValueElement.textContent = value !== null ? value.toLocaleString() : "None"; // 숫자 형식화
+    ofcValueElement.textContent = value !== null ? value.toLocaleString() : "값 없음";
   } catch (error) {
-    console.error('Error fetching OFC value:', error);
-    ofcValueElement.textContent = "Error"; // 오류 메시지 표시
+    console.error("Error fetching OFC value:", error);
+    ofcValueElement.textContent = "오류 발생";
   }
 }
 
