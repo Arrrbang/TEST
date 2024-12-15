@@ -311,6 +311,7 @@ function updateContainerDropdown(containerTypes, containerDropdown, selectedValu
 async function updateOfcValue() {
   const poeValue = poeDropdown.value; // POE 드롭다운의 VALUE 값
   const containerType = containerDropdown.value; // Container Type 값
+  const cbmValue = parseFloat(cbmDropdown.value); // CBM 드롭다운 값 (숫자 변환)
 
   if (!poeValue || !containerType) {
     ofcValueElement.textContent = "값 없음";
@@ -325,6 +326,7 @@ async function updateOfcValue() {
 
     const notionData = await response.json();
 
+    // 이름(POE) 값이 일치하는 데이터를 찾습니다.
     const matchingData = notionData.data.find(
       (item) => item.name.toLowerCase() === poeValue.toLowerCase() // 대소문자 무시 비교
     );
@@ -334,7 +336,18 @@ async function updateOfcValue() {
       return;
     }
 
-    const value = matchingData[`value${containerType}`];
+    let value = matchingData[`value${containerType}`];
+
+    // 컨테이너 타입이 "CONSOLE"이면 계산을 수행
+    if (containerType.toLowerCase() === "console") {
+      if (!cbmValue || isNaN(cbmValue)) {
+        ofcValueElement.textContent = "CBM 값 없음";
+        return;
+      }
+      value = (value / 60) * cbmValue; // 값 ÷ 60 × CBM 값
+    }
+
+    // 최종 값을 화면에 표시
     ofcValueElement.textContent = value !== null ? value.toLocaleString() : "값 없음";
   } catch (error) {
     console.error("Error fetching OFC value:", error);
@@ -345,6 +358,7 @@ async function updateOfcValue() {
 // 드롭다운 변경 시 데이터 업데이트
 poeDropdown.addEventListener('change', updateOfcValue);
 containerDropdown.addEventListener('change', updateOfcValue);
+cbmDropdown.addEventListener('change', updateOfcValue); // CBM 드롭다운도 리스너 추가
 
 // 초기화 시 OFC 값 업데이트
 document.addEventListener('DOMContentLoaded', updateOfcValue);
