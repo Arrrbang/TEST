@@ -307,17 +307,20 @@ function updateContainerDropdown(containerTypes, containerDropdown, selectedValu
   }
 }
 //------------------OFC비용 가져오기---------------------------
+//------------------OFC 비용 가져오기---------------------------
 // POE 또는 Container 드롭다운 값 변경 시 데이터 업데이트
 async function updateOfcValue() {
   const poeValue = poeDropdown.value; // POE 드롭다운의 VALUE 값
   const containerType = containerDropdown.value; // Container Type 값
 
+  // POE 또는 컨테이너 타입 값이 없을 경우 처리
   if (!poeValue || !containerType) {
     ofcValueElement.textContent = "값 없음";
     return;
   }
 
   try {
+    // 백엔드 데이터 가져오기
     const response = await fetch(notionBackendURL);
     if (!response.ok) {
       throw new Error(`백엔드 호출 실패: ${response.status}`);
@@ -325,29 +328,32 @@ async function updateOfcValue() {
 
     const notionData = await response.json();
 
+    // 백엔드 데이터에서 POE 및 컨테이너 값에 맞는 데이터 찾기
     const matchingData = notionData.data.find(
       (item) => item.name.toLowerCase() === poeValue.toLowerCase() // 대소문자 무시 비교
     );
 
+    // 매칭 데이터가 없을 경우
     if (!matchingData || !matchingData[`value${containerType}`]) {
       ofcValueElement.textContent = "값 없음";
       return;
     }
 
-    const value = matchingData[`value${containerType}`];
-    ofcValueElement.textContent = value !== null ? value.toLocaleString() : "값 없음";
+    // 값 가져오기
+    let value = matchingData[`value${containerType}`];
+
+    // 값이 숫자라면 화폐 단위를 포함해 형식화
+    if (!isNaN(value)) {
+      value = `${currencySymbol}${parseFloat(value).toLocaleString()}`;
+    }
+
+    // 값 업데이트
+    ofcValueElement.textContent = value !== null ? value : "값 없음";
   } catch (error) {
     console.error("Error fetching OFC value:", error);
     ofcValueElement.textContent = "오류 발생";
   }
 }
-
-// 드롭다운 변경 시 데이터 업데이트
-poeDropdown.addEventListener('change', updateOfcValue);
-containerDropdown.addEventListener('change', updateOfcValue);
-
-// 초기화 시 OFC 값 업데이트
-document.addEventListener('DOMContentLoaded', updateOfcValue);
 
 //------------------basic delivery 처리------------------------
 function updateBasicDeliveryCost() {
@@ -785,12 +791,14 @@ function updatestorageperiodDropdown() {
 document.addEventListener("DOMContentLoaded", () => {
   updateStairChargeDropdown(); // 페이지 로드 후 초기화
   calculateStairCharge(); // 초기값 계산
+  updateOfcValue(); // OFC 값 초기화
   calculateTotalCost();
 });
 
 
 // 모든 카테고리를 동적으로 업데이트
 function updateAllCosts() {
+  updateOfcValue(); 
   // basic 비용 업데이트
   Object.keys(basicExtraCost).forEach((categoryKey) => {
     if (categoryKey.startsWith("basic-cost-")) {
